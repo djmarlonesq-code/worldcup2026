@@ -482,7 +482,7 @@ const GROUPS={
   B:{teams:[{flag:'🇧🇦',name:'Bosnia & Herz.',mp:1,w:0,d:1,l:0,gf:1,ga:1,pts:1},{flag:'🇨🇦',name:'Canada',mp:1,w:0,d:1,l:0,gf:1,ga:1,pts:1},{flag:'🇨🇭',name:'Switzerland',mp:1,w:0,d:1,l:0,gf:1,ga:1,pts:1},{flag:'🇶🇦',name:'Qatar',mp:1,w:0,d:1,l:0,gf:1,ga:1,pts:1}]},
   C:{teams:[{flag:'🏴󠁧󠁢󠁳󠁣󠁴󠁿',name:'Scotland',mp:1,w:1,d:0,l:0,gf:1,ga:0,pts:3},{flag:'🇧🇷',name:'Brazil',mp:1,w:0,d:1,l:0,gf:1,ga:1,pts:1},{flag:'🇲🇦',name:'Morocco',mp:1,w:0,d:1,l:0,gf:1,ga:1,pts:1},{flag:'🇭🇹',name:'Haiti',mp:1,w:0,d:0,l:1,gf:0,ga:1,pts:0}]},
   D:{teams:[{flag:'🇺🇸',name:'USA',mp:1,w:1,d:0,l:0,gf:4,ga:1,pts:3},{flag:'🇦🇺',name:'Australia',mp:1,w:1,d:0,l:0,gf:2,ga:0,pts:3},{flag:'🇹🇷',name:'Türkiye',mp:1,w:0,d:0,l:1,gf:0,ga:2,pts:0},{flag:'🇵🇾',name:'Paraguay',mp:1,w:0,d:0,l:1,gf:1,ga:4,pts:0}]},
-  E:{teams:[{flag:'🇩🇪',name:'Germany',mp:0,w:0,d:0,l:0,gf:0,ga:0,pts:0},{flag:'🇨🇮',name:'Ivory Coast',mp:0,w:0,d:0,l:0,gf:0,ga:0,pts:0},{flag:'🇪🇨',name:'Ecuador',mp:0,w:0,d:0,l:0,gf:0,ga:0,pts:0},{flag:'🇨🇼',name:'Curaçao',mp:0,w:0,d:0,l:0,gf:0,ga:0,pts:0}]},
+  E:{teams:[{flag:'🇩🇪',name:'Germany',mp:1,w:1,d:0,l:0,gf:3,ga:1,pts:3},{flag:'🇨🇮',name:'Ivory Coast',mp:0,w:0,d:0,l:0,gf:0,ga:0,pts:0},{flag:'🇪🇨',name:'Ecuador',mp:0,w:0,d:0,l:0,gf:0,ga:0,pts:0},{flag:'🇨🇼',name:'Curaçao',mp:1,w:0,d:0,l:1,gf:1,ga:3,pts:0}]},
   F:{teams:[{flag:'🇳🇱',name:'Netherlands',mp:0,w:0,d:0,l:0,gf:0,ga:0,pts:0},{flag:'🇯🇵',name:'Japan',mp:0,w:0,d:0,l:0,gf:0,ga:0,pts:0},{flag:'🇸🇪',name:'Sweden',mp:0,w:0,d:0,l:0,gf:0,ga:0,pts:0},{flag:'🇹🇳',name:'Tunisia',mp:0,w:0,d:0,l:0,gf:0,ga:0,pts:0}]},
   G:{teams:[{flag:'🇧🇪',name:'Belgium',mp:0,w:0,d:0,l:0,gf:0,ga:0,pts:0},{flag:'🇪🇬',name:'Egypt',mp:0,w:0,d:0,l:0,gf:0,ga:0,pts:0},{flag:'🇮🇷',name:'Iran',mp:0,w:0,d:0,l:0,gf:0,ga:0,pts:0},{flag:'🇳🇿',name:'New Zealand',mp:0,w:0,d:0,l:0,gf:0,ga:0,pts:0}]},
   H:{teams:[{flag:'🇪🇸',name:'Spain',mp:0,w:0,d:0,l:0,gf:0,ga:0,pts:0},{flag:'🇺🇾',name:'Uruguay',mp:0,w:0,d:0,l:0,gf:0,ga:0,pts:0},{flag:'🇸🇦',name:'Saudi Arabia',mp:0,w:0,d:0,l:0,gf:0,ga:0,pts:0},{flag:'🇨🇻',name:'Cape Verde',mp:0,w:0,d:0,l:0,gf:0,ga:0,pts:0}]},
@@ -538,9 +538,12 @@ let MATCHES=[
   {grp:'D',home:'Australia',hf:'🇦🇺',away:'Türkiye',af:'🇹🇷',hs:2,as_:0,date:'Jun 14',time:'12:00 AM',venue:'Vancouver',status:'ft',espnId:'760416',motm:'P. Beach (AUS)',
    hev:[{i:'⚽',m:"27'",n:'N. Irankunda',a:'Ast: Okon-Engstler (long ball)'},{i:'⚽',m:"75'",n:'C. Metcalfe',a:'Strike from 23m out'}],
    aev:[{i:'🟨',m:"86'",n:'Y. Akgun',a:'Serious foul play'}],
-   ms:{homePoss:30,homeShots:9,awayShots:30,homeShotsOT:4,awayShotsOT:8,homeCorners:3,awayCorners:8,homeSaves:8,awaySaves:2}},
+   ms:{homePoss:30,awayPoss:57,homeShots:9,awayShots:30,homeShotsOT:4,awayShotsOT:8,homeCorners:3,awayCorners:8,homeSaves:8,awaySaves:2}},
   // UPCOMING
-  {grp:'E',home:'Germany',hf:'🇩🇪',away:'Curaçao',af:'🇨🇼',hs:null,as_:null,date:'Jun 14',time:'1:00 PM',venue:'Houston',status:'upcoming',espnId:'760422',hev:[],aev:[],ms:null},
+  {grp:'E',home:'Germany',hf:'🇩🇪',away:'Curaçao',af:'🇨🇼',hs:3,as_:1,date:'Jun 14',time:'1:00 PM',venue:'Houston',status:'live',espnId:'760422',motm:null,
+   hev:[{i:'⚽',m:"6'",n:'F. Nmecha',a:'Flowing team move'},{i:'⚽',m:"37'",n:'N. Schlotterbeck',a:'Header from corner'},{i:'⚽',m:"45+4'",n:'K. Havertz',a:'Penalty (foul on Nmecha)'}],
+   aev:[{i:'⚽',m:"21'",n:'L. Comenencia',a:'Deflected shot — CUW first WC goal!'}],
+   ms:{homePoss:60,awayPoss:27,homeShots:16,awayShots:4,homeShotsOT:6,awayShotsOT:1,homeCorners:5,awayCorners:1,homeSaves:0,awaySaves:3}},
   {grp:'F',home:'Netherlands',hf:'🇳🇱',away:'Japan',af:'🇯🇵',hs:null,as_:null,date:'Jun 14',time:'4:00 PM',venue:'Dallas',status:'upcoming',espnId:'760425',hev:[],aev:[],ms:null},
   {grp:'E',home:'Ivory Coast',hf:'🇨🇮',away:'Ecuador',af:'🇪🇨',hs:null,as_:null,date:'Jun 14',time:'7:00 PM',venue:'Philadelphia',status:'upcoming',espnId:'760423',hev:[],aev:[],ms:null},
   {grp:'F',home:'Tunisia',hf:'🇹🇳',away:'Sweden',af:'🇸🇪',hs:null,as_:null,date:'Jun 14',time:'10:00 PM',venue:'Monterrey',status:'upcoming',espnId:'760426',hev:[],aev:[],ms:null},
@@ -559,7 +562,11 @@ let MATCHES=[
 ];
 
 const GOALS=[
-  {name:'N. Irankunda',     team:'Australia',   flag:'🇦🇺',goals:1,photo:null,          matchOrder:8,lastMin:27},
+  {name:'F. Nmecha',        team:'Germany',    flag:'🇩🇪',goals:1,photo:null,          matchOrder:9,lastMin:6},
+  {name:'N. Schlotterbeck', team:'Germany',    flag:'🇩🇪',goals:1,photo:null,          matchOrder:9,lastMin:37},
+  {name:'K. Havertz',       team:'Germany',    flag:'🇩🇪',goals:1,photo:null,          matchOrder:9,lastMin:45},
+  {name:'L. Comenencia',    team:'Curaçao',    flag:'🇨🇼',goals:1,photo:null,          matchOrder:9,lastMin:21},
+  {name:'N. Irankunda',     team:'Australia',  flag:'🇦🇺',goals:1,photo:null,          matchOrder:8,lastMin:27},
   {name:'C. Metcalfe',      team:'Australia',   flag:'🇦🇺',goals:1,photo:null,          matchOrder:8,lastMin:75},
   {name:'J. McGinn',        team:'Scotland',    flag:'🏴󠁧󠁢󠁳󠁣󠁴󠁿',goals:1,photo:null,          matchOrder:7,lastMin:28},
   {name:'I. Saibari',       team:'Morocco',     flag:'🇲🇦',goals:1,photo:null,          matchOrder:6,lastMin:21},
@@ -699,13 +706,18 @@ async function doRefresh() {
 
         // Map ESPN state to our status
         if (state === 'post' || completed) {
-          match.status = 'ft';
-          match.hs = parseInt(homeComp.score);
-          match.as_ = parseInt(awayComp.score);
-          if (isNaN(match.hs)) match.hs = 0;
-          if (isNaN(match.as_)) match.as_ = 0;
-          updatedCount++;
+          // Only update if we don't already have a verified FT score
+          // This prevents ESPN from corrupting manually verified data
+          if (match.status !== 'ft') {
+            match.status = 'ft';
+            match.hs = parseInt(homeComp.score);
+            match.as_ = parseInt(awayComp.score);
+            if (isNaN(match.hs)) match.hs = 0;
+            if (isNaN(match.as_)) match.as_ = 0;
+            updatedCount++;
+          }
         } else if (state === 'in') {
+          // Always update live scores
           match.status = 'live';
           match.hs = parseInt(homeComp.score) || 0;
           match.as_ = parseInt(awayComp.score) || 0;
@@ -714,9 +726,11 @@ async function doRefresh() {
           updatedCount++;
         } else {
           // Upcoming — keep null scores so they show as "VS" not "0:0"
-          match.status = 'upcoming';
-          match.hs = null;
-          match.as_ = null;
+          if (match.status !== 'ft' && match.status !== 'live') {
+            match.status = 'upcoming';
+            match.hs = null;
+            match.as_ = null;
+          }
         }
       });
     }
@@ -791,7 +805,7 @@ function evRows(evs){
 function statsBar(m){
   if(!m.ms)return'';
   const {homePoss,homeShots,awayShots,homeShotsOT,awayShotsOT,homeCorners,awayCorners,homeSaves,awaySaves}=m.ms;
-  const ap=100-homePoss;
+  const ap=m.ms.awayPoss||(100-homePoss);
   function bar(hv,av,lbl){
     const tot=hv+av||1;const hp=Math.round(hv/tot*100);
     return`<div class="ms-bar-row"><div class="ms-bar-label"><span class="ms-val-home">${hv}</span><span class="ms-lbl-center">${lbl}</span><span class="ms-val-away">${av}</span></div><div class="ms-bar-track"><div class="ms-bar-home" style="width:${hp}%"></div><div class="ms-bar-away" style="width:${100-hp}%"></div></div></div>`;
@@ -932,7 +946,7 @@ function renderStats(){
   let tsh='';
   played.slice().reverse().forEach(m=>{
     const {homePoss,homeShots,awayShots,homeShotsOT,awayShotsOT,homeCorners,awayCorners,homeSaves,awaySaves}=m.ms;
-    const ap=100-homePoss;
+    const ap=m.ms.awayPoss||(100-homePoss);
     function bar(hv,av,lbl){const tot=hv+av||1;const hp=Math.round(hv/tot*100);return`<div class="ms-bar-row"><div class="ms-bar-label"><span class="ms-val-home">${hv}</span><span class="ms-lbl-center">${lbl}</span><span class="ms-val-away">${av}</span></div><div class="ms-bar-track"><div class="ms-bar-home" style="width:${hp}%"></div><div class="ms-bar-away" style="width:${100-hp}%"></div></div></div>`;}
     tsh+=`<div class="ts-card"><div class="ts-header"><div class="ts-flags">${m.hf}</div><div><div class="ts-title">${m.home} <span style="color:var(--gold)">${m.hs}–${m.as_}</span> ${m.away} ${m.af}</div><div class="ts-subtitle">${m.date} · ${m.venue}</div></div></div>${bar(homePoss,ap,'Possession %')}${bar(homeShots,awayShots,'Total Shots')}${bar(homeShotsOT,awayShotsOT,'Shots on Target')}${bar(homeCorners,awayCorners,'Corners')}${bar(homeSaves,awaySaves,'GK Saves')}${m.motm?`<div class="ms-motm">🏅 <strong>MOTM:</strong> ${m.motm}</div>`:''}</div>`;
   });
