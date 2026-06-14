@@ -372,9 +372,9 @@ main{padding:14px 16px;max-width:660px;margin:0 auto;}
 </div>
 <div id="tab-cards" class="tab-panel">
   <div class="cf-wrap">
-    <button class="cf-btn active" onclick="filterCards('all',this)">All (15)</button>
+    <button class="cf-btn active" onclick="filterCards('all',this)">All (16)</button>
     <button class="cf-btn" onclick="filterCards('red',this)">🟥 Red (3)</button>
-    <button class="cf-btn" onclick="filterCards('yellow',this)">🟨 Yellow (12)</button>
+    <button class="cf-btn" onclick="filterCards('yellow',this)">🟨 Yellow (13)</button>
   </div>
   <div id="cardsCont"></div>
 </div>
@@ -536,9 +536,9 @@ let MATCHES=[
    aev:[{i:'⚽',m:"28'",n:'J. McGinn',a:'Deflected shot'}],
    ms:{homePoss:44,homeShots:10,awayShots:14,homeShotsOT:2,awayShotsOT:4,homeCorners:4,awayCorners:6,homeSaves:3,awaySaves:2}},
   {grp:'D',home:'Australia',hf:'🇦🇺',away:'Türkiye',af:'🇹🇷',hs:2,as_:0,date:'Jun 14',time:'12:00 AM',venue:'Vancouver',status:'ft',espnId:'760416',motm:'P. Beach (AUS)',
-   hev:[{i:'⚽',m:"27'",n:'N. Irankunda',a:'Counter-attack finish'},{i:'⚽',m:"75'",n:'C. Metcalfe',a:'Strike from edge'}],
-   aev:[],
-   ms:{homePoss:30,homeShots:9,awayShots:30,homeShotsOT:3,awayShotsOT:11,homeCorners:3,awayCorners:8,homeSaves:8,awaySaves:1}},
+   hev:[{i:'⚽',m:"27'",n:'N. Irankunda',a:'Ast: Okon-Engstler (long ball)'},{i:'⚽',m:"75'",n:'C. Metcalfe',a:'Strike from 23m out'}],
+   aev:[{i:'🟨',m:"86'",n:'Y. Akgun',a:'Serious foul play'}],
+   ms:{homePoss:30,homeShots:9,awayShots:30,homeShotsOT:4,awayShotsOT:8,homeCorners:3,awayCorners:8,homeSaves:8,awaySaves:2}},
   // UPCOMING
   {grp:'E',home:'Germany',hf:'🇩🇪',away:'Curaçao',af:'🇨🇼',hs:null,as_:null,date:'Jun 14',time:'1:00 PM',venue:'Houston',status:'upcoming',espnId:'760422',hev:[],aev:[],ms:null},
   {grp:'F',home:'Netherlands',hf:'🇳🇱',away:'Japan',af:'🇯🇵',hs:null,as_:null,date:'Jun 14',time:'4:00 PM',venue:'Dallas',status:'upcoming',espnId:'760425',hev:[],aev:[],ms:null},
@@ -578,6 +578,7 @@ const GOALS=[
   {name:'J. Quiñones',      team:'Mexico',      flag:'🇲🇽',goals:1,photo:null,          matchOrder:1,lastMin:9},
 ];
 const ASSISTS=[
+  {name:'P. Okon-Engstler', team:'Australia', flag:'🇦🇺',assists:1,photo:null,note:"Long ball → Irankunda 27'",matchOrder:8,lastMin:27},
   {name:'Bruno Guimarães',  team:'Brazil',  flag:'🇧🇷',assists:1,photo:null,note:"Pass → Vinícius 32'",matchOrder:6,lastMin:32},
   {name:'Brahim Díaz',      team:'Morocco', flag:'🇲🇦',assists:1,photo:null,note:"Through ball → Saibari 21'",matchOrder:6,lastMin:21},
   {name:'Christian Pulisic',team:'USA',     flag:'🇺🇸',assists:2,photo:'Christian Pulisic',note:'2 assists vs Paraguay',matchOrder:4,lastMin:31},
@@ -590,6 +591,7 @@ const GKS=[
   {name:'P. Beach',    team:'Australia',   flag:'🇦🇺',photo:null,mp:1,saves:8,ga:0,cs:1,savePct:73},
   {name:'A. Gunn',     team:'Scotland',    flag:'🏴󠁧󠁢󠁳󠁣󠁴󠁿',photo:null,mp:1,saves:3,ga:0,cs:1,savePct:100},
   {name:'Y. Sommer',   team:'Switzerland', flag:'🇨🇭',photo:null,mp:1,saves:6,ga:1,cs:0,savePct:86},
+  {name:'U. Çakır',    team:'Türkiye',     flag:'🇹🇷',photo:null,mp:1,saves:2,ga:2,cs:0,savePct:33},
   {name:'Alisson',     team:'Brazil',      flag:'🇧🇷',photo:null,mp:1,saves:2,ga:1,cs:0,savePct:67},
   {name:'J. Placide',  team:'Haiti',       flag:'🇭🇹',photo:null,mp:1,saves:2,ga:1,cs:0,savePct:50},
   {name:'M. Abunada',  team:'Qatar',       flag:'🇶🇦',photo:null,mp:1,saves:1,ga:1,cs:0,savePct:50},
@@ -598,6 +600,7 @@ const GKS=[
 ];
 const CARDS=[
   {type:'yellow',player:'J.R. Bellegarde',flag:'🇭🇹',team:'Haiti',       min:"40'",  match:'HAI vs SCO',reason:'Reckless tackle',       photo:null,matchOrder:7,lastMin:40},
+  {type:'yellow',player:'Y. Akgun',       flag:'🇹🇷',team:'Türkiye',     min:"86'",  match:'AUS vs TUR',reason:'Serious foul play',      photo:null,matchOrder:8,lastMin:86},
   {type:'yellow',player:'Casemiro',    flag:'🇧🇷',team:'Brazil',      min:"37'",  match:'BRA vs MAR',reason:'',                       photo:null,matchOrder:6,lastMin:37},
   {type:'yellow',player:'R. Ibañez',   flag:'🇧🇷',team:'Brazil',      min:"43'",  match:'BRA vs MAR',reason:'Clumsy challenge',       photo:null,matchOrder:6,lastMin:43},
   {type:'yellow',player:'D. Zakaria',  flag:'🇨🇭',team:'Switzerland', min:"—",    match:'QAT vs SUI',reason:'',                       photo:null,matchOrder:5,lastMin:99},
