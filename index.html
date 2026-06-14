@@ -673,9 +673,24 @@ async function doRefresh() {
         if (!match) return;
 
         const competitors = comp.competitors || [];
-        const homeTeam = competitors.find(c => c.homeAway === 'home');
-        const awayTeam = competitors.find(c => c.homeAway === 'away');
-        if (!homeTeam || !awayTeam) return;
+
+        // Match by team abbreviation rather than homeAway — ESPN sometimes
+        // assigns home/away differently from our data (neutral venues etc.)
+        const homeAbbr = ESPN_TEAM_MAP[competitors.find(c=>c.homeAway==='home')?.team?.abbreviation] || '';
+        const awayAbbr = ESPN_TEAM_MAP[competitors.find(c=>c.homeAway==='away')?.team?.abbreviation] || '';
+
+        // Find which competitor matches our home/away team
+        const homeComp = competitors.find(c => {
+          const mapped = ESPN_TEAM_MAP[c.team?.abbreviation] || '';
+          return mapped === match.home || match.home.includes(mapped) || mapped.includes(match.home.split(' ')[0]);
+        }) || competitors.find(c=>c.homeAway==='home');
+
+        const awayComp = competitors.find(c => {
+          const mapped = ESPN_TEAM_MAP[c.team?.abbreviation] || '';
+          return mapped === match.away || match.away.includes(mapped) || mapped.includes(match.away.split(' ')[0]);
+        }) || competitors.find(c=>c.homeAway==='away');
+
+        if (!homeComp || !awayComp) return;
 
         const statusType = comp.status?.type;
         const state = statusType?.state;
@@ -685,17 +700,20 @@ async function doRefresh() {
         // Map ESPN state to our status
         if (state === 'post' || completed) {
           match.status = 'ft';
-          match.hs = parseInt(homeTeam.score) || 0;
-          match.as_ = parseInt(awayTeam.score) || 0;
+          match.hs = parseInt(homeComp.score);
+          match.as_ = parseInt(awayComp.score);
+          if (isNaN(match.hs)) match.hs = 0;
+          if (isNaN(match.as_)) match.as_ = 0;
           updatedCount++;
         } else if (state === 'in') {
           match.status = 'live';
-          match.hs = parseInt(homeTeam.score) || 0;
-          match.as_ = parseInt(awayTeam.score) || 0;
+          match.hs = parseInt(homeComp.score) || 0;
+          match.as_ = parseInt(awayComp.score) || 0;
           match.clock = clock;
           liveCount++;
           updatedCount++;
         } else {
+          // Upcoming — keep null scores so they show as "VS" not "0:0"
           match.status = 'upcoming';
           match.hs = null;
           match.as_ = null;
