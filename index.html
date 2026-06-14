@@ -716,7 +716,7 @@ async function doRefresh() {
         liveMatches.map(m => `${m.home} ${m.hs}–${m.as_} ${m.away} (${m.clock})`).join(' · ');
       // Auto-refresh every 60s when live
       clearInterval(autoRefreshTimer);
-      autoRefreshTimer = setInterval(doRefresh, 60000);
+      autoRefreshTimer = setInterval(doRefresh, 30000);
     } else {
       liveBadge.classList.remove('show');
       liveAlert.classList.remove('show');
