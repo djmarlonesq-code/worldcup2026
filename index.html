@@ -127,6 +127,8 @@ main{padding:14px 16px;max-width:660px;margin:0 auto;}
 .ev-nm{font-size:12px;color:var(--text);}
 .ev-as{font-size:11px;color:var(--text-muted);}
 .no-ev{color:var(--text-muted);font-size:12px;font-style:italic;}
+.ev-tbd{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--wc-orange);font-weight:700;background:rgba(255,61,0,.12);border:1px solid rgba(255,61,0,.3);border-radius:3px;padding:1px 5px;}
+.mc-tbd-banner{background:rgba(255,61,0,.08);border-top:1px solid rgba(255,61,0,.25);padding:7px 12px;font-size:11px;color:var(--wc-orange);font-weight:600;display:flex;align-items:center;gap:6px;}
 
 /* MATCH STATS */
 .mc-stats{border-top:1px solid var(--sky-border);padding:12px 14px;display:none;}
@@ -254,6 +256,8 @@ main{padding:14px 16px;max-width:660px;margin:0 auto;}
 .info-box strong{color:var(--wc-yellow);}
 .dl{font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-muted);margin-bottom:10px;padding:0 4px;}
 </style>
+<link rel="dns-prefetch" href="https://flagcdn.com">
+<link rel="preconnect" href="https://flagcdn.com">
 </head>
 <body>
 <header>
@@ -300,11 +304,11 @@ main{padding:14px 16px;max-width:660px;margin:0 auto;}
   <div id="grpContent"></div>
 </div>
 <div id="tab-schedule" class="tab-panel">
-  <div class="info-box"><strong>All times ET.</strong> Data sourced from openfootball open data.</div>
+  <div class="info-box"><strong>All times ET.</strong> Match data verified via openfootball after full time.</div>
   <div id="schedContent"></div>
 </div>
 <div id="tab-results" class="tab-panel">
-  <div class="info-box" id="resultsInfo"><strong>Verified via openfootball · ESPN · Fox Sports · Telemundo.</strong> Tap any match to expand goals &amp; stats.</div>
+  <div class="info-box" id="resultsInfo"><strong>Verified via openfootball only.</strong> Scores update live via ESPN. Goals &amp; cards confirmed after FT from openfootball.</div>
   <div id="resContent"></div>
 </div>
 <div id="tab-stats" class="tab-panel">
@@ -374,6 +378,65 @@ const OFB_MAP = {
   'England':'England','Croatia':'Croatia','Ghana':'Ghana','Panama':'Panama',
   'Uzbekistan':'Uzbekistan','Colombia':'Colombia',
 };
+
+// ============================================================
+// FLAG IMAGES — sourced from flagcdn.com via rezarahiminia/worldcup2026
+// ============================================================
+const FLAG_IMGS = {
+  'Mexico': 'https://flagcdn.com/w40/mx.png',
+  'South Africa': 'https://flagcdn.com/w40/za.png',
+  'South Korea': 'https://flagcdn.com/w40/kr.png',
+  'Czechia': 'https://flagcdn.com/w40/cz.png',
+  'Canada': 'https://flagcdn.com/w40/ca.png',
+  'Bosnia & Herz.': 'https://flagcdn.com/w40/ba.png',
+  'Qatar': 'https://flagcdn.com/w40/qa.png',
+  'Switzerland': 'https://flagcdn.com/w40/ch.png',
+  'Brazil': 'https://flagcdn.com/w40/br.png',
+  'Morocco': 'https://flagcdn.com/w40/ma.png',
+  'Haiti': 'https://flagcdn.com/w40/ht.png',
+  'Scotland': 'https://flagcdn.com/w40/gb-sct.png',
+  'USA': 'https://flagcdn.com/w40/us.png',
+  'Paraguay': 'https://flagcdn.com/w40/py.png',
+  'Australia': 'https://flagcdn.com/w40/au.png',
+  'Türkiye': 'https://flagcdn.com/w40/tr.png',
+  'Germany': 'https://flagcdn.com/w40/de.png',
+  'Curaçao': 'https://flagcdn.com/w40/cw.png',
+  'Ivory Coast': 'https://flagcdn.com/w40/ci.png',
+  'Ecuador': 'https://flagcdn.com/w40/ec.png',
+  'Netherlands': 'https://flagcdn.com/w40/nl.png',
+  'Japan': 'https://flagcdn.com/w40/jp.png',
+  'Sweden': 'https://flagcdn.com/w40/se.png',
+  'Tunisia': 'https://flagcdn.com/w40/tn.png',
+  'Belgium': 'https://flagcdn.com/w40/be.png',
+  'Egypt': 'https://flagcdn.com/w40/eg.png',
+  'Iran': 'https://flagcdn.com/w40/ir.png',
+  'New Zealand': 'https://flagcdn.com/w40/nz.png',
+  'Spain': 'https://flagcdn.com/w40/es.png',
+  'Cape Verde': 'https://flagcdn.com/w40/cv.png',
+  'Saudi Arabia': 'https://flagcdn.com/w40/sa.png',
+  'Uruguay': 'https://flagcdn.com/w40/uy.png',
+  'France': 'https://flagcdn.com/w40/fr.png',
+  'Senegal': 'https://flagcdn.com/w40/sn.png',
+  'Iraq': 'https://flagcdn.com/w40/iq.png',
+  'Norway': 'https://flagcdn.com/w40/no.png',
+  'Argentina': 'https://flagcdn.com/w40/ar.png',
+  'Algeria': 'https://flagcdn.com/w40/dz.png',
+  'Austria': 'https://flagcdn.com/w40/at.png',
+  'Jordan': 'https://flagcdn.com/w40/jo.png',
+  'Portugal': 'https://flagcdn.com/w40/pt.png',
+  'DR Congo': 'https://flagcdn.com/w40/cd.png',
+  'Uzbekistan': 'https://flagcdn.com/w40/uz.png',
+  'Colombia': 'https://flagcdn.com/w40/co.png',
+  'England': 'https://flagcdn.com/w40/gb-eng.png',
+  'Croatia': 'https://flagcdn.com/w40/hr.png',
+  'Ghana': 'https://flagcdn.com/w40/gh.png',
+  'Panama': 'https://flagcdn.com/w40/pa.png',
+};
+function flagImg(name, size=24) {
+  const url = FLAG_IMGS[name];
+  if (!url) return '';
+  return `<img src="${url}" alt="${name}" style="width:${size}px;height:auto;border-radius:2px;vertical-align:middle;" onerror="this.style.display='none'">`;
+}
 
 // ============================================================
 // STADIUMS
@@ -575,8 +638,10 @@ let MATCHES=[
 
   // UPCOMING JUN 15
   {grp:'H',home:'Spain',hf:'🇪🇸',away:'Cape Verde',af:'🇨🇻',hs:0,as_:0,date:'Jun 15',time:'12:00 PM',venue:'Atlanta',status:'ft',hev:[],aev:[],motm:'J. Raya (ESP)',ms:{homePoss:62,awayPoss:38,homeShots:22,awayShots:3,homeShotsOT:6,awayShotsOT:0,homeCorners:12,awayCorners:2,homeSaves:0,awaySaves:6}},
-  {grp:'G',home:'Belgium',hf:'🇧🇪',away:'Egypt',af:'🇪🇬',hs:0,as_:1,date:'Jun 15',time:'3:00 PM',venue:'Seattle',status:'live',hev:[{i:'🟨',m:"14'",n:'T. Castagne',a:'Gripping Salah\'s arm'}],aev:[{i:'🟨',m:"13'",n:'M. Attia',a:'Foul on Doku'},{i:'⚽',m:"19'",n:'E. Ashour',a:'Brilliant strike outside box — first WC goal for Egypt 2026!'},{i:'🟨',m:"34'",n:'A. Fatouh',a:''}]},  
-  {grp:'H',home:'Saudi Arabia',hf:'🇸🇦',away:'Uruguay',af:'🇺🇾',hs:null,as_:null,date:'Jun 15',time:'6:00 PM',venue:'Miami',status:'upcoming',hev:[],aev:[],ms:null},
+  {grp:'G',home:'Belgium',hf:'🇧🇪',away:'Egypt',af:'🇪🇬',hs:0,as_:1,date:'Jun 15',time:'3:00 PM',venue:'Seattle',status:'live',tbd:true,
+   hev:[{i:'🟨',m:'TBD',n:'T. Castagne',a:'Yellow card'}],
+   aev:[{i:'⚽',m:'TBD',n:'E. Ashour',a:'Goal'},{i:'🟨',m:'TBD',n:'M. Attia',a:'Yellow card'},{i:'🟨',m:'TBD',n:'A. Fatouh',a:'Yellow card'}],
+   ms:null},
   {grp:'G',home:'Iran',hf:'🇮🇷',away:'New Zealand',af:'🇳🇿',hs:null,as_:null,date:'Jun 15',time:'9:00 PM',venue:'Los Angeles',status:'upcoming',hev:[],aev:[],ms:null},
   // JUN 16
   {grp:'I',home:'France',hf:'🇫🇷',away:'Senegal',af:'🇸🇳',hs:null,as_:null,date:'Jun 16',time:'3:00 PM',venue:'New York/NJ',status:'upcoming',hev:[],aev:[],ms:null},
@@ -829,10 +894,35 @@ async function doRefresh() {
         const ft = ofb.score?.ft;
         const ht = ofb.score?.ht;
         if (ft) {
-          // openfootball confirmed FT — lock it
+          // openfootball confirmed FT — lock score
           match.status = 'ft';
           match.hs = ft[0]; match.as_ = ft[1];
           updatedCount++;
+
+          // Auto-resolve TBD events if openfootball now has goal data
+          if (match.tbd && (ofb.goals1?.length || ofb.goals2?.length)) {
+            // Build verified home events from openfootball goals
+            const newHev = (ofb.goals1 || []).map(g => ({
+              i: '⚽', m: g.minute + "'", n: g.name, a: ''
+            }));
+            const newAev = (ofb.goals2 || []).map(g => ({
+              i: '⚽', m: g.minute + "'", n: g.name, a: ''
+            }));
+            // Keep existing non-TBD events (cards etc) but replace TBD goal entries
+            match.hev = [
+              ...match.hev.filter(e => e.m !== 'TBD'),
+              ...newHev
+            ];
+            match.aev = [
+              ...match.aev.filter(e => e.m !== 'TBD'),
+              ...newAev
+            ];
+            // Only clear TBD flag if we have full data
+            if (newHev.length + newAev.length === ft[0] + ft[1]) {
+              match.tbd = false;
+            }
+            updatedCount++;
+          }
         }
       });
     }
@@ -967,7 +1057,7 @@ function standing(grp){
   const dots=['pd1','pd2','pd3','pd4'];
   let h=`<div class="standing-card"><div class="s-hdr"><div class="s-badge">Group ${grp}</div><div class="s-flags">${s.map(t=>t.flag).join(' ')}</div></div>
   <table class="s-tbl"><thead><tr><th>Team</th><th>MP</th><th>W</th><th>D</th><th>L</th><th>GF</th><th>GA</th><th>GD</th><th>Pts</th></tr></thead><tbody>`;
-  s.forEach((t,i)=>{const gd=t.gf-t.ga;h+=`<tr class="${i<2?'adv':''}"><td><span class="pos-dot ${dots[i]}"></span><span style="margin-right:6px">${t.flag}</span>${t.name}</td><td>${t.mp}</td><td>${t.w}</td><td>${t.d}</td><td>${t.l}</td><td>${t.gf}</td><td>${t.ga}</td><td>${gd>=0?'+':''}${gd}</td><td class="td-pts">${t.pts}</td></tr>`;});
+  s.forEach((t,i)=>{const gd=t.gf-t.ga;h+=`<tr class="${i<2?'adv':''}"><td><span class="pos-dot ${dots[i]}"></span>${flagImg(t.name,18)||`<span style="margin-right:4px">${t.flag}</span>`} ${t.name}</td><td>${t.mp}</td><td>${t.w}</td><td>${t.d}</td><td>${t.l}</td><td>${t.gf}</td><td>${t.ga}</td><td>${gd>=0?'+':''}${gd}</td><td class="td-pts">${t.pts}</td></tr>`;});
   h+=`</tbody></table><div class="s-note">🟢 Auto-qualify &nbsp;·&nbsp; 🔵 Possible 3rd-place qualifier</div></div>`;
   return h;
 }
@@ -977,7 +1067,13 @@ function standing(grp){
 // ============================================================
 function evRows(evs){
   if(!evs||!evs.length)return'<div class="no-ev">No events recorded</div>';
-  return evs.map(e=>`<div class="ev-row"><span class="ev-ico">${e.i}</span><span class="ev-min">${e.m}</span><div><div class="ev-nm">${e.n}</div>${e.a?`<div class="ev-as">${e.a}</div>`:''}</div></div>`).join('');
+  return evs.map(e=>{
+    const minHtml = e.m==='TBD'
+      ? `<span class="ev-tbd">TBD</span>`
+      : `<span class="ev-min">${e.m}</span>`;
+    const nameHtml = e.n==='TBD' ? `<div class="ev-nm" style="color:var(--wc-orange)">Pending confirmation</div>` : `<div class="ev-nm">${e.n}</div>`;
+    return `<div class="ev-row"><span class="ev-ico">${e.i}</span>${minHtml}<div>${nameHtml}${e.a&&e.a!=='Pending openfootball confirmation'?`<div class="ev-as">${e.a}</div>`:''}</div></div>`;
+  }).join('');
 }
 function statsBar(m){
   if(!m.ms)return'';
@@ -998,14 +1094,14 @@ function matchCard(m,showGrp=true){
   const vb=stad?`<div class="mc-venue-wrap"><div class="mc-venue">${m.venue}</div><div class="mc-stadium">${stad.name}</div><div class="mc-cap">${stad.cap.toLocaleString()} seats</div><div class="mc-tv">📺 ${tv}</div></div>`:`<div class="mc-venue-wrap"><div class="mc-venue">${m.venue}</div><div class="mc-tv">📺 ${tv}</div></div>`;
   const sp=isFt?`<span class="mc-status-pill pill-ft">Final</span>`:isLive?`<span class="mc-status-pill pill-live">● Live</span>`:`<span class="mc-status-pill pill-up">Upcoming</span>`;
   const bdr=isLive?'is-live':'';
-  const ev=hasEv&&!m.status==='upcoming'?`<div class="mc-evts"><div class="ev-cols"><div class="ev-team"><div class="ev-lbl">${m.hf} ${m.home}</div>${evRows(m.hev)}</div><div class="ev-team"><div class="ev-lbl">${m.af} ${m.away}</div>${evRows(m.aev)}</div></div></div>`:'';
+  const ev=hasEv&&!m.status==='upcoming'?`<div class="mc-evts"><div class="ev-cols"><div class="ev-team"><div class="ev-lbl">${flagImg(m.home,14)||m.hf} ${m.home}</div>${evRows(m.hev)}</div><div class="ev-team"><div class="ev-lbl">${flagImg(m.away,14)||m.af} ${m.away}</div>${evRows(m.aev)}</div></div></div>`:'';
   return`<div class="mc ${bdr}" onclick="toggleMC(this)">
     <div class="mc-hdr"><span class="mc-tag">${showGrp?'Grp '+m.grp+' · ':''}${m.date}</span>${sp}${vb}</div>
     <div class="mc-body">
-      <div class="t-side"><span class="t-flag">${m.hf}</span><div><span class="t-name">${m.home}</span></div></div>
+      <div class="t-side">${flagImg(m.home,28)||`<span class="t-flag">${m.hf}</span>`}<div><span class="t-name">${m.home}</span></div></div>
       <div class="sc-block">${sc}</div>
-      <div class="t-side r"><span class="t-flag">${m.af}</span><div><span class="t-name">${m.away}</span></div></div>
-    </div>${hasEv?`<div class="mc-evts"><div class="ev-cols"><div class="ev-team"><div class="ev-lbl">${m.hf} ${m.home}</div>${evRows(m.hev)}</div><div class="ev-team"><div class="ev-lbl">${m.af} ${m.away}</div>${evRows(m.aev)}</div></div></div>`:''}</div>`;
+      <div class="t-side r">${flagImg(m.away,28)||`<span class="t-flag">${m.af}</span>`}<div><span class="t-name">${m.away}</span></div></div>
+    </div>${hasEv?`<div class="mc-evts"><div class="ev-cols"><div class="ev-team"><div class="ev-lbl">${m.hf} ${m.home}</div>${evRows(m.hev)}</div><div class="ev-team"><div class="ev-lbl">${m.af} ${m.away}</div>${evRows(m.aev)}</div></div>${m.tbd?`<div class="mc-tbd-banner">⏳ Event details pending — will auto-update on Refresh when openfootball confirms</div>`:''}</div>`:''}</div>`;
 }
 function toggleMC(el){
   el.querySelectorAll('.mc-evts,.mc-stats').forEach(e=>e.classList.toggle('open'));
@@ -1057,9 +1153,9 @@ function renderOverview(){
         ${isL?'🔴 LIVE':'⚡ Up Next'} · ${m.date}
       </div>
       <div class="nh-teams">
-        <div class="nh-team"><span class="nh-flag">${m.hf}</span><div class="nh-name">${m.home}</div></div>
+        <div class="nh-team">${flagImg(m.home,42)||`<span class="nh-flag">${m.hf}</span>`}<div class="nh-name">${m.home}</div></div>
         ${isL?`<div class="nh-score">${m.hs!==null?m.hs:'—'} : ${m.as_!==null?m.as_:'—'}</div>`:`<div class="nh-vs">VS</div>`}
-        <div class="nh-team"><span class="nh-flag">${m.af}</span><div class="nh-name">${m.away}</div></div>
+        <div class="nh-team">${flagImg(m.away,42)||`<span class="nh-flag">${m.af}</span>`}<div class="nh-name">${m.away}</div></div>
       </div>
       ${isL?`<div class="nh-time live">● ${m.clock||'LIVE'}</div>`:`<div class="nh-time">${m.time} ET</div>`}
       <div class="nh-meta">Group ${m.grp} · ${m.venue}</div>
@@ -1174,14 +1270,14 @@ function renderTeam(name){
   notPlayed.forEach(m=>res.push(m.status==='live'?'🔴':'U'));
   const sorted=sortTeams(GROUPS[g].teams);const pos=sorted.findIndex(t=>t.name===name)+1;const posl=['','1st','2nd','3rd','4th'];
   const pills=res.map(r=>{if(r==='W')return`<span class="pill pw">W</span>`;if(r==='D')return`<span class="pill pd">D</span>`;if(r==='L')return`<span class="pill pl">L</span>`;if(r==='🔴')return`<span style="font-size:16px">🔴</span>`;return`<span class="pill pu">U</span>`;} ).join('');
-  let h=`<div class="cp"><div class="cp-top"><span class="cp-flag">${info.flag}</span><div><div class="cp-cname">${name}</div><div class="cp-grp">Group ${g} · ${posl[pos]||pos+'th'} place</div><div style="margin-top:8px">${pills}</div></div></div>
+  let h=`<div class="cp"><div class="cp-top"><div style="font-size:46px">${flagImg(name,60)||info.flag}</div><div><div class="cp-cname">${name}</div><div class="cp-grp">Group ${g} · ${posl[pos]||pos+'th'} place</div><div style="margin-top:8px">${pills}</div></div></div>
   <div class="cp-stats"><div class="cp-stat"><div class="cp-sn">${pts}</div><div class="cp-sl">Points</div></div><div class="cp-stat"><div class="cp-sn">${gf}</div><div class="cp-sl">GF</div></div><div class="cp-stat"><div class="cp-sn">${ga}</div><div class="cp-sl">GA</div></div><div class="cp-stat"><div class="cp-sn">${gf-ga>=0?'+':''}${gf-ga}</div><div class="cp-sl">GD</div></div></div></div>`;
   h+=standing(g);
   if(played.length){h+='<div class="sec-label">Results</div>';played.forEach(m=>{h+=matchCard(m);});}
   const lM=ms.filter(m=>m.status==='live');if(lM.length){h+='<div class="sec-label" style="color:var(--wc-red)">🔴 Live</div>';lM.forEach(m=>{h+=matchCard(m);});}
   const uM=ms.filter(m=>m.status==='upcoming');if(uM.length){h+='<div class="sec-label" style="margin-top:12px">Upcoming</div>';uM.forEach(m=>{h+=matchCard(m);});}
   const tgk=GKS.filter(gk=>gk.team===name||gk.team.includes(name.split(' ')[0]));
-  if(tgk.length){h+='<div class="sec-label" style="margin-top:12px">🧤 Goalkeeper</div>';tgk.forEach(gk=>{h+=`<div class="gk-row">${avHTML(gk.photo,gk.flag,50)}<div style="flex:1;min-width:0"><div class="p-name">${gk.name}</div><div class="p-team">${gk.flag} ${gk.team}</div><div class="gk-stats-grid"><div class="gk-stat"><div class="gk-stat-num">${gk.saves}</div><div class="gk-stat-lbl">Saves</div></div><div class="gk-stat"><div class="gk-stat-num">${gk.ga}</div><div class="gk-stat-lbl">GA</div></div><div class="gk-stat"><div class="gk-stat-num ${gk.cs>0?'gk-clean':''}">${gk.cs>0?'✓':'—'}</div><div class="gk-stat-lbl">Clean Sheet</div></div></div></div><div class="p-stat"><div class="p-num">${gk.savePct}%</div><div class="p-lbl">Save %</div></div></div>`;});}
+  if(tgk.length){h+='<div class="sec-label" style="margin-top:12px">🧤 Goalkeeper</div>';tgk.forEach(gk=>{h+=`<div class="gk-row">${avHTML(gk.photo,gk.flag,50)}<div style="flex:1;min-width:0"><div class="p-name">${gk.name}</div><div class="p-team">${flagImg(gk.team,16)||gk.flag} ${gk.team}</div><div class="gk-stats-grid"><div class="gk-stat"><div class="gk-stat-num">${gk.saves}</div><div class="gk-stat-lbl">Saves</div></div><div class="gk-stat"><div class="gk-stat-num">${gk.ga}</div><div class="gk-stat-lbl">GA</div></div><div class="gk-stat"><div class="gk-stat-num ${gk.cs>0?'gk-clean':''}">${gk.cs>0?'✓':'—'}</div><div class="gk-stat-lbl">Clean Sheet</div></div></div></div><div class="p-stat"><div class="p-num">${gk.savePct}%</div><div class="p-lbl">Save %</div></div></div>`;});}
   const tg=GOALS.filter(p=>p.team===name||p.team.includes(name.split(' ')[0]));
   if(tg.length){h+='<div class="sec-label" style="margin-top:12px">⚽ Scorers</div>';tg.forEach((p,i)=>{h+=`<div class="player-row"><div class="p-rank ${i===0?'t1':''}">${i+1}</div>${avHTML(p.photo,p.flag,50)}<div class="p-info"><div class="p-name">${p.name}</div><div class="p-team">${p.flag} ${p.team}</div></div><div class="p-stat"><div class="p-num">${p.goals}</div><div class="p-lbl">Goals</div></div></div>`;});}
   const ta=ASSISTS.filter(p=>p.assists>0&&(p.team===name||p.team.includes(name.split(' ')[0])));
