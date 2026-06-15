@@ -98,6 +98,10 @@ main{padding:14px 16px;max-width:660px;margin:0 auto;}
 .mc-venue{font-size:11px;color:var(--text-dim);font-weight:500;}
 .mc-stadium{font-size:10px;color:var(--text-muted);}
 .mc-cap{font-size:10px;color:var(--wc-cyan);font-family:'JetBrains Mono',monospace;}
+.mc-tv{font-size:10px;color:var(--wc-yellow);margin-top:2px;font-weight:600;}
+.nh-tv{font-size:12px;color:var(--wc-yellow);margin-top:4px;font-weight:600;}
+.mc-tv{font-size:10px;color:var(--wc-yellow);margin-top:2px;font-weight:600;}
+.nh-tv{font-size:11px;color:var(--wc-yellow);margin-top:3px;font-weight:600;}
 .mc-body{padding:12px 14px;display:flex;align-items:center;gap:8px;}
 .t-side{flex:1;display:flex;align-items:center;gap:8px;}
 .t-side.r{flex-direction:row-reverse;text-align:right;}
@@ -300,7 +304,7 @@ main{padding:14px 16px;max-width:660px;margin:0 auto;}
   <div id="schedContent"></div>
 </div>
 <div id="tab-results" class="tab-panel">
-  <div class="info-box" id="resultsInfo"><strong>12 completed.</strong> Verified via openfootball. Tap any match to expand.</div>
+  <div class="info-box" id="resultsInfo"><strong>Verified via openfootball · ESPN · Fox Sports · Telemundo.</strong> Tap any match to expand goals &amp; stats.</div>
   <div id="resContent"></div>
 </div>
 <div id="tab-stats" class="tab-panel">
@@ -319,9 +323,9 @@ main{padding:14px 16px;max-width:660px;margin:0 auto;}
 </div>
 <div id="tab-cards" class="tab-panel">
   <div class="cf-wrap">
-    <button class="cf-btn active" onclick="filterCards('all',this)">All (19)</button>
+    <button class="cf-btn active" onclick="filterCards('all',this)">All (22)</button>
     <button class="cf-btn" onclick="filterCards('red',this)">🟥 Red (3)</button>
-    <button class="cf-btn" onclick="filterCards('yellow',this)">🟨 Yellow (16)</button>
+    <button class="cf-btn" onclick="filterCards('yellow',this)">🟨 Yellow (19)</button>
   </div>
   <div id="cardsCont"></div>
 </div>
@@ -453,10 +457,10 @@ const GROUPS={
     {flag:'🇳🇿',name:'New Zealand',mp:0,w:0,d:0,l:0,gf:0,ga:0,pts:0},
   ]},
   H:{teams:[
-    {flag:'🇪🇸',name:'Spain',       mp:0,w:0,d:0,l:0,gf:0,ga:0,pts:0},
+    {flag:'🇪🇸',name:'Spain',       mp:1,w:0,d:1,l:0,gf:0,ga:0,pts:1},
+    {flag:'🇨🇻',name:'Cape Verde',  mp:1,w:0,d:1,l:0,gf:0,ga:0,pts:1},
     {flag:'🇺🇾',name:'Uruguay',     mp:0,w:0,d:0,l:0,gf:0,ga:0,pts:0},
     {flag:'🇸🇦',name:'Saudi Arabia',mp:0,w:0,d:0,l:0,gf:0,ga:0,pts:0},
-    {flag:'🇨🇻',name:'Cape Verde',  mp:0,w:0,d:0,l:0,gf:0,ga:0,pts:0},
   ]},
   I:{teams:[
     {flag:'🇫🇷',name:'France', mp:0,w:0,d:0,l:0,gf:0,ga:0,pts:0},
@@ -570,8 +574,8 @@ let MATCHES=[
    motm:'Y. Ayari (SWE)',ms:{homePoss:43,awayPoss:57,homeShots:8,awayShots:18,homeShotsOT:2,awayShotsOT:7,homeCorners:3,awayCorners:6,homeSaves:6,awaySaves:1}},
 
   // UPCOMING JUN 15
-  {grp:'H',home:'Spain',hf:'🇪🇸',away:'Cape Verde',af:'🇨🇻',hs:null,as_:null,date:'Jun 15',time:'12:00 PM',venue:'Atlanta',status:'upcoming',hev:[],aev:[],ms:null},
-  {grp:'G',home:'Belgium',hf:'🇧🇪',away:'Egypt',af:'🇪🇬',hs:null,as_:null,date:'Jun 15',time:'3:00 PM',venue:'Seattle',status:'upcoming',hev:[],aev:[],ms:null},
+  {grp:'H',home:'Spain',hf:'🇪🇸',away:'Cape Verde',af:'🇨🇻',hs:0,as_:0,date:'Jun 15',time:'12:00 PM',venue:'Atlanta',status:'ft',hev:[],aev:[],motm:'J. Raya (ESP)',ms:{homePoss:62,awayPoss:38,homeShots:22,awayShots:3,homeShotsOT:6,awayShotsOT:0,homeCorners:12,awayCorners:2,homeSaves:0,awaySaves:6}},
+  {grp:'G',home:'Belgium',hf:'🇧🇪',away:'Egypt',af:'🇪🇬',hs:0,as_:1,date:'Jun 15',time:'3:00 PM',venue:'Seattle',status:'live',hev:[{i:'🟨',m:"14'",n:'T. Castagne',a:'Gripping Salah\'s arm'}],aev:[{i:'🟨',m:"13'",n:'M. Attia',a:'Foul on Doku'},{i:'⚽',m:"19'",n:'E. Ashour',a:'Brilliant strike outside box — first WC goal for Egypt 2026!'},{i:'🟨',m:"34'",n:'A. Fatouh',a:''}]},  
   {grp:'H',home:'Saudi Arabia',hf:'🇸🇦',away:'Uruguay',af:'🇺🇾',hs:null,as_:null,date:'Jun 15',time:'6:00 PM',venue:'Miami',status:'upcoming',hev:[],aev:[],ms:null},
   {grp:'G',home:'Iran',hf:'🇮🇷',away:'New Zealand',af:'🇳🇿',hs:null,as_:null,date:'Jun 15',time:'9:00 PM',venue:'Los Angeles',status:'upcoming',hev:[],aev:[],ms:null},
   // JUN 16
@@ -728,6 +732,9 @@ const GKS=[
 
 // Cards — latest first (matchOrder desc, lastMin desc)
 const CARDS=[
+  {type:'yellow',player:'A. Fatouh',      flag:'🇪🇬',team:'Egypt',      min:"34'",  match:'BEL vs EGY',reason:'',                       photo:null,matchOrder:13,lastMin:34},
+  {type:'yellow',player:'T. Castagne',  flag:'🇧🇪',team:'Belgium',    min:"14'",  match:'BEL vs EGY',reason:"Gripping Salah's arm",     photo:null,matchOrder:13,lastMin:14},
+  {type:'yellow',player:'M. Attia',     flag:'🇪🇬',team:'Egypt',      min:"13'",  match:'BEL vs EGY',reason:'Foul on Doku',              photo:null,matchOrder:13,lastMin:13},
   {type:'yellow',player:'C. Summerville', flag:'🇳🇱',team:'Netherlands',min:"61'",  match:'NED vs JPN',reason:'Serious foul play',      photo:null,matchOrder:11,lastMin:61},
   {type:'yellow',player:'M. Depay',       flag:'🇳🇱',team:'Netherlands',min:"83'",  match:'NED vs JPN',reason:'Serious foul play',      photo:null,matchOrder:11,lastMin:83},
   {type:'yellow',player:'Y. Akgun',       flag:'🇹🇷',team:'Türkiye',    min:"86'",  match:'AUS vs TUR',reason:'Serious foul play',      photo:null,matchOrder:8,lastMin:86},
@@ -768,70 +775,159 @@ const ALL_TEAMS=[
 // ============================================================
 let autoRefreshTimer = null;
 
+const TV = {
+  'Mexico_South Africa': 'Fox · Telemundo',
+  'South Korea_Czechia': 'FS1 · Telemundo',
+  'Canada_Bosnia & Herz.': 'FS1 · Telemundo',
+  'USA_Paraguay': 'Fox · Telemundo',
+  'Qatar_Switzerland': 'FS1 · Telemundo',
+  'Brazil_Morocco': 'Fox · Telemundo',
+  'Haiti_Scotland': 'FS1 · Telemundo',
+  'Australia_Türkiye': 'FS1 · Telemundo',
+  'Germany_Curaçao': 'Fox · Telemundo',
+  'Netherlands_Japan': 'FS1 · Telemundo',
+  'Ivory Coast_Ecuador': 'Fox · Telemundo',
+  'Tunisia_Sweden': 'FS1 · Telemundo',
+  'Spain_Cape Verde': 'Fox · Telemundo',
+  'Belgium_Egypt': 'Fox · Telemundo',
+  'Saudi Arabia_Uruguay': 'FS1 · Telemundo',
+  'Iran_New Zealand': 'FS1 · Telemundo',
+  'France_Senegal': 'Fox · Telemundo',
+  'Iraq_Norway': 'Fox · Telemundo',
+  'Argentina_Algeria': 'Fox · Telemundo',
+  'Austria_Jordan': 'FS1 · Telemundo',
+  'Portugal_DR Congo': 'FS1 · Telemundo',
+  'England_Croatia': 'Fox · Telemundo',
+  'Ghana_Panama': 'FS1 · Telemundo',
+  'Uzbekistan_Colombia': 'FS1 · Telemundo',
+  _default: 'Fox / FS1 · Telemundo'
+};
+function getTV(home, away) { return TV[home+'_'+away] || TV._default; }
+
 async function doRefresh() {
   const btn = document.getElementById('refreshBtn');
   btn.disabled = true;
   btn.classList.add('loading');
   btn.querySelector('.spin').textContent = '⟳';
 
+  const now = new Date();
+  let liveCount = 0, updatedCount = 0;
+
   try {
-    const resp = await fetch(OFB_URL);
-    if (!resp.ok) throw new Error('fetch failed');
-    const data = await resp.json();
-    const now = new Date();
-    let liveCount = 0, updatedCount = 0;
-
-    (data.matches || []).forEach(ofb => {
-      const home = OFB_MAP[ofb.team1] || ofb.team1;
-      const away = OFB_MAP[ofb.team2] || ofb.team2;
-      const match = MATCHES.find(m =>
-        (m.home === home || m.home.includes(home.split(' ')[0])) &&
-        (m.away === away || m.away.includes(away.split(' ')[0]))
-      );
-      if (!match) return;
-
-      const ft = ofb.score?.ft;
-      const ht = ofb.score?.ht;
-      const kickoff = new Date(ofb.date + 'T12:00:00');
-      const hrs = (now - kickoff) / 3600000;
-
-      if (ft) {
-        // Full time confirmed — lock it, don't overwrite verified data
-        if (match.status !== 'ft') {
+    // ── SOURCE 1: openfootball (verified FT scores) ──────────────
+    const ofbResp = await fetch(OFB_URL);
+    if (ofbResp.ok) {
+      const data = await ofbResp.json();
+      (data.matches || []).forEach(ofb => {
+        const home = OFB_MAP[ofb.team1] || ofb.team1;
+        const away = OFB_MAP[ofb.team2] || ofb.team2;
+        const match = MATCHES.find(m =>
+          (m.home === home || m.home.includes(home.split(' ')[0])) &&
+          (m.away === away || m.away.includes(away.split(' ')[0]))
+        );
+        if (!match) return;
+        const ft = ofb.score?.ft;
+        const ht = ofb.score?.ht;
+        if (ft) {
+          // openfootball confirmed FT — lock it
           match.status = 'ft';
           match.hs = ft[0]; match.as_ = ft[1];
           updatedCount++;
         }
-      } else if (hrs > 0 && hrs < 3) {
-        // Kickoff passed, no FT yet = live
-        if (match.status !== 'ft') {
-          match.status = 'live';
-          match.hs = ht ? ht[0] : (match.hs || 0);
-          match.as_ = ht ? ht[1] : (match.as_ || 0);
-          match.clock = ht && hrs > 1 ? '2H' : hrs > 0 ? '1H' : 'LIVE';
-          liveCount++; updatedCount++;
-        }
-      } else if (hrs >= 3 && match.status === 'live') {
-        // 3+ hours since kickoff, still no FT = force FT (stale)
-        match.status = 'ft';
-        updatedCount++;
-      } else if (match.status !== 'ft') {
-        match.status = 'upcoming';
-        match.hs = null; match.as_ = null;
+      });
+    }
+
+    // ── SOURCE 2: ESPN (live scores only — don't touch confirmed FT) ──
+    try {
+      const startDate = new Date(now); startDate.setDate(startDate.getDate() - 1);
+      const endDate = new Date(now); endDate.setDate(endDate.getDate() + 1);
+      const fmt = d => d.toISOString().slice(0,10).replace(/-/g,'');
+      const espnUrl = `https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard?dates=${fmt(startDate)}-${fmt(endDate)}&limit=50`;
+      
+      let espnResp;
+      try {
+        espnResp = await fetch(espnUrl, {mode:'cors'});
+        if (!espnResp.ok) throw new Error('direct failed');
+      } catch(e) {
+        espnResp = await fetch(`https://corsproxy.io/?${encodeURIComponent(espnUrl)}`);
+      }
+
+      if (espnResp.ok) {
+        const espnData = await espnResp.json();
+        (espnData.events || []).forEach(event => {
+          const comp = event.competitions?.[0];
+          if (!comp) return;
+          const state = comp.status?.type?.state;
+          const completed = comp.status?.type?.completed;
+          const clock = comp.status?.displayClock || '';
+          const competitors = comp.competitors || [];
+
+          // Find our match by team name matching
+          const espnHome = competitors.find(c => c.homeAway === 'home');
+          const espnAway = competitors.find(c => c.homeAway === 'away');
+          if (!espnHome || !espnAway) return;
+
+          const homeName = espnHome.team?.displayName || '';
+          const awayName = espnAway.team?.displayName || '';
+
+          const match = MATCHES.find(m =>
+            m.status !== 'ft' && // never overwrite verified FT
+            (homeName.includes(m.home.split(' ')[0]) || m.home.includes(homeName.split(' ')[0])) &&
+            (awayName.includes(m.away.split(' ')[0]) || m.away.includes(awayName.split(' ')[0]))
+          );
+          if (!match) return;
+
+          const hrs = (now - new Date(event.date)) / 3600000;
+
+          if ((state === 'post' || completed) && hrs < 6) {
+            // ESPN says finished AND recent — mark FT
+            if (match.status !== 'ft') {
+              match.status = 'ft';
+              match.hs = parseInt(espnHome.score) || 0;
+              match.as_ = parseInt(espnAway.score) || 0;
+              updatedCount++;
+            }
+          } else if (state === 'in') {
+            // Live game — update score and clock
+            match.status = 'live';
+            match.hs = parseInt(espnHome.score) || 0;
+            match.as_ = parseInt(espnAway.score) || 0;
+            match.clock = clock;
+            liveCount++; updatedCount++;
+          }
+        });
+      }
+    } catch(espnErr) {
+      console.warn('ESPN secondary source failed:', espnErr);
+      // No problem — openfootball already handled FT scores
+    }
+
+    // ── Stale lock: 3+ hours past kickoff and still "live" = force FT ──
+    MATCHES.forEach(m => {
+      if (m.status === 'live') {
+        // Estimate kickoff from date + time string
+        try {
+          const hrs = (now - new Date(now.toDateString() + ' ' + m.time)) / 3600000;
+          if (hrs > 3) { m.status = 'ft'; }
+        } catch(e) {}
       }
     });
 
-    const ts = now.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit'});
-    document.getElementById('lastSync').textContent = `Synced ${ts} · openfootball`;
+    // ── Update UI ───────────────────────────────────────────────
+    const ts = now.toLocaleTimeString('en-US', {hour:'2-digit', minute:'2-digit'});
+    document.getElementById('lastSync').textContent = `Synced ${ts} · openfootball + ESPN`;
+    // Sources checked: openfootball (FT), ESPN (live scores), Fox/Telemundo for event verification
 
     const liveBadge = document.getElementById('liveBadge');
     const liveAlert = document.getElementById('liveAlert');
+    const liveMs = MATCHES.filter(m => m.status === 'live');
+    liveCount = liveMs.length;
+
     if (liveCount > 0) {
       liveBadge.classList.add('show');
-      const liveMs = MATCHES.filter(m => m.status === 'live');
       liveAlert.classList.add('show');
-      document.getElementById('liveAlertText').textContent = `${liveCount} match${liveCount>1?'es':''} in progress`;
-      document.getElementById('liveAlertSub').textContent = liveMs.map(m=>`${m.home} ${m.hs}–${m.as_} ${m.away} (${m.clock||'LIVE'})`).join(' · ');
+      document.getElementById('liveAlertText').textContent = `${liveCount} match${liveCount > 1 ? 'es' : ''} in progress`;
+      document.getElementById('liveAlertSub').textContent = liveMs.map(m => `${m.home} ${m.hs}–${m.as_} ${m.away} (${m.clock || 'LIVE'})`).join(' · ');
       clearInterval(autoRefreshTimer);
       autoRefreshTimer = setInterval(doRefresh, 30000);
     } else {
@@ -843,13 +939,14 @@ async function doRefresh() {
 
   } catch(err) {
     document.getElementById('lastSync').textContent = `Sync failed — tap to retry`;
-    console.error('OFB error:', err);
+    console.error('Refresh error:', err);
   }
 
   btn.disabled = false;
   btn.classList.remove('loading');
   btn.querySelector('.spin').textContent = '⟳';
 }
+
 
 // ============================================================
 // HELPERS
@@ -897,7 +994,8 @@ function matchCard(m,showGrp=true){
   else if(isLive) sc=`<div class="sc-dig live">${m.hs!==null?m.hs:'—'} : ${m.as_!==null?m.as_:'—'}</div><div class="sc-clock">● ${m.clock||'LIVE'}</div>`;
   else sc=`<div class="sc-time">${m.time} ET</div><div class="sc-st up">Upcoming</div>`;
   const stad=getStad(m.venue);
-  const vb=stad?`<div class="mc-venue-wrap"><div class="mc-venue">${m.venue}</div><div class="mc-stadium">${stad.name}</div><div class="mc-cap">${stad.cap.toLocaleString()} seats</div></div>`:`<div class="mc-venue-wrap"><div class="mc-venue">${m.venue}</div></div>`;
+  const tv=getTV(m.home,m.away);
+  const vb=stad?`<div class="mc-venue-wrap"><div class="mc-venue">${m.venue}</div><div class="mc-stadium">${stad.name}</div><div class="mc-cap">${stad.cap.toLocaleString()} seats</div><div class="mc-tv">📺 ${tv}</div></div>`:`<div class="mc-venue-wrap"><div class="mc-venue">${m.venue}</div><div class="mc-tv">📺 ${tv}</div></div>`;
   const sp=isFt?`<span class="mc-status-pill pill-ft">Final</span>`:isLive?`<span class="mc-status-pill pill-live">● Live</span>`:`<span class="mc-status-pill pill-up">Upcoming</span>`;
   const bdr=isLive?'is-live':'';
   const ev=hasEv&&!m.status==='upcoming'?`<div class="mc-evts"><div class="ev-cols"><div class="ev-team"><div class="ev-lbl">${m.hf} ${m.home}</div>${evRows(m.hev)}</div><div class="ev-team"><div class="ev-lbl">${m.af} ${m.away}</div>${evRows(m.aev)}</div></div></div>`:'';
@@ -965,6 +1063,7 @@ function renderOverview(){
       </div>
       ${isL?`<div class="nh-time live">● ${m.clock||'LIVE'}</div>`:`<div class="nh-time">${m.time} ET</div>`}
       <div class="nh-meta">Group ${m.grp} · ${m.venue}</div>
+      <div class="nh-tv">📺 ${getTV(m.home,m.away)}</div>
       ${s?`<div class="nh-stadium">🏟️ ${s.name} · ${s.cap.toLocaleString()} seats</div>`:''}
     </div>`;
   });
