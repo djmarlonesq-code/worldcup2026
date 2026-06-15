@@ -375,9 +375,9 @@ main{padding:14px 16px;max-width:660px;margin:0 auto;}
 </div>
 <div id="tab-cards" class="tab-panel">
   <div class="cf-wrap">
-    <button class="cf-btn active" onclick="filterCards('all',this)">All (16)</button>
+    <button class="cf-btn active" onclick="filterCards('all',this)">All (19)</button>
     <button class="cf-btn" onclick="filterCards('red',this)">🟥 Red (3)</button>
-    <button class="cf-btn" onclick="filterCards('yellow',this)">🟨 Yellow (13)</button>
+    <button class="cf-btn" onclick="filterCards('yellow',this)">🟨 Yellow (16)</button>
   </div>
   <div id="cardsCont"></div>
 </div>
@@ -485,8 +485,8 @@ const GROUPS={
   B:{teams:[{flag:'🇧🇦',name:'Bosnia & Herz.',mp:1,w:0,d:1,l:0,gf:1,ga:1,pts:1},{flag:'🇨🇦',name:'Canada',mp:1,w:0,d:1,l:0,gf:1,ga:1,pts:1},{flag:'🇨🇭',name:'Switzerland',mp:1,w:0,d:1,l:0,gf:1,ga:1,pts:1},{flag:'🇶🇦',name:'Qatar',mp:1,w:0,d:1,l:0,gf:1,ga:1,pts:1}]},
   C:{teams:[{flag:'🏴󠁧󠁢󠁳󠁣󠁴󠁿',name:'Scotland',mp:1,w:1,d:0,l:0,gf:1,ga:0,pts:3},{flag:'🇧🇷',name:'Brazil',mp:1,w:0,d:1,l:0,gf:1,ga:1,pts:1},{flag:'🇲🇦',name:'Morocco',mp:1,w:0,d:1,l:0,gf:1,ga:1,pts:1},{flag:'🇭🇹',name:'Haiti',mp:1,w:0,d:0,l:1,gf:0,ga:1,pts:0}]},
   D:{teams:[{flag:'🇺🇸',name:'USA',mp:1,w:1,d:0,l:0,gf:4,ga:1,pts:3},{flag:'🇦🇺',name:'Australia',mp:1,w:1,d:0,l:0,gf:2,ga:0,pts:3},{flag:'🇹🇷',name:'Türkiye',mp:1,w:0,d:0,l:1,gf:0,ga:2,pts:0},{flag:'🇵🇾',name:'Paraguay',mp:1,w:0,d:0,l:1,gf:1,ga:4,pts:0}]},
-  E:{teams:[{flag:'🇩🇪',name:'Germany',mp:1,w:1,d:0,l:0,gf:7,ga:1,pts:3},{flag:'🇨🇮',name:'Ivory Coast',mp:0,w:0,d:0,l:0,gf:0,ga:0,pts:0},{flag:'🇪🇨',name:'Ecuador',mp:0,w:0,d:0,l:0,gf:0,ga:0,pts:0},{flag:'🇨🇼',name:'Curaçao',mp:1,w:0,d:0,l:1,gf:1,ga:7,pts:0}]},
-  F:{teams:[{flag:'🇳🇱',name:'Netherlands',mp:0,w:0,d:0,l:0,gf:0,ga:0,pts:0},{flag:'🇯🇵',name:'Japan',mp:0,w:0,d:0,l:0,gf:0,ga:0,pts:0},{flag:'🇸🇪',name:'Sweden',mp:0,w:0,d:0,l:0,gf:0,ga:0,pts:0},{flag:'🇹🇳',name:'Tunisia',mp:0,w:0,d:0,l:0,gf:0,ga:0,pts:0}]},
+  E:{teams:[{flag:'🇩🇪',name:'Germany',mp:1,w:1,d:0,l:0,gf:7,ga:1,pts:3},{flag:'🇨🇮',name:'Ivory Coast',mp:1,w:1,d:0,l:0,gf:1,ga:0,pts:3},{flag:'🇪🇨',name:'Ecuador',mp:1,w:0,d:0,l:1,gf:0,ga:1,pts:0},{flag:'🇨🇼',name:'Curaçao',mp:1,w:0,d:0,l:1,gf:1,ga:7,pts:0}]},
+  F:{teams:[{flag:'🇳🇱',name:'Netherlands',mp:1,w:0,d:1,l:0,gf:2,ga:2,pts:1},{flag:'🇯🇵',name:'Japan',mp:1,w:0,d:1,l:0,gf:2,ga:2,pts:1},{flag:'🇸🇪',name:'Sweden',mp:1,w:1,d:0,l:0,gf:3,ga:1,pts:3},{flag:'🇹🇳',name:'Tunisia',mp:1,w:0,d:0,l:1,gf:1,ga:3,pts:0}]},
   G:{teams:[{flag:'🇧🇪',name:'Belgium',mp:0,w:0,d:0,l:0,gf:0,ga:0,pts:0},{flag:'🇪🇬',name:'Egypt',mp:0,w:0,d:0,l:0,gf:0,ga:0,pts:0},{flag:'🇮🇷',name:'Iran',mp:0,w:0,d:0,l:0,gf:0,ga:0,pts:0},{flag:'🇳🇿',name:'New Zealand',mp:0,w:0,d:0,l:0,gf:0,ga:0,pts:0}]},
   H:{teams:[{flag:'🇪🇸',name:'Spain',mp:0,w:0,d:0,l:0,gf:0,ga:0,pts:0},{flag:'🇺🇾',name:'Uruguay',mp:0,w:0,d:0,l:0,gf:0,ga:0,pts:0},{flag:'🇸🇦',name:'Saudi Arabia',mp:0,w:0,d:0,l:0,gf:0,ga:0,pts:0},{flag:'🇨🇻',name:'Cape Verde',mp:0,w:0,d:0,l:0,gf:0,ga:0,pts:0}]},
   I:{teams:[{flag:'🇫🇷',name:'France',mp:0,w:0,d:0,l:0,gf:0,ga:0,pts:0},{flag:'🇸🇳',name:'Senegal',mp:0,w:0,d:0,l:0,gf:0,ga:0,pts:0},{flag:'🇳🇴',name:'Norway',mp:0,w:0,d:0,l:0,gf:0,ga:0,pts:0},{flag:'🇮🇶',name:'Iraq',mp:0,w:0,d:0,l:0,gf:0,ga:0,pts:0}]},
@@ -547,9 +547,17 @@ let MATCHES=[
    hev:[{i:'⚽',m:"6'",n:'F. Nmecha',a:'Ast: F. Wirtz'},{i:'⚽',m:"38'",n:'N. Schlotterbeck',a:'Ast: N. Brown (corner)'},{i:'⚽',m:"45+5'",n:'K. Havertz',a:'Penalty (foul on Nmecha)'},{i:'⚽',m:"47'",n:'J. Musiala',a:'Ast: J. Kimmich'},{i:'⚽',m:"68'",n:'N. Brown',a:'Ast: D. Undav (side volley)'},{i:'⚽',m:"78'",n:'D. Undav',a:'Ast: J. Kimmich (cutback)'},{i:'⚽',m:"85'",n:'K. Havertz',a:'Ast: D. Undav — 2nd of the game'}],
    aev:[{i:'⚽',m:"21'",n:'L. Comenencia',a:'Deflected shot — CUW first ever WC goal!'}],
    ms:{homePoss:60,awayPoss:27,homeShots:24,awayShots:6,homeShotsOT:9,awayShotsOT:2,homeCorners:8,awayCorners:2,homeSaves:1,awaySaves:3}},
-  {grp:'F',home:'Netherlands',hf:'🇳🇱',away:'Japan',af:'🇯🇵',hs:null,as_:null,date:'Jun 14',time:'4:00 PM',venue:'Dallas',status:'upcoming',espnId:'760425',hev:[],aev:[],ms:null},
-  {grp:'E',home:'Ivory Coast',hf:'🇨🇮',away:'Ecuador',af:'🇪🇨',hs:null,as_:null,date:'Jun 14',time:'7:00 PM',venue:'Philadelphia',status:'upcoming',espnId:'760423',hev:[],aev:[],ms:null},
-  {grp:'F',home:'Tunisia',hf:'🇹🇳',away:'Sweden',af:'🇸🇪',hs:null,as_:null,date:'Jun 14',time:'10:00 PM',venue:'Monterrey',status:'upcoming',espnId:'760426',hev:[],aev:[],ms:null},
+  {grp:'F',home:'Netherlands',hf:'🇳🇱',away:'Japan',af:'🇯🇵',hs:2,as_:2,date:'Jun 14',time:'4:00 PM',venue:'Dallas',status:'ft',espnId:'760425',motm:'R. Gravenberch (NED)',
+   hev:[{i:'⚽',m:"51'",n:'V. van Dijk',a:'Ast: R. Gravenberch (header)'},{i:'⚽',m:"64'",n:'C. Summerville',a:'Ast: R. Gravenberch (curling far post)'},{i:'🟨',m:"61'",n:'C. Summerville',a:'Serious foul play'},{i:'🟨',m:"83'",n:'M. Depay',a:'Serious foul play'}],
+   aev:[{i:'⚽',m:"57'",n:'K. Nakamura',a:'Ast: T. Kubo (deflected shot)'},{i:'⚽',m:"89'",n:'D. Kamada',a:'Ast: K. Ogawa (header — dramatic late equalizer!)'}],
+   ms:{homePoss:54,awayPoss:37,homeShots:10,awayShots:9,homeShotsOT:6,awayShotsOT:2,homeCorners:6,awayCorners:4,homeSaves:1,awaySaves:4}},
+  {grp:'E',home:'Ivory Coast',hf:'🇨🇮',away:'Ecuador',af:'🇪🇨',hs:1,as_:0,date:'Jun 14',time:'7:00 PM',venue:'Philadelphia',status:'ft',espnId:'760423',motm:'Y. Diomande (CIV)',
+   hev:[{i:'⚽',m:"90'",n:'Amad Diallo',a:'Ast: W. Singo (dramatic winner — sub)'}],
+   aev:[],
+   ms:{homePoss:48,awayPoss:52,homeShots:15,awayShots:12,homeShotsOT:4,awayShotsOT:1,homeCorners:6,awayCorners:5,homeSaves:1,awaySaves:3}},
+  {grp:'F',home:'Tunisia',hf:'🇹🇳',away:'Sweden',af:'🇸🇪',hs:1,as_:3,date:'Jun 14',time:'10:00 PM',venue:'Monterrey',status:'live',espnId:'760426',motm:null,
+   hev:[{i:'⚽',m:"43'",n:'O. Rekik',a:'Ast: Hannibal Mejbri'}],
+   aev:[{i:'⚽',m:"7'",n:'Y. Ayari',a:'Long-range effort top corner'},{i:'⚽',m:"30'",n:'A. Isak',a:'Ast: V. Gyökeres (counter)'},{i:'⚽',m:"59'",n:'V. Gyökeres',a:'Ast: A. Isak (thunderous finish)'}]},
   {grp:'H',home:'Spain',hf:'🇪🇸',away:'Cape Verde',af:'🇨🇻',hs:null,as_:null,date:'Jun 15',time:'12:00 PM',venue:'Atlanta',status:'upcoming',espnId:'760428',hev:[],aev:[],ms:null},
   {grp:'G',home:'Belgium',hf:'🇧🇪',away:'Egypt',af:'🇪🇬',hs:null,as_:null,date:'Jun 15',time:'3:00 PM',venue:'Seattle',status:'upcoming',espnId:'760427',hev:[],aev:[],ms:null},
   {grp:'H',home:'Saudi Arabia',hf:'🇸🇦',away:'Uruguay',af:'🇺🇾',hs:null,as_:null,date:'Jun 15',time:'6:00 PM',venue:'Miami',status:'upcoming',espnId:'760429',hev:[],aev:[],ms:null},
@@ -565,7 +573,15 @@ let MATCHES=[
 ];
 
 const GOALS=[
-  {name:'J. Musiala',        team:'Germany',    flag:'🇩🇪',goals:1,photo:null,          matchOrder:9,lastMin:47},
+  {name:'V. Gyökeres',       team:'Sweden',      flag:'🇸🇪',goals:1,photo:null,          matchOrder:12,lastMin:59},
+  {name:'A. Isak',           team:'Sweden',      flag:'🇸🇪',goals:1,photo:null,          matchOrder:12,lastMin:30},
+  {name:'Y. Ayari',          team:'Sweden',      flag:'🇸🇪',goals:1,photo:null,          matchOrder:12,lastMin:7},
+  {name:'O. Rekik',          team:'Tunisia',     flag:'🇹🇳',goals:1,photo:null,          matchOrder:12,lastMin:43},
+  {name:'Amad Diallo',       team:'Ivory Coast', flag:'🇨🇮',goals:1,photo:null,          matchOrder:11,lastMin:90},
+  {name:'D. Kamada',         team:'Japan',       flag:'🇯🇵',goals:1,photo:null,          matchOrder:10,lastMin:89},
+  {name:'K. Nakamura',       team:'Japan',       flag:'🇯🇵',goals:1,photo:null,          matchOrder:10,lastMin:57},
+  {name:'V. van Dijk',       team:'Netherlands', flag:'🇳🇱',goals:1,photo:null,          matchOrder:10,lastMin:51},
+  {name:'C. Summerville',    team:'Netherlands', flag:'🇳🇱',goals:1,photo:null,          matchOrder:10,lastMin:64},
   {name:'N. Brown',          team:'Germany',    flag:'🇩🇪',goals:1,photo:null,          matchOrder:9,lastMin:68},
   {name:'D. Undav',          team:'Germany',    flag:'🇩🇪',goals:1,photo:null,          matchOrder:9,lastMin:78},
   {name:'F. Nmecha',         team:'Germany',    flag:'🇩🇪',goals:1,photo:null,          matchOrder:9,lastMin:6},
@@ -593,7 +609,14 @@ const GOALS=[
 const ASSISTS=[
   {name:'J. Kimmich',        team:'Germany',  flag:'🇩🇪',assists:2,photo:null,note:"Ast → Musiala 47' + Undav 78'",  matchOrder:9,lastMin:78},
   {name:'D. Undav',          team:'Germany',  flag:'🇩🇪',assists:2,photo:null,note:"Ast → Brown 68' + Havertz 85'",  matchOrder:9,lastMin:85},
-  {name:'F. Wirtz',          team:'Germany',  flag:'🇩🇪',assists:1,photo:null,note:"Ast → Nmecha 6'",                matchOrder:9,lastMin:6},
+  {name:'V. Gyökeres',       team:'Sweden',     flag:'🇸🇪',assists:1,photo:null,note:"Ast → Isak 30'",                    matchOrder:12,lastMin:30},
+  {name:'A. Isak',           team:'Sweden',     flag:'🇸🇪',assists:1,photo:null,note:"Ast → Gyökeres 59'",                matchOrder:12,lastMin:59},
+  {name:'Hannibal Mejbri',   team:'Tunisia',    flag:'🇹🇳',assists:1,photo:null,note:"Ast → Rekik 43'",                   matchOrder:12,lastMin:43},
+  {name:'W. Singo',          team:'Ivory Coast',flag:'🇨🇮',assists:1,photo:null,note:"Ast → Amad Diallo 90'",             matchOrder:11,lastMin:90},
+  {name:'R. Gravenberch',    team:'Netherlands',flag:'🇳🇱',assists:2,photo:null,note:"Ast → Van Dijk 51' + Summerville 64'",matchOrder:10,lastMin:64},
+  {name:'T. Kubo',           team:'Japan',      flag:'🇯🇵',assists:1,photo:null,note:"Ast → Nakamura 57'",                  matchOrder:10,lastMin:57},
+  {name:'K. Ogawa',          team:'Japan',      flag:'🇯🇵',assists:1,photo:null,note:"Header → Kamada 89'",                 matchOrder:10,lastMin:89},
+  {name:'F. Wirtz',          team:'Germany',    flag:'🇩🇪',assists:1,photo:null,note:"Ast → Nmecha 6'",                    matchOrder:9,lastMin:6},
   {name:'N. Brown',          team:'Germany',  flag:'🇩🇪',assists:1,photo:null,note:"Corner → Schlotterbeck 38'",     matchOrder:9,lastMin:38},
   {name:'P. Okon-Engstler',  team:'Australia',flag:'🇦🇺',assists:1,photo:null,note:"Long ball → Irankunda 27'",   matchOrder:8,lastMin:27},
   {name:'Bruno Guimarães',  team:'Brazil',  flag:'🇧🇷',assists:1,photo:null,note:"Pass → Vinícius 32'",matchOrder:6,lastMin:32},
@@ -605,7 +628,13 @@ const ASSISTS=[
   {name:'Roberto Alvarado', team:'Mexico',  flag:'🇲🇽',assists:1,photo:null,note:"Ast → Jiménez 67'",matchOrder:1,lastMin:67},
 ];
 const GKS=[
-  {name:'P. Beach',    team:'Australia',   flag:'🇦🇺',photo:null,mp:1,saves:8,ga:0,cs:1,savePct:73},
+  {name:'B. Verbruggen', team:'Netherlands', flag:'🇳🇱',photo:null,mp:1,saves:4,ga:2,cs:0,savePct:67},
+  {name:'D. Schmidt',    team:'Japan',       flag:'🇯🇵',photo:null,mp:1,saves:1,ga:2,cs:0,savePct:14},
+  {name:'K. Fofana',    team:'Ivory Coast', flag:'🇨🇮',photo:null,mp:1,saves:3,ga:0,cs:1,savePct:100},
+  {name:'H. Galindez',  team:'Ecuador',     flag:'🇪🇨',photo:null,mp:1,saves:1,ga:1,cs:0,savePct:20},
+  {name:'M. Chamakh',   team:'Tunisia',     flag:'🇹🇳',photo:null,mp:1,saves:3,ga:3,cs:0,savePct:50},
+  {name:'O. Olsen',     team:'Sweden',      flag:'🇸🇪',photo:null,mp:1,saves:1,ga:1,cs:0,savePct:50},
+  {name:'P. Beach',     team:'Australia',   flag:'🇦🇺',photo:null,mp:1,saves:8,ga:0,cs:1,savePct:73},
   {name:'A. Gunn',     team:'Scotland',    flag:'🏴󠁧󠁢󠁳󠁣󠁴󠁿',photo:null,mp:1,saves:3,ga:0,cs:1,savePct:100},
   {name:'Y. Sommer',   team:'Switzerland', flag:'🇨🇭',photo:null,mp:1,saves:6,ga:1,cs:0,savePct:86},
   {name:'E. Room',     team:'Curaçao',     flag:'🇨🇼',photo:null,mp:1,saves:3,ga:6,cs:0,savePct:33},
@@ -618,6 +647,9 @@ const GKS=[
   {name:'O. Guzan',    team:'Paraguay',    flag:'🇵🇾',photo:null,mp:1,saves:3,ga:4,cs:0,savePct:43},
 ];
 const CARDS=[
+  {type:'yellow',player:'R. Khedira',     flag:'🇹🇳',team:'Tunisia',     min:"2H",   match:'TUN vs SWE',reason:'Heavy challenge',          photo:null,matchOrder:12,lastMin:70},
+  {type:'yellow',player:'C. Summerville', flag:'🇳🇱',team:'Netherlands',min:"61'",  match:'NED vs JPN',reason:'Serious foul play',      photo:null,matchOrder:10,lastMin:61},
+  {type:'yellow',player:'M. Depay',       flag:'🇳🇱',team:'Netherlands',min:"83'",  match:'NED vs JPN',reason:'Serious foul play',      photo:null,matchOrder:10,lastMin:83},
   {type:'yellow',player:'J.R. Bellegarde',flag:'🇭🇹',team:'Haiti',       min:"40'",  match:'HAI vs SCO',reason:'Reckless tackle',       photo:null,matchOrder:7,lastMin:40},
   {type:'yellow',player:'Y. Akgun',       flag:'🇹🇷',team:'Türkiye',     min:"86'",  match:'AUS vs TUR',reason:'Serious foul play',      photo:null,matchOrder:8,lastMin:86},
   {type:'yellow',player:'Casemiro',    flag:'🇧🇷',team:'Brazil',      min:"37'",  match:'BRA vs MAR',reason:'',                       photo:null,matchOrder:6,lastMin:37},
@@ -675,8 +707,18 @@ async function doRefresh() {
     const startDate = dates[0];
     const endDate = dates[dates.length - 1];
     const url = `${ESPN_SCOREBOARD}?dates=${startDate}-${endDate}&limit=200`;
-    const resp = await fetch(url);
-    if (!resp.ok) throw new Error('ESPN API error');
+    
+    // Try direct ESPN fetch first, fall back to CORS proxy if blocked
+    let resp;
+    try {
+      resp = await fetch(url, { mode: 'cors', headers: { 'Accept': 'application/json' } });
+      if (!resp.ok) throw new Error('direct failed');
+    } catch(e) {
+      // Fallback: route through public CORS proxy
+      const proxy = `https://corsproxy.io/?${encodeURIComponent(url)}`;
+      resp = await fetch(proxy);
+      if (!resp.ok) throw new Error('ESPN API error via proxy');
+    }
     const data = await resp.json();
 
     let liveCount = 0;
@@ -774,7 +816,7 @@ async function doRefresh() {
     renderAll();
 
   } catch(err) {
-    document.getElementById('lastSync').textContent = `Sync failed — check connection`;
+    document.getElementById('lastSync').textContent = `ESPN sync failed — tap to retry`;
     console.error('ESPN fetch error:', err);
   }
 
