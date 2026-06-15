@@ -874,7 +874,7 @@ function matchCard(m,showGrp=true){
   const hasEv=!isUp&&((m.hev&&m.hev.length)||(m.aev&&m.aev.length));
   let sc;
   if(isFt) sc=`<div class="sc-dig">${m.hs} : ${m.as_}</div><div class="sc-st ft">FT</div>`;
-  else if(isLive) sc=`<div class="sc-dig live">${m.hs} : ${m.as_}</div><div class="sc-clock">⏱ ${m.clock||'LIVE'}</div>`;
+  else if(isLive) sc=`<div class="sc-dig live">${m.hs !== null ? m.hs : '—'} : ${m.as_ !== null ? m.as_ : '—'}</div><div class="sc-clock">● ${m.clock && m.clock !== '0:00' && m.clock !== '' ? m.clock : 'LIVE'}</div>`;
   else sc=`<div class="sc-time">${m.time} ET</div><div class="sc-st up">Upcoming</div>`;
   const stad=getStad(m.venue);
   const vb=stad?`<div class="mc-venue-wrap"><div class="mc-venue">${m.venue}</div><div class="mc-stadium">${stad.real}</div><div class="mc-cap">${stad.cap.toLocaleString()} seats</div></div>`:`<div class="mc-venue-wrap"><div class="mc-venue">${m.venue}</div></div>`;
@@ -922,10 +922,10 @@ function renderOverview(){
       <div class="nh-lbl ${isL?'live':''}">${isL?'🔴 LIVE':'⚡ Up Next'} · ${m.date}</div>
       <div class="nh-teams">
         <div class="nh-team"><span class="nh-flag">${m.hf}</span><div class="nh-name">${m.home}</div></div>
-        ${isL?`<div class="nh-score">${m.hs} : ${m.as_}</div>`:`<div class="nh-vs">VS</div>`}
+        ${isL?`<div class="nh-score">${m.hs !== null ? m.hs : '—'} : ${m.as_ !== null ? m.as_ : '—'}</div>`:`<div class="nh-vs">VS</div>`}
         <div class="nh-team"><span class="nh-flag">${m.af}</span><div class="nh-name">${m.away}</div></div>
       </div>
-      ${isL?`<div class="nh-clock">⏱ ${m.clock||'In Progress'}</div>`:`<div class="nh-time">${m.time} ET</div>`}
+      ${isL?`<div class="nh-clock">● ${m.clock && m.clock !== '0:00' && m.clock !== '' ? m.clock : 'LIVE'}</div>`:`<div class="nh-time">${m.time} ET</div>`}
       <div class="nh-meta">Group ${m.grp} · ${m.venue}</div>
       ${s?`<div class="nh-stadium">🏟️ ${s.real} · ${s.cap.toLocaleString()} seats</div>`:''}
     </div>`;
