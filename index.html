@@ -1085,6 +1085,8 @@ function statsBar(m){
 function matchCard(m,showGrp=true){
   const isFt=m.status==='ft';const isLive=m.status==='live';
   const hasEv=!!(m.hev?.length||m.aev?.length);
+  const hasStats=!!(m.ms);
+  const isExpandable=isFt&&(hasEv||hasStats);  // expandable if FT and has stats OR events
   let sc;
   if(isFt) sc=`<div class="sc-dig">${m.hs} : ${m.as_}</div><div class="sc-st ft">FT</div>`;
   else if(isLive) sc=`<div class="sc-dig live">${m.hs!==null?m.hs:'—'} : ${m.as_!==null?m.as_:'—'}</div><div class="sc-clock">● ${m.clock||'LIVE'}</div>`;
@@ -1094,14 +1096,15 @@ function matchCard(m,showGrp=true){
   const vb=stad?`<div class="mc-venue-wrap"><div class="mc-venue">${m.venue}</div><div class="mc-stadium">${stad.name}</div><div class="mc-cap">${stad.cap.toLocaleString()} seats</div><div class="mc-tv">📺 ${tv}</div></div>`:`<div class="mc-venue-wrap"><div class="mc-venue">${m.venue}</div><div class="mc-tv">📺 ${tv}</div></div>`;
   const sp=isFt?`<span class="mc-status-pill pill-ft">Final</span>`:isLive?`<span class="mc-status-pill pill-live">● Live</span>`:`<span class="mc-status-pill pill-up">Upcoming</span>`;
   const bdr=isLive?'is-live':'';
-  const ev=hasEv&&!m.status==='upcoming'?`<div class="mc-evts"><div class="ev-cols"><div class="ev-team"><div class="ev-lbl">${flagImg(m.home,14)||m.hf} ${m.home}</div>${evRows(m.hev)}</div><div class="ev-team"><div class="ev-lbl">${flagImg(m.away,14)||m.af} ${m.away}</div>${evRows(m.aev)}</div></div></div>`:'';
-  return`<div class="mc ${bdr}" onclick="toggleMC(this)">
+  // Always render events drawer for FT matches (even 0-0 shows "No events" + stats)
+  const evHtml=(isFt||isLive)?`<div class="mc-evts"><div class="ev-cols"><div class="ev-team"><div class="ev-lbl">${flagImg(m.home,14)||m.hf} ${m.home}</div>${evRows(m.hev)}</div><div class="ev-team"><div class="ev-lbl">${flagImg(m.away,14)||m.af} ${m.away}</div>${evRows(m.aev)}</div></div>${m.tbd?`<div class="mc-tbd-banner">⏳ Event details pending — will auto-update on Refresh when openfootball confirms</div>`:''}</div>`:'';
+  return`<div class="mc ${bdr}" onclick="${isExpandable||isLive?'toggleMC(this)':''}">
     <div class="mc-hdr"><span class="mc-tag">${showGrp?'Grp '+m.grp+' · ':''}${m.date}</span>${sp}${vb}</div>
     <div class="mc-body">
       <div class="t-side">${flagImg(m.home,28)||`<span class="t-flag">${m.hf}</span>`}<div><span class="t-name">${m.home}</span></div></div>
       <div class="sc-block">${sc}</div>
       <div class="t-side r">${flagImg(m.away,28)||`<span class="t-flag">${m.af}</span>`}<div><span class="t-name">${m.away}</span></div></div>
-    </div>${hasEv?`<div class="mc-evts"><div class="ev-cols"><div class="ev-team"><div class="ev-lbl">${m.hf} ${m.home}</div>${evRows(m.hev)}</div><div class="ev-team"><div class="ev-lbl">${m.af} ${m.away}</div>${evRows(m.aev)}</div></div>${m.tbd?`<div class="mc-tbd-banner">⏳ Event details pending — will auto-update on Refresh when openfootball confirms</div>`:''}</div>`:''}</div>`;
+    </div>${evHtml}${isFt&&hasStats?statsBar(m):''}</div>`;
 }
 function toggleMC(el){
   el.querySelectorAll('.mc-evts,.mc-stats').forEach(e=>e.classList.toggle('open'));
