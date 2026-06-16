@@ -647,21 +647,21 @@ let MATCHES=[
    hev:[{i:'⚽',m:"41'",n:'A. Al-Amri',a:''}],
    aev:[{i:'⚽',m:"80'",n:'M. Araújo',a:'Dramatic equalizer'}],
    motm:'A. Al-Amri (KSA)',ms:null},
-  {grp:'G',home:'Iran',hf:'🇮🇷',away:'New Zealand',af:'🇳🇿',hs:2,as_:2,date:'Jun 15',time:'9:00 PM',venue:'Los Angeles',espnId:'760430',status:'ft',
+  {grp:'G',home:'Iran',hf:'🇮🇷',away:'New Zealand',af:'🇳🇿',hs:2,as_:2,date:'Jun 15',time:'9:00 PM',venue:'Los Angeles',espnId:'760431',status:'ft',
    hev:[{i:'⚽',m:"32'",n:'R. Rezaeian',a:''},{i:'⚽',m:"64'",n:'M. Mohebbi',a:''}],
    aev:[{i:'⚽',m:"7'",n:'E. Just',a:'1st goal'},{i:'⚽',m:"54'",n:'E. Just',a:'2nd goal — brace!'}],
    motm:'E. Just (NZL)',ms:null},
   // JUN 16
-  {grp:'I',home:'France',hf:'🇫🇷',away:'Senegal',af:'🇸🇳',hs:3,as_:1,date:'Jun 16',time:'3:00 PM',venue:'New York/NJ',status:'ft',
+  {grp:'I',home:'France',hf:'🇫🇷',away:'Senegal',af:'🇸🇳',hs:3,as_:1,date:'Jun 16',time:'3:00 PM',venue:'New York/NJ',espnId:'760432',status:'ft',
    hev:[{i:'⚽',m:"66'",n:'K. Mbappé',a:'1st goal'},{i:'⚽',m:"82'",n:'B. Barcola',a:''},{i:'⚽',m:"90+6'",n:'K. Mbappé',a:'2nd goal — seals it'}],
    aev:[{i:'⚽',m:"90+5'",n:'I. Mbaye',a:'Consolation'}],
    motm:'K. Mbappé (FRA)',ms:null},
-  {grp:'I',home:'Iraq',hf:'🇮🇶',away:'Norway',af:'🇳🇴',hs:1,as_:2,date:'Jun 16',time:'6:00 PM',venue:'Boston',espnId:'760430',status:'live',clock:'HT',
+  {grp:'I',home:'Iraq',hf:'🇮🇶',away:'Norway',af:'🇳🇴',hs:1,as_:2,date:'Jun 16',time:'6:00 PM',venue:'Boston',espnId:'760430',status:'live',clock:'2H',
    hev:[{i:'⚽',m:"39'",n:'A. Hussein',a:''}],
    aev:[{i:'⚽',m:"29'",n:'E. Haaland',a:'1st goal'},{i:'⚽',m:"43'",n:'E. Haaland',a:'Brace!'}],
    tbd:false,ms:null},
-  {grp:'J',home:'Argentina',hf:'🇦🇷',away:'Algeria',af:'🇩🇿',hs:null,as_:null,date:'Jun 16',time:'9:00 PM',venue:'Kansas City',status:'upcoming',hev:[],aev:[],ms:null},
-  {grp:'J',home:'Austria',hf:'🇦🇹',away:'Jordan',af:'🇯🇴',hs:null,as_:null,date:'Jun 16',time:'12:00 AM',venue:'San Francisco',status:'upcoming',hev:[],aev:[],ms:null},
+  {grp:'J',home:'Argentina',hf:'🇦🇷',away:'Algeria',af:'🇩🇿',hs:null,as_:null,date:'Jun 16',time:'9:00 PM',venue:'Kansas City',espnId:'760433',status:'upcoming',hev:[],aev:[],ms:null},
+  {grp:'J',home:'Austria',hf:'🇦🇹',away:'Jordan',af:'🇯🇴',hs:null,as_:null,date:'Jun 16',time:'12:00 AM',venue:'San Francisco',espnId:'760434',status:'upcoming',hev:[],aev:[],ms:null},
   // JUN 17
   {grp:'K',home:'Portugal',hf:'🇵🇹',away:'DR Congo',af:'🇨🇩',hs:null,as_:null,date:'Jun 17',time:'1:00 PM',venue:'Houston',status:'upcoming',hev:[],aev:[],ms:null},
   {grp:'L',home:'England',hf:'🏴󠁧󠁢󠁥󠁮󠁧󠁿',away:'Croatia',af:'🇭🇷',hs:null,as_:null,date:'Jun 17',time:'4:00 PM',venue:'Dallas',status:'upcoming',hev:[],aev:[],ms:null},
@@ -1020,18 +1020,19 @@ async function doRefresh() {
           } else if (state === 'in') {
             // Live game — update score and clock
             // Use team name matching to assign scores correctly
-            // (ESPN home/away can differ from our home/away at neutral venues)
             const espnHomeTeam = normHome;
-            const espnAwayTeam = normAway;
             const homeIsESPNHome = match.home.includes(espnHomeTeam.split(' ')[0]) || 
                                    espnHomeTeam.includes(match.home.split(' ')[0]);
-            if (homeIsESPNHome) {
-              match.hs = parseInt(espnHome.score) || 0;
-              match.as_ = parseInt(espnAway.score) || 0;
-            } else {
-              // ESPN has our home team listed as away — flip scores
-              match.hs = parseInt(espnAway.score) || 0;
-              match.as_ = parseInt(espnHome.score) || 0;
+            let newHs = homeIsESPNHome ? parseInt(espnHome.score)||0 : parseInt(espnAway.score)||0;
+            let newAs = homeIsESPNHome ? parseInt(espnAway.score)||0 : parseInt(espnHome.score)||0;
+            // Sanity check: if ESPN score doesn't match expected goal count, trust our data
+            // (catches ESPN data errors like showing 3-1 when FIFA says 1-2)
+            const espnTotal = newHs + newAs;
+            const ourTotal = (match.hs || 0) + (match.as_ || 0);
+            // Only update if ESPN total >= our total (can't have fewer goals than we know about)
+            if (espnTotal >= ourTotal) {
+              match.hs = newHs;
+              match.as_ = newAs;
             }
             match.status = 'live';
             match.clock = clock;
