@@ -527,8 +527,8 @@ const GROUPS={
     {flag:'🇺🇾',name:'Uruguay',     mp:1,w:0,d:1,l:0,gf:1,ga:1,pts:1},
   ]},
   I:{teams:[
-    {flag:'🇫🇷',name:'France', mp:0,w:0,d:0,l:0,gf:0,ga:0,pts:0},
-    {flag:'🇸🇳',name:'Senegal',mp:0,w:0,d:0,l:0,gf:0,ga:0,pts:0},
+    {flag:'🇫🇷',name:'France', mp:1,w:1,d:0,l:0,gf:3,ga:1,pts:3},
+    {flag:'🇸🇳',name:'Senegal',mp:1,w:0,d:0,l:1,gf:1,ga:3,pts:0},
     {flag:'🇳🇴',name:'Norway', mp:0,w:0,d:0,l:0,gf:0,ga:0,pts:0},
     {flag:'🇮🇶',name:'Iraq',   mp:0,w:0,d:0,l:0,gf:0,ga:0,pts:0},
   ]},
@@ -652,8 +652,11 @@ let MATCHES=[
    aev:[{i:'⚽',m:"7'",n:'E. Just',a:'1st goal'},{i:'⚽',m:"54'",n:'E. Just',a:'2nd goal — brace!'}],
    motm:'E. Just (NZL)',ms:null},
   // JUN 16
-  {grp:'I',home:'France',hf:'🇫🇷',away:'Senegal',af:'🇸🇳',hs:null,as_:null,date:'Jun 16',time:'3:00 PM',venue:'New York/NJ',status:'upcoming',hev:[],aev:[],ms:null},
-  {grp:'I',home:'Iraq',hf:'🇮🇶',away:'Norway',af:'🇳🇴',hs:null,as_:null,date:'Jun 16',time:'6:00 PM',venue:'Boston',status:'upcoming',hev:[],aev:[],ms:null},
+  {grp:'I',home:'France',hf:'🇫🇷',away:'Senegal',af:'🇸🇳',hs:3,as_:1,date:'Jun 16',time:'3:00 PM',venue:'New York/NJ',status:'ft',
+   hev:[{i:'⚽',m:"66'",n:'K. Mbappé',a:'1st goal'},{i:'⚽',m:"82'",n:'B. Barcola',a:''},{i:'⚽',m:"90+6'",n:'K. Mbappé',a:'2nd goal — seals it'}],
+   aev:[{i:'⚽',m:"90+5'",n:'I. Mbaye',a:'Consolation'}],
+   motm:'K. Mbappé (FRA)',ms:null},
+  {grp:'I',home:'Iraq',hf:'🇮🇶',away:'Norway',af:'🇳🇴',hs:0,as_:0,date:'Jun 16',time:'6:00 PM',venue:'Boston',espnId:'760432',status:'live',clock:'LIVE',hev:[],aev:[],tbd:true,ms:null},
   {grp:'J',home:'Argentina',hf:'🇦🇷',away:'Algeria',af:'🇩🇿',hs:null,as_:null,date:'Jun 16',time:'9:00 PM',venue:'Kansas City',status:'upcoming',hev:[],aev:[],ms:null},
   {grp:'J',home:'Austria',hf:'🇦🇹',away:'Jordan',af:'🇯🇴',hs:null,as_:null,date:'Jun 16',time:'12:00 AM',venue:'San Francisco',status:'upcoming',hev:[],aev:[],ms:null},
   // JUN 17
@@ -726,6 +729,9 @@ let MATCHES=[
 // matchOrder = chronological match number (higher = more recent)
 // ============================================================
 const GOALS=[
+  {name:'K. Mbappé',      team:'France',   flag:'🇫🇷',goals:2,photo:null,matchOrder:17,lastMin:90},
+  {name:'B. Barcola',     team:'France',   flag:'🇫🇷',goals:1,photo:null,matchOrder:17,lastMin:82},
+  {name:'I. Mbaye',       team:'Senegal',  flag:'🇸🇳',goals:1,photo:null,matchOrder:17,lastMin:90},
   {name:'E. Just',        team:'New Zealand', flag:'🇳🇿',goals:2,photo:null,matchOrder:15,lastMin:54},
   {name:'R. Rezaeian',    team:'Iran',        flag:'🇮🇷',goals:1,photo:null,matchOrder:15,lastMin:32},
   {name:'M. Mohebbi',     team:'Iran',        flag:'🇮🇷',goals:1,photo:null,matchOrder:15,lastMin:64},
@@ -791,6 +797,8 @@ const ASSISTS=[
 ];
 
 const GKS=[
+  {name:'M. Maignan',    team:'France',   flag:'🇫🇷',photo:null,mp:1,saves:2,ga:1,cs:0,savePct:67},
+  {name:'E. Mendy',      team:'Senegal',  flag:'🇸🇳',photo:null,mp:1,saves:4,ga:3,cs:0,savePct:57},
   {name:'M. Beiranvand', team:'Iran',         flag:'🇮🇷',photo:null,mp:1,saves:3,ga:2,cs:0,savePct:60},
   {name:'O. Sail',       team:'New Zealand',  flag:'🇳🇿',photo:null,mp:1,saves:2,ga:2,cs:0,savePct:50},
   {name:'M. Al-Owais',   team:'Saudi Arabia', flag:'🇸🇦',photo:null,mp:1,saves:4,ga:1,cs:0,savePct:80},
