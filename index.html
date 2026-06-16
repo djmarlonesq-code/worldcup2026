@@ -656,7 +656,7 @@ let MATCHES=[
    hev:[{i:'⚽',m:"66'",n:'K. Mbappé',a:'1st goal'},{i:'⚽',m:"82'",n:'B. Barcola',a:''},{i:'⚽',m:"90+6'",n:'K. Mbappé',a:'2nd goal — seals it'}],
    aev:[{i:'⚽',m:"90+5'",n:'I. Mbaye',a:'Consolation'}],
    motm:'K. Mbappé (FRA)',ms:null},
-  {grp:'I',home:'Iraq',hf:'🇮🇶',away:'Norway',af:'🇳🇴',hs:1,as_:2,date:'Jun 16',time:'6:00 PM',venue:'Boston',espnId:'760432',status:'live',clock:'HT',
+  {grp:'I',home:'Iraq',hf:'🇮🇶',away:'Norway',af:'🇳🇴',hs:1,as_:2,date:'Jun 16',time:'6:00 PM',venue:'Boston',espnId:'760430',status:'live',clock:'HT',
    hev:[{i:'⚽',m:"39'",n:'A. Hussein',a:''}],
    aev:[{i:'⚽',m:"29'",n:'E. Haaland',a:'1st goal'},{i:'⚽',m:"43'",n:'E. Haaland',a:'Brace!'}],
    tbd:false,ms:null},
@@ -1019,9 +1019,21 @@ async function doRefresh() {
             }
           } else if (state === 'in') {
             // Live game — update score and clock
+            // Use team name matching to assign scores correctly
+            // (ESPN home/away can differ from our home/away at neutral venues)
+            const espnHomeTeam = normHome;
+            const espnAwayTeam = normAway;
+            const homeIsESPNHome = match.home.includes(espnHomeTeam.split(' ')[0]) || 
+                                   espnHomeTeam.includes(match.home.split(' ')[0]);
+            if (homeIsESPNHome) {
+              match.hs = parseInt(espnHome.score) || 0;
+              match.as_ = parseInt(espnAway.score) || 0;
+            } else {
+              // ESPN has our home team listed as away — flip scores
+              match.hs = parseInt(espnAway.score) || 0;
+              match.as_ = parseInt(espnHome.score) || 0;
+            }
             match.status = 'live';
-            match.hs = parseInt(espnHome.score) || 0;
-            match.as_ = parseInt(espnAway.score) || 0;
             match.clock = clock;
             liveCount++; updatedCount++;
           }
