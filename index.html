@@ -517,14 +517,14 @@ const GROUPS={
   G:{teams:[
     {flag:'🇧🇪',name:'Belgium',    mp:1,w:0,d:1,l:0,gf:1,ga:1,pts:1},
     {flag:'🇪🇬',name:'Egypt',      mp:1,w:0,d:1,l:0,gf:1,ga:1,pts:1},
-    {flag:'🇮🇷',name:'Iran',       mp:0,w:0,d:0,l:0,gf:0,ga:0,pts:0},
-    {flag:'🇳🇿',name:'New Zealand',mp:0,w:0,d:0,l:0,gf:0,ga:0,pts:0},
+    {flag:'🇮🇷',name:'Iran',       mp:1,w:0,d:1,l:0,gf:2,ga:2,pts:1},
+    {flag:'🇳🇿',name:'New Zealand',mp:1,w:0,d:1,l:0,gf:2,ga:2,pts:1},
   ]},
   H:{teams:[
     {flag:'🇪🇸',name:'Spain',       mp:1,w:0,d:1,l:0,gf:0,ga:0,pts:1},
     {flag:'🇨🇻',name:'Cape Verde',  mp:1,w:0,d:1,l:0,gf:0,ga:0,pts:1},
-    {flag:'🇺🇾',name:'Uruguay',     mp:0,w:0,d:0,l:0,gf:0,ga:0,pts:0},
-    {flag:'🇸🇦',name:'Saudi Arabia',mp:0,w:0,d:0,l:0,gf:0,ga:0,pts:0},
+    {flag:'🇸🇦',name:'Saudi Arabia',mp:1,w:0,d:1,l:0,gf:1,ga:1,pts:1},
+    {flag:'🇺🇾',name:'Uruguay',     mp:1,w:0,d:1,l:0,gf:1,ga:1,pts:1},
   ]},
   I:{teams:[
     {flag:'🇫🇷',name:'France', mp:0,w:0,d:0,l:0,gf:0,ga:0,pts:0},
@@ -643,8 +643,14 @@ let MATCHES=[
    hev:[{i:'⚽',m:"66'",n:'M. Hany',a:'Equalizer'},{i:'🟨',m:"14'",n:'T. Castagne',a:'Yellow card'}],
    aev:[{i:'⚽',m:"19'",n:'E. Ashour',a:'Brilliant strike'},{i:'🟨',m:"13'",n:'M. Attia',a:'Yellow card'},{i:'🟨',m:"34'",n:'A. Fatouh',a:'Yellow card'}],
    motm:'E. Ashour (EGY)',ms:null},
-  {grp:'H',home:'Saudi Arabia',hf:'🇸🇦',away:'Uruguay',af:'🇺🇾',hs:0,as_:0,date:'Jun 15',time:'6:00 PM',venue:'Miami',status:'live',clock:'LIVE',espnId:'760429',hev:[],aev:[],tbd:true,ms:null},
-  {grp:'G',home:'Iran',hf:'🇮🇷',away:'New Zealand',af:'🇳🇿',hs:null,as_:null,date:'Jun 15',time:'9:00 PM',venue:'Los Angeles',espnId:'760430',status:'upcoming',hev:[],aev:[],ms:null},
+  {grp:'H',home:'Saudi Arabia',hf:'🇸🇦',away:'Uruguay',af:'🇺🇾',hs:1,as_:1,date:'Jun 15',time:'6:00 PM',venue:'Miami',espnId:'760429',status:'ft',
+   hev:[{i:'⚽',m:"41'",n:'A. Al-Amri',a:''}],
+   aev:[{i:'⚽',m:"80'",n:'M. Araújo',a:'Dramatic equalizer'}],
+   motm:'A. Al-Amri (KSA)',ms:null},
+  {grp:'G',home:'Iran',hf:'🇮🇷',away:'New Zealand',af:'🇳🇿',hs:2,as_:2,date:'Jun 15',time:'9:00 PM',venue:'Los Angeles',espnId:'760430',status:'ft',
+   hev:[{i:'⚽',m:"32'",n:'R. Rezaeian',a:''},{i:'⚽',m:"64'",n:'M. Mohebbi',a:''}],
+   aev:[{i:'⚽',m:"7'",n:'E. Just',a:'1st goal'},{i:'⚽',m:"54'",n:'E. Just',a:'2nd goal — brace!'}],
+   motm:'E. Just (NZL)',ms:null},
   // JUN 16
   {grp:'I',home:'France',hf:'🇫🇷',away:'Senegal',af:'🇸🇳',hs:null,as_:null,date:'Jun 16',time:'3:00 PM',venue:'New York/NJ',status:'upcoming',hev:[],aev:[],ms:null},
   {grp:'I',home:'Iraq',hf:'🇮🇶',away:'Norway',af:'🇳🇴',hs:null,as_:null,date:'Jun 16',time:'6:00 PM',venue:'Boston',status:'upcoming',hev:[],aev:[],ms:null},
@@ -720,6 +726,11 @@ let MATCHES=[
 // matchOrder = chronological match number (higher = more recent)
 // ============================================================
 const GOALS=[
+  {name:'E. Just',        team:'New Zealand', flag:'🇳🇿',goals:2,photo:null,matchOrder:15,lastMin:54},
+  {name:'R. Rezaeian',    team:'Iran',        flag:'🇮🇷',goals:1,photo:null,matchOrder:15,lastMin:32},
+  {name:'M. Mohebbi',     team:'Iran',        flag:'🇮🇷',goals:1,photo:null,matchOrder:15,lastMin:64},
+  {name:'A. Al-Amri',     team:'Saudi Arabia',flag:'🇸🇦',goals:1,photo:null,matchOrder:14,lastMin:41},
+  {name:'M. Araújo',      team:'Uruguay',     flag:'🇺🇾',goals:1,photo:null,matchOrder:14,lastMin:80},
   {name:'M. Hany',          team:'Belgium',    flag:'🇧🇪',goals:1,photo:null,matchOrder:13,lastMin:66},
   {name:'E. Ashour',         team:'Egypt',      flag:'🇪🇬',goals:1,photo:null,matchOrder:13,lastMin:19},
   {name:'Y. Ayari',          team:'Sweden',      flag:'🇸🇪',goals:2,photo:null,matchOrder:12,lastMin:90},
@@ -780,6 +791,10 @@ const ASSISTS=[
 ];
 
 const GKS=[
+  {name:'M. Beiranvand', team:'Iran',         flag:'🇮🇷',photo:null,mp:1,saves:3,ga:2,cs:0,savePct:60},
+  {name:'O. Sail',       team:'New Zealand',  flag:'🇳🇿',photo:null,mp:1,saves:2,ga:2,cs:0,savePct:50},
+  {name:'M. Al-Owais',   team:'Saudi Arabia', flag:'🇸🇦',photo:null,mp:1,saves:4,ga:1,cs:0,savePct:80},
+  {name:'S. Rochet',     team:'Uruguay',      flag:'🇺🇾',photo:null,mp:1,saves:3,ga:1,cs:0,savePct:75},
   {name:'K. Baah',      team:'Belgium',    flag:'🇧🇪',photo:null,mp:1,saves:2,ga:1,cs:0,savePct:67},
   {name:'M. El Shennawy',team:'Egypt',    flag:'🇪🇬',photo:null,mp:1,saves:3,ga:1,cs:0,savePct:75},
   {name:'P. Beach',     team:'Australia',   flag:'🇦🇺',photo:null,mp:1,saves:8,ga:0,cs:1,savePct:73},
