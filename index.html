@@ -981,7 +981,28 @@ async function doRefresh() {
           if (!comp) return;
           const state = comp.status?.type?.state;
           const completed = comp.status?.type?.completed;
-          const clock = comp.status?.displayClock || '';
+          // Build clock string from ESPN — try multiple fields
+          const statusObj = comp.status || {};
+          const rawClock = statusObj.displayClock || '';
+          const period = statusObj.period || 0;
+          const clockSecs = statusObj.clock || 0;
+          let clock = '';
+          if (rawClock && rawClock !== '0:00' && rawClock !== '0\'') {
+            // ESPN returned a real clock value like "67'" or "45:00"
+            clock = rawClock.includes(':') 
+              ? Math.ceil(parseInt(rawClock.split(':')[0]) + (parseInt(rawClock.split(':')[1]||0)/60)) + "'"
+              : rawClock;
+          } else if (clockSecs > 0) {
+            // Calculate minute from seconds
+            const mins = Math.floor((period === 2 ? 45 : 0) + clockSecs / 60);
+            clock = mins + "'";
+          } else if (period === 1) {
+            clock = '1H';
+          } else if (period === 2) {
+            clock = '2H';
+          } else {
+            clock = 'LIVE';
+          }
           const competitors = comp.competitors || [];
 
           // Find our match by team name matching
