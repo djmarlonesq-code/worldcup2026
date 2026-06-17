@@ -660,7 +660,7 @@ let MATCHES=[
    hev:[{i:'⚽',m:"39'",n:'A. Hussein',a:'Ast: A. Al-Ammari'}],
    aev:[{i:'⚽',m:"29'",n:'E. Haaland',a:'Ast: D. Moller Wolfe'},{i:'⚽',m:"43'",n:'E. Haaland',a:'Brace — closed down keeper'},{i:'⚽',m:"76'",n:'L. Ostgard',a:'Ast: M. Ødegaard (corner)'},{i:'⚽',m:"90+6'",n:'A. Hussein OG',a:'Own goal — seals Norway win'}],
    tbd:false,motm:'E. Haaland (NOR)',ms:null},
-  {grp:'J',home:'Argentina',hf:'🇦🇷',away:'Algeria',af:'🇩🇿',hs:1,as_:0,date:'Jun 16',time:'9:00 PM',venue:'Kansas City',espnId:'760433',status:'live',clock:'LIVE',hev:[{i:'⚽',m:'TBD',n:'TBD',a:'Goal — pending openfootball'}],aev:[],tbd:true,ms:null},
+  {grp:'J',home:'Argentina',hf:'🇦🇷',away:'Algeria',af:'🇩🇿',hs:3,as_:0,date:'Jun 16',time:'9:00 PM',venue:'Kansas City',espnId:'760433',status:'live',clock:'LIVE',fifaVerified:true,hev:[{i:'⚽',m:'TBD',n:'TBD',a:'Goal 1 — pending openfootball'},{i:'⚽',m:'TBD',n:'TBD',a:'Goal 2 — pending openfootball'},{i:'⚽',m:'TBD',n:'TBD',a:'Goal 3 — pending openfootball'}],aev:[],tbd:true,ms:null},
   {grp:'J',home:'Austria',hf:'🇦🇹',away:'Jordan',af:'🇯🇴',hs:null,as_:null,date:'Jun 16',time:'12:00 AM',venue:'San Francisco',espnId:'760434',status:'upcoming',hev:[],aev:[],ms:null},
   // JUN 17
   {grp:'K',home:'Portugal',hf:'🇵🇹',away:'DR Congo',af:'🇨🇩',hs:null,as_:null,date:'Jun 17',time:'1:00 PM',venue:'Houston',status:'upcoming',hev:[],aev:[],ms:null},
@@ -947,6 +947,7 @@ async function doRefresh() {
           // openfootball confirmed FT — lock score
           match.status = 'ft';
           match.hs = ft[0]; match.as_ = ft[1];
+          match.fifaVerified = false; // openfootball is now authoritative
           updatedCount++;
 
           // Auto-resolve TBD events if openfootball now has goal data
@@ -1066,7 +1067,8 @@ async function doRefresh() {
             let newAs = homeIsESPNHome ? parseInt(espnAway.score)||0 : parseInt(espnHome.score)||0;
             // Never let ESPN decrease the score — if we already have more goals, keep ours
             // This prevents ESPN returning stale 0-0 when FIFA shows 1-0
-            if (newHs + newAs >= (match.hs||0) + (match.as_||0)) {
+            // Also skip if FIFA has verified the score (ESPN is broken for this match)
+            if (!match.fifaVerified && newHs + newAs >= (match.hs||0) + (match.as_||0)) {
               match.hs = newHs;
               match.as_ = newAs;
             }
