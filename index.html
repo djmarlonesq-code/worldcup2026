@@ -756,6 +756,7 @@ const GOALS=[
   {name:'M. Hany',          team:'Belgium',    flag:'🇧🇪',goals:1,photo:null,matchOrder:13,lastMin:66},
   {name:'E. Ashour',         team:'Egypt',      flag:'🇪🇬',goals:1,photo:null,matchOrder:13,lastMin:19},
   {name:'Y. Ayari',          team:'Sweden',      flag:'🇸🇪',goals:2,photo:null,matchOrder:12,lastMin:90},
+  {name:'R. De Paul',      team:'Argentina',flag:'🇦🇷',assists:1,photo:null,note:"Ast → Messi 17'",         matchOrder:19,lastMin:17},
   {name:'D. Moller Wolfe', team:'Norway',  flag:'🇳🇴',assists:1,photo:null,note:"Ast → Haaland 29'",        matchOrder:18,lastMin:29},
   {name:'M. Ødegaard',    team:'Norway',  flag:'🇳🇴',assists:1,photo:null,note:"Corner → Ostgard 76'",      matchOrder:18,lastMin:76},
   {name:'A. Al-Ammari',   team:'Iraq',    flag:'🇮🇶',assists:1,photo:null,note:"Ast → Hussein 39'",         matchOrder:18,lastMin:39},
@@ -1326,12 +1327,13 @@ function renderStats(){
   const bigWin=MATCHES.filter(m=>m.status==='ft').sort((a,b)=>Math.abs(b.hs-b.as_)-Math.abs(a.hs-a.as_))[0];
   document.getElementById('funCont').innerHTML=`<div class="fun-card">
     <div class="fun-title">⭐ Tournament Highlights</div>
+    <div class="fun-item"><span class="fun-emoji">👑</span><div><div class="fun-text"><strong>Messi Hat-trick — WC Record Equalled</strong></div><div class="fun-sub">Lionel Messi 17', 60', 76' vs Algeria — his 14th, 15th & 16th World Cup goals, equalling Klose's all-time record of 16. Argentina won 3–0.</div><div class="fun-badge">Historic Milestone</div></div></div>
+    <div class="fun-item"><span class="fun-emoji">⚡</span><div><div class="fun-text"><strong>Haaland Brace on WC Debut</strong></div><div class="fun-sub">Erling Haaland 29' & 43' vs Iraq — Norway's 4-1 rout was the biggest win of the tournament. Haaland also got an OG assist (Hussein 90+6').</div><div class="fun-badge">Debut Brace</div></div></div>
     <div class="fun-item"><span class="fun-emoji">🏅</span><div><div class="fun-text"><strong>Performance of the Tournament</strong></div><div class="fun-sub">Patrick Beach (AUS) — 8 saves vs Türkiye. Australia had 30% possession, 9 shots, won 2–0. Untouchable.</div><div class="fun-badge">Goalkeeper of the Round</div></div></div>
-    <div class="fun-item"><span class="fun-emoji">⚡</span><div><div class="fun-text"><strong>Youngest WC Scorer</strong></div><div class="fun-sub">Nestory Irankunda (AUS, 20) — Australia's youngest ever World Cup goalscorer. 27' counter-attack vs Türkiye.</div><div class="fun-badge">Historic Milestone</div></div></div>
-    <div class="fun-item"><span class="fun-emoji">🎭</span><div><div class="fun-text"><strong>Drama of the Round</strong></div><div class="fun-sub">Qatar 1–1 Switzerland — Khoukhi equalized in 90+4' after the Swiss dominated with 62% possession and 23 shots. Sweden 5–1 Tunisia with Ayari scoring in 7' AND 90+6'.</div><div class="fun-badge">Two Dramatic Moments</div></div></div>
+    <div class="fun-item"><span class="fun-emoji">🎭</span><div><div class="fun-text"><strong>Drama of the Round</strong></div><div class="fun-sub">Qatar 1–1 Switzerland — Khoukhi equalized in 90+4'. Austria vs Jordan — Arnautovic sealed it in 90+12' of stoppage time! Sweden 5–1 Tunisia with Ayari brace.</div><div class="fun-badge">Dramatic Moments</div></div></div>
     <div class="fun-item"><span class="fun-emoji">🃏</span><div><div class="fun-text"><strong>WC Record — 3 Reds in One Game</strong></div><div class="fun-sub">Mexico vs South Africa: 3 red cards — a World Cup opening-match record. Two for South Africa, one for Mexico (Montes, double yellow).</div><div class="fun-badge">WC Record</div></div></div>
-    <div class="fun-item"><span class="fun-emoji">📊</span><div><div class="fun-text"><strong>Tournament Stats</strong></div><div class="fun-sub">⚽ ${totalG} goals in ${p8} games · ${gpg}/game avg<br>🏆 Biggest Win: ${bigWin?`${bigWin.home} ${bigWin.hs}–${bigWin.as_} ${bigWin.away}`:'—'}<br>🟥 3 reds, 16 yellows · 🌎 48 teams, 104 matches total</div></div></div>
-    <div class="fun-item"><span class="fun-emoji">📈</span><div><div class="fun-text"><strong>Top Teams by GD</strong></div><div class="fun-sub">1. 🇩🇪 Germany +6 &nbsp; 2. 🇺🇸 USA +3 &nbsp; 3. 🇸🇪 Sweden +4<br>4. 🇦🇺 Australia +2 &nbsp; 5. 🇲🇽 Mexico +2</div></div></div>
+    <div class="fun-item"><span class="fun-emoji">📊</span><div><div class="fun-text"><strong>Tournament Stats</strong></div><div class="fun-sub">⚽ ${totalG} goals in ${p8} games · ${gpg}/game avg<br>🏆 Biggest Win: ${bigWin?`${bigWin.home} ${bigWin.hs}–${bigWin.as_} ${bigWin.away}`:'—'}<br>🟥 3 reds, 16 yellows · 🌎 48 teams, 104 matches total · ⭐ Messi equals Klose WC record</div></div></div>
+    <div class="fun-item"><span class="fun-emoji">📈</span><div><div class="fun-text"><strong>Top Teams by GD</strong></div><div class="fun-sub">1. 🇩🇪 Germany +6 &nbsp; 2. 🇸🇪 Sweden +4 &nbsp; 3. 🇳🇴 Norway +3<br>4. 🇦🇷 Argentina +3 &nbsp; 5. 🇺🇸 USA +3 &nbsp; 6. 🇦🇹 Austria +2</div></div></div>
   </div>`;
 }
 
