@@ -528,9 +528,9 @@ const GROUPS={
   ]},
   I:{teams:[
     {flag:'🇫🇷',name:'France', mp:1,w:1,d:0,l:0,gf:3,ga:1,pts:3},
+    {flag:'🇳🇴',name:'Norway', mp:1,w:1,d:0,l:0,gf:4,ga:1,pts:3},
     {flag:'🇸🇳',name:'Senegal',mp:1,w:0,d:0,l:1,gf:1,ga:3,pts:0},
-    {flag:'🇳🇴',name:'Norway', mp:0,w:0,d:0,l:0,gf:0,ga:0,pts:0},
-    {flag:'🇮🇶',name:'Iraq',   mp:0,w:0,d:0,l:0,gf:0,ga:0,pts:0},
+    {flag:'🇮🇶',name:'Iraq',   mp:1,w:0,d:0,l:1,gf:1,ga:4,pts:0},
   ]},
   J:{teams:[
     {flag:'🇦🇷',name:'Argentina',mp:0,w:0,d:0,l:0,gf:0,ga:0,pts:0},
@@ -656,10 +656,10 @@ let MATCHES=[
    hev:[{i:'⚽',m:"66'",n:'K. Mbappé',a:'1st goal'},{i:'⚽',m:"82'",n:'B. Barcola',a:''},{i:'⚽',m:"90+6'",n:'K. Mbappé',a:'2nd goal — seals it'}],
    aev:[{i:'⚽',m:"90+5'",n:'I. Mbaye',a:'Consolation'}],
    motm:'K. Mbappé (FRA)',ms:null},
-  {grp:'I',home:'Iraq',hf:'🇮🇶',away:'Norway',af:'🇳🇴',hs:1,as_:3,date:'Jun 16',time:'6:00 PM',venue:'Boston',espnId:'760430',status:'live',clock:'LIVE',
-   hev:[{i:'⚽',m:"39'",n:'A. Hussein',a:'Header'}],
-   aev:[{i:'⚽',m:"29'",n:'E. Haaland',a:'1st goal'},{i:'⚽',m:"43'",n:'E. Haaland',a:'Brace!'},{i:'⚽',m:"76'",n:'L. Ostigard',a:'Sub — 3rd goal for Norway'}],
-   tbd:false,ms:null},
+  {grp:'I',home:'Iraq',hf:'🇮🇶',away:'Norway',af:'🇳🇴',hs:1,as_:4,date:'Jun 16',time:'6:00 PM',venue:'Boston',espnId:'760430',status:'ft',
+   hev:[{i:'⚽',m:"39'",n:'A. Hussein',a:'Header — A. Al-Ammari assist'}],
+   aev:[{i:'⚽',m:"29'",n:'E. Haaland',a:'Ast: D. Moller Wolfe'},{i:'⚽',m:"43'",n:'E. Haaland',a:'Brace — closed down keeper'},{i:'⚽',m:"76'",n:'L. Ostigard',a:'Ast: M. Ødegaard (corner header)'},{i:'⚽',m:'TBD',n:'TBD',a:'4th Norway goal — pending openfootball'}],
+   tbd:true,motm:'E. Haaland (NOR)',ms:null},
   {grp:'J',home:'Argentina',hf:'🇦🇷',away:'Algeria',af:'🇩🇿',hs:null,as_:null,date:'Jun 16',time:'9:00 PM',venue:'Kansas City',espnId:'760433',status:'upcoming',hev:[],aev:[],ms:null},
   {grp:'J',home:'Austria',hf:'🇦🇹',away:'Jordan',af:'🇯🇴',hs:null,as_:null,date:'Jun 16',time:'12:00 AM',venue:'San Francisco',espnId:'760434',status:'upcoming',hev:[],aev:[],ms:null},
   // JUN 17
@@ -732,6 +732,9 @@ let MATCHES=[
 // matchOrder = chronological match number (higher = more recent)
 // ============================================================
 const GOALS=[
+  {name:'E. Haaland',     team:'Norway',   flag:'🇳🇴',goals:2,photo:null,matchOrder:18,lastMin:43},
+  {name:'L. Ostigard',   team:'Norway',   flag:'🇳🇴',goals:1,photo:null,matchOrder:18,lastMin:76},
+  {name:'A. Hussein',    team:'Iraq',     flag:'🇮🇶',goals:1,photo:null,matchOrder:18,lastMin:39},
   {name:'K. Mbappé',      team:'France',   flag:'🇫🇷',goals:2,photo:null,matchOrder:17,lastMin:90},
   {name:'B. Barcola',     team:'France',   flag:'🇫🇷',goals:1,photo:null,matchOrder:17,lastMin:82},
   {name:'I. Mbaye',       team:'Senegal',  flag:'🇸🇳',goals:1,photo:null,matchOrder:17,lastMin:90},
@@ -800,6 +803,8 @@ const ASSISTS=[
 ];
 
 const GKS=[
+  {name:'O. Nyland',     team:'Norway',   flag:'🇳🇴',photo:null,mp:1,saves:2,ga:1,cs:0,savePct:67},
+  {name:'J. Hassan',     team:'Iraq',     flag:'🇮🇶',photo:null,mp:1,saves:3,ga:4,cs:0,savePct:43},
   {name:'M. Maignan',    team:'France',   flag:'🇫🇷',photo:null,mp:1,saves:2,ga:1,cs:0,savePct:67},
   {name:'E. Mendy',      team:'Senegal',  flag:'🇸🇳',photo:null,mp:1,saves:4,ga:3,cs:0,savePct:57},
   {name:'M. Beiranvand', team:'Iran',         flag:'🇮🇷',photo:null,mp:1,saves:3,ga:2,cs:0,savePct:60},
