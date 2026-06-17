@@ -539,10 +539,10 @@ const GROUPS={
     {flag:'🇩🇿',name:'Algeria',  mp:1,w:0,d:0,l:1,gf:0,ga:3,pts:0},
   ]},
   K:{teams:[
-    {flag:'🇵🇹',name:'Portugal',  mp:0,w:0,d:0,l:0,gf:0,ga:0,pts:0},
+    {flag:'🇵🇹',name:'Portugal',  mp:1,w:0,d:1,l:0,gf:1,ga:1,pts:1},
+    {flag:'🇨🇩',name:'DR Congo',  mp:1,w:0,d:1,l:0,gf:1,ga:1,pts:1},
     {flag:'🇨🇴',name:'Colombia',  mp:0,w:0,d:0,l:0,gf:0,ga:0,pts:0},
     {flag:'🇺🇿',name:'Uzbekistan',mp:0,w:0,d:0,l:0,gf:0,ga:0,pts:0},
-    {flag:'🇨🇩',name:'DR Congo',  mp:0,w:0,d:0,l:0,gf:0,ga:0,pts:0},
   ]},
   L:{teams:[
     {flag:'🏴󠁧󠁢󠁥󠁮󠁧󠁿',name:'England', mp:0,w:0,d:0,l:0,gf:0,ga:0,pts:0},
@@ -668,8 +668,11 @@ let MATCHES=[
    aev:[{i:'⚽',m:"50'",n:'A. Olwan',a:'Jordan back in it'}],
    motm:'R. Schmid (AUT)',ms:null},
   // JUN 17
-  {grp:'K',home:'Portugal',hf:'🇵🇹',away:'DR Congo',af:'🇨🇩',hs:null,as_:null,date:'Jun 17',time:'1:00 PM',venue:'Houston',status:'upcoming',hev:[],aev:[],ms:null},
-  {grp:'L',home:'England',hf:'🏴󠁧󠁢󠁥󠁮󠁧󠁿',away:'Croatia',af:'🇭🇷',hs:null,as_:null,date:'Jun 17',time:'4:00 PM',venue:'Dallas',status:'upcoming',hev:[],aev:[],ms:null},
+  {grp:'K',home:'Portugal',hf:'🇵🇹',away:'DR Congo',af:'🇨🇩',hs:1,as_:1,date:'Jun 17',time:'1:00 PM',venue:'Houston',status:'ft',
+   hev:[{i:'⚽',m:"6'",n:'J. Neves',a:'Early opener'}],
+   aev:[{i:'⚽',m:"45+5'",n:'Y. Wissa',a:'Late equalizer — HT 1-1'}],
+   motm:'J. Neves (POR)',ms:null},
+  {grp:'L',home:'England',hf:'🏴󠁧󠁢󠁥󠁮󠁧󠁿',away:'Croatia',af:'🇭🇷',hs:3,as_:2,date:'Jun 17',time:'4:00 PM',venue:'Dallas',espnId:'760436',status:'live',clock:'LIVE',hev:[],aev:[],tbd:true,fifaVerified:true,ms:null},
   {grp:'L',home:'Ghana',hf:'🇬🇭',away:'Panama',af:'🇵🇦',hs:null,as_:null,date:'Jun 17',time:'7:00 PM',venue:'Toronto',status:'upcoming',hev:[],aev:[],ms:null},
   {grp:'K',home:'Uzbekistan',hf:'🇺🇿',away:'Colombia',af:'🇨🇴',hs:null,as_:null,date:'Jun 17',time:'10:00 PM',venue:'Mexico City',status:'upcoming',hev:[],aev:[],ms:null},
   // JUN 18
@@ -737,6 +740,8 @@ let MATCHES=[
 // matchOrder = chronological match number (higher = more recent)
 // ============================================================
 const GOALS=[
+  {name:'J. Neves',        team:'Portugal', flag:'🇵🇹',goals:1,photo:null,matchOrder:21,lastMin:6},
+  {name:'Y. Wissa',        team:'DR Congo',  flag:'🇨🇩',goals:1,photo:null,matchOrder:21,lastMin:45},
   {name:'L. Messi',        team:'Argentina', flag:'🇦🇷',goals:3,photo:null,matchOrder:19,lastMin:76},
   {name:'R. Schmid',       team:'Austria',   flag:'🇦🇹',goals:1,photo:null,matchOrder:20,lastMin:21},
   {name:'Y. Al-Arab',      team:'Austria',   flag:'🇦🇹',goals:1,photo:null,matchOrder:20,lastMin:76},
@@ -827,6 +832,8 @@ const GKS=[
   {name:'Y. Bounou',  team:'Morocco', flag:'🇲🇦',photo:null,mp:1,saves:3,ga:1,cs:0,savePct:75},
   {name:'D. Raya',  team:'Spain', flag:'🇪🇸',photo:null,mp:1,saves:0,ga:0,cs:1,savePct:100},
   {name:'Vozinha',      team:'Cape Verde', flag:'🇨🇻',photo:null,mp:1,saves:6,ga:0,cs:1,savePct:100},
+  {name:'D. Costa',      team:'Portugal', flag:'🇵🇹',photo:null,mp:1,saves:4,ga:1,cs:0,savePct:80},
+  {name:'H. Epassy',     team:'DR Congo',  flag:'🇨🇩',photo:null,mp:1,saves:3,ga:1,cs:0,savePct:75},
   {name:'E. Martinez',   team:'Argentina', flag:'🇦🇷',photo:null,mp:1,saves:3,ga:0,cs:1,savePct:100},
   {name:'P. Pentz',      team:'Austria',   flag:'🇦🇹',photo:null,mp:1,saves:2,ga:1,cs:0,savePct:67},
   {name:'Y. Shaban',     team:'Jordan',    flag:'🇯🇴',photo:null,mp:1,saves:4,ga:3,cs:0,savePct:57},
