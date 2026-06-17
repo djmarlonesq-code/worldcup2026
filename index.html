@@ -545,8 +545,8 @@ const GROUPS={
     {flag:'🇺🇿',name:'Uzbekistan',mp:0,w:0,d:0,l:0,gf:0,ga:0,pts:0},
   ]},
   L:{teams:[
-    {flag:'🏴󠁧󠁢󠁥󠁮󠁧󠁿',name:'England', mp:0,w:0,d:0,l:0,gf:0,ga:0,pts:0},
-    {flag:'🇭🇷',name:'Croatia', mp:0,w:0,d:0,l:0,gf:0,ga:0,pts:0},
+    {flag:'🏴󠁧󠁢󠁥󠁮󠁧󠁿',name:'England', mp:1,w:1,d:0,l:0,gf:4,ga:2,pts:3},
+    {flag:'🇭🇷',name:'Croatia', mp:1,w:0,d:0,l:1,gf:2,ga:4,pts:0},
     {flag:'🇬🇭',name:'Ghana',   mp:0,w:0,d:0,l:0,gf:0,ga:0,pts:0},
     {flag:'🇵🇦',name:'Panama',  mp:0,w:0,d:0,l:0,gf:0,ga:0,pts:0},
   ]},
@@ -672,7 +672,10 @@ let MATCHES=[
    hev:[{i:'⚽',m:"6'",n:'J. Neves',a:'Early opener'}],
    aev:[{i:'⚽',m:"45+5'",n:'Y. Wissa',a:'Late equalizer — HT 1-1'}],
    motm:'J. Neves (POR)',ms:null},
-  {grp:'L',home:'England',hf:'🏴󠁧󠁢󠁥󠁮󠁧󠁿',away:'Croatia',af:'🇭🇷',hs:3,as_:2,date:'Jun 17',time:'4:00 PM',venue:'Dallas',espnId:'760436',status:'live',clock:'LIVE',hev:[],aev:[],tbd:true,fifaVerified:true,ms:null},
+  {grp:'L',home:'England',hf:'🏴󠁧󠁢󠁥󠁮󠁧󠁿',away:'Croatia',af:'🇭🇷',hs:4,as_:2,date:'Jun 17',time:'4:00 PM',venue:'Dallas',espnId:'760436',status:'ft',
+   hev:[{i:'⚽',m:"12'",n:'H. Kane',a:'Opening goal'},{i:'⚽',m:"42'",n:'H. Kane',a:'Brace!'},{i:'⚽',m:"47'",n:'J. Bellingham',a:'Early 2nd half'},{i:'⚽',m:"85'",n:'M. Rashford',a:'Seals it'}],
+   aev:[{i:'⚽',m:"36'",n:'M. Baturina',a:'Back in it'},{i:'⚽',m:"45+5'",n:'P. Musa',a:'HT equalizer!'}],
+   motm:'H. Kane (ENG)',ms:null},
   {grp:'L',home:'Ghana',hf:'🇬🇭',away:'Panama',af:'🇵🇦',hs:null,as_:null,date:'Jun 17',time:'7:00 PM',venue:'Toronto',status:'upcoming',hev:[],aev:[],ms:null},
   {grp:'K',home:'Uzbekistan',hf:'🇺🇿',away:'Colombia',af:'🇨🇴',hs:null,as_:null,date:'Jun 17',time:'10:00 PM',venue:'Mexico City',status:'upcoming',hev:[],aev:[],ms:null},
   // JUN 18
@@ -740,6 +743,11 @@ let MATCHES=[
 // matchOrder = chronological match number (higher = more recent)
 // ============================================================
 const GOALS=[
+  {name:'H. Kane',         team:'England',  flag:'🏴󠁧󠁢󠁥󠁮󠁧󠁿',goals:2,photo:null,matchOrder:22,lastMin:42},
+  {name:'J. Bellingham',   team:'England',  flag:'🏴󠁧󠁢󠁥󠁮󠁧󠁿',goals:1,photo:null,matchOrder:22,lastMin:47},
+  {name:'M. Rashford',     team:'England',  flag:'🏴󠁧󠁢󠁥󠁮󠁧󠁿',goals:1,photo:null,matchOrder:22,lastMin:85},
+  {name:'M. Baturina',     team:'Croatia',  flag:'🇭🇷',goals:1,photo:null,matchOrder:22,lastMin:36},
+  {name:'P. Musa',         team:'Croatia',  flag:'🇭🇷',goals:1,photo:null,matchOrder:22,lastMin:45},
   {name:'J. Neves',        team:'Portugal', flag:'🇵🇹',goals:1,photo:null,matchOrder:21,lastMin:6},
   {name:'Y. Wissa',        team:'DR Congo',  flag:'🇨🇩',goals:1,photo:null,matchOrder:21,lastMin:45},
   {name:'L. Messi',        team:'Argentina', flag:'🇦🇷',goals:3,photo:null,matchOrder:19,lastMin:76},
@@ -832,6 +840,8 @@ const GKS=[
   {name:'Y. Bounou',  team:'Morocco', flag:'🇲🇦',photo:null,mp:1,saves:3,ga:1,cs:0,savePct:75},
   {name:'D. Raya',  team:'Spain', flag:'🇪🇸',photo:null,mp:1,saves:0,ga:0,cs:1,savePct:100},
   {name:'Vozinha',      team:'Cape Verde', flag:'🇨🇻',photo:null,mp:1,saves:6,ga:0,cs:1,savePct:100},
+  {name:'J. Pickford',   team:'England',  flag:'🏴󠁧󠁢󠁥󠁮󠁧󠁿',photo:null,mp:1,saves:5,ga:2,cs:0,savePct:71},
+  {name:'D. Livaković',  team:'Croatia',  flag:'🇭🇷',photo:null,mp:1,saves:6,ga:4,cs:0,savePct:60},
   {name:'D. Costa',      team:'Portugal', flag:'🇵🇹',photo:null,mp:1,saves:4,ga:1,cs:0,savePct:80},
   {name:'H. Epassy',     team:'DR Congo',  flag:'🇨🇩',photo:null,mp:1,saves:3,ga:1,cs:0,savePct:75},
   {name:'E. Martinez',   team:'Argentina', flag:'🇦🇷',photo:null,mp:1,saves:3,ga:0,cs:1,savePct:100},
