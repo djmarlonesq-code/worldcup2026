@@ -533,10 +533,10 @@ const GROUPS={
     {flag:'🇮🇶',name:'Iraq',   mp:1,w:0,d:0,l:1,gf:1,ga:4,pts:0},
   ]},
   J:{teams:[
-    {flag:'🇦🇷',name:'Argentina',mp:0,w:0,d:0,l:0,gf:0,ga:0,pts:0},
-    {flag:'🇩🇿',name:'Algeria',  mp:0,w:0,d:0,l:0,gf:0,ga:0,pts:0},
-    {flag:'🇦🇹',name:'Austria',  mp:0,w:0,d:0,l:0,gf:0,ga:0,pts:0},
-    {flag:'🇯🇴',name:'Jordan',   mp:0,w:0,d:0,l:0,gf:0,ga:0,pts:0},
+    {flag:'🇦🇷',name:'Argentina',mp:1,w:1,d:0,l:0,gf:3,ga:0,pts:3},
+    {flag:'🇦🇹',name:'Austria',  mp:1,w:1,d:0,l:0,gf:3,ga:1,pts:3},
+    {flag:'🇯🇴',name:'Jordan',   mp:1,w:0,d:0,l:1,gf:1,ga:3,pts:0},
+    {flag:'🇩🇿',name:'Algeria',  mp:1,w:0,d:0,l:1,gf:0,ga:3,pts:0},
   ]},
   K:{teams:[
     {flag:'🇵🇹',name:'Portugal',  mp:0,w:0,d:0,l:0,gf:0,ga:0,pts:0},
@@ -660,8 +660,13 @@ let MATCHES=[
    hev:[{i:'⚽',m:"39'",n:'A. Hussein',a:'Ast: A. Al-Ammari'}],
    aev:[{i:'⚽',m:"29'",n:'E. Haaland',a:'Ast: D. Moller Wolfe'},{i:'⚽',m:"43'",n:'E. Haaland',a:'Brace — closed down keeper'},{i:'⚽',m:"76'",n:'L. Ostgard',a:'Ast: M. Ødegaard (corner)'},{i:'⚽',m:"90+6'",n:'A. Hussein OG',a:'Own goal — seals Norway win'}],
    tbd:false,motm:'E. Haaland (NOR)',ms:null},
-  {grp:'J',home:'Argentina',hf:'🇦🇷',away:'Algeria',af:'🇩🇿',hs:3,as_:0,date:'Jun 16',time:'9:00 PM',venue:'Kansas City',espnId:'760433',status:'live',clock:'LIVE',fifaVerified:true,hev:[{i:'⚽',m:'TBD',n:'TBD',a:'Goal 1 — pending openfootball'},{i:'⚽',m:'TBD',n:'TBD',a:'Goal 2 — pending openfootball'},{i:'⚽',m:'TBD',n:'TBD',a:'Goal 3 — pending openfootball'}],aev:[],tbd:true,ms:null},
-  {grp:'J',home:'Austria',hf:'🇦🇹',away:'Jordan',af:'🇯🇴',hs:null,as_:null,date:'Jun 16',time:'12:00 AM',venue:'San Francisco',espnId:'760434',status:'upcoming',hev:[],aev:[],ms:null},
+  {grp:'J',home:'Argentina',hf:'🇦🇷',away:'Algeria',af:'🇩🇿',hs:3,as_:0,date:'Jun 16',time:'9:00 PM',venue:'Kansas City',espnId:'760433',status:'ft',
+   hev:[{i:'⚽',m:"17'",n:'L. Messi',a:'Hat-trick goal 1'},{i:'⚽',m:"60'",n:'L. Messi',a:'Hat-trick goal 2'},{i:'⚽',m:"76'",n:'L. Messi',a:'Hat-trick goal 3 — levels Klose WC record!'}],
+   aev:[],motm:'L. Messi (ARG)',ms:null},
+  {grp:'J',home:'Austria',hf:'🇦🇹',away:'Jordan',af:'🇯🇴',hs:3,as_:1,date:'Jun 16',time:'12:00 AM',venue:'San Francisco',espnId:'760434',status:'ft',
+   hev:[{i:'⚽',m:"21'",n:'R. Schmid',a:'Austria opener'},{i:'⚽',m:"76'",n:'Y. Al-Arab',a:'2nd goal'},{i:'⚽',m:"90+12'",n:'M. Arnautovic',a:'Late 3rd — huge stoppage time!'}],
+   aev:[{i:'⚽',m:"50'",n:'A. Olwan',a:'Jordan back in it'}],
+   motm:'R. Schmid (AUT)',ms:null},
   // JUN 17
   {grp:'K',home:'Portugal',hf:'🇵🇹',away:'DR Congo',af:'🇨🇩',hs:null,as_:null,date:'Jun 17',time:'1:00 PM',venue:'Houston',status:'upcoming',hev:[],aev:[],ms:null},
   {grp:'L',home:'England',hf:'🏴󠁧󠁢󠁥󠁮󠁧󠁿',away:'Croatia',af:'🇭🇷',hs:null,as_:null,date:'Jun 17',time:'4:00 PM',venue:'Dallas',status:'upcoming',hev:[],aev:[],ms:null},
@@ -732,6 +737,11 @@ let MATCHES=[
 // matchOrder = chronological match number (higher = more recent)
 // ============================================================
 const GOALS=[
+  {name:'L. Messi',        team:'Argentina', flag:'🇦🇷',goals:3,photo:null,matchOrder:19,lastMin:76},
+  {name:'R. Schmid',       team:'Austria',   flag:'🇦🇹',goals:1,photo:null,matchOrder:20,lastMin:21},
+  {name:'Y. Al-Arab',      team:'Austria',   flag:'🇦🇹',goals:1,photo:null,matchOrder:20,lastMin:76},
+  {name:'M. Arnautovic',   team:'Austria',   flag:'🇦🇹',goals:1,photo:null,matchOrder:20,lastMin:90},
+  {name:'A. Olwan',        team:'Jordan',    flag:'🇯🇴',goals:1,photo:null,matchOrder:20,lastMin:50},
   {name:'E. Haaland',     team:'Norway',   flag:'🇳🇴',goals:2,photo:null,matchOrder:18,lastMin:43},
   {name:'L. Ostgard',    team:'Norway',   flag:'🇳🇴',goals:1,photo:null,matchOrder:18,lastMin:76},
   {name:'A. Hussein',    team:'Iraq',     flag:'🇮🇶',goals:1,photo:null,matchOrder:18,lastMin:39},
@@ -816,6 +826,10 @@ const GKS=[
   {name:'Y. Bounou',  team:'Morocco', flag:'🇲🇦',photo:null,mp:1,saves:3,ga:1,cs:0,savePct:75},
   {name:'D. Raya',  team:'Spain', flag:'🇪🇸',photo:null,mp:1,saves:0,ga:0,cs:1,savePct:100},
   {name:'Vozinha',      team:'Cape Verde', flag:'🇨🇻',photo:null,mp:1,saves:6,ga:0,cs:1,savePct:100},
+  {name:'E. Martinez',   team:'Argentina', flag:'🇦🇷',photo:null,mp:1,saves:3,ga:0,cs:1,savePct:100},
+  {name:'P. Pentz',      team:'Austria',   flag:'🇦🇹',photo:null,mp:1,saves:2,ga:1,cs:0,savePct:67},
+  {name:'Y. Shaban',     team:'Jordan',    flag:'🇯🇴',photo:null,mp:1,saves:4,ga:3,cs:0,savePct:57},
+  {name:'R. Mbolhi',     team:'Algeria',   flag:'🇩🇿',photo:null,mp:1,saves:1,ga:3,cs:0,savePct:25},
   {name:'O. Nyland',     team:'Norway',   flag:'🇳🇴',photo:null,mp:1,saves:2,ga:1,cs:0,savePct:67},
   {name:'J. Hassan',     team:'Iraq',     flag:'🇮🇶',photo:null,mp:1,saves:3,ga:4,cs:0,savePct:43},
   {name:'M. Maignan',    team:'France',   flag:'🇫🇷',photo:null,mp:1,saves:2,ga:1,cs:0,savePct:67},
