@@ -1496,10 +1496,8 @@ function renderStats(){
   const played=MATCHES.filter(m=>m.status==='ft');
   let tsh='';
   played.slice().reverse().forEach(m=>{
-    const {homePoss,awayPoss,homeShots,awayShots,homeShotsOT,awayShotsOT,homeCorners,awayCorners,homeSaves,awaySaves}=m.ms;
-    const ap=awayPoss||(100-homePoss);
-    function bar(hv,av,lbl){const tot=hv+av||1;const hp=Math.round(hv/tot*100);return`<div class="ms-bar-row"><div class="ms-bar-label"><span class="ms-val-h">${hv}</span><span class="ms-lbl-c">${lbl}</span><span class="ms-val-a">${av}</span></div><div class="ms-bar-track"><div class="ms-bar-h" style="width:${hp}%"></div><div class="ms-bar-a" style="width:${100-hp}%"></div></div></div>`;}
-    const eid=getEspnId(m.home,m.away)||m.espnId||''; tsh+=`<div class="ts-card" onclick="loadCardStats(this,'${m.home}','${m.away}','${eid}')" style="cursor:pointer"><div class="ts-header"><span style="font-size:22px">${m.hf}</span><div><div class="ts-title">${m.home} <span style="color:var(--wc-yellow)">${m.hs}–${m.as_}</span> ${m.away} ${m.af}</div><div class="ts-subtitle">${m.date} · ${m.venue} · <span style="color:var(--wc-yellow);font-size:11px">Tap to load stats</span></div></div></div>${m.motm?`<div class="ms-motm">🏅 <strong>MOTM:</strong> ${m.motm}</div>`:''}<div class="ts-stats-content"></div></div>`;
+    const eid=getEspnId(m.home,m.away)||m.espnId||'';
+    tsh+=`<div class="ts-card" onclick="loadCardStats(this,'${m.home}','${m.away}','${eid}')" style="cursor:pointer"><div class="ts-header"><span style="font-size:22px">${m.hf}</span><div><div class="ts-title">${m.home} <span style="color:var(--wc-yellow)">${m.hs}–${m.as_}</span> ${m.away} ${m.af}</div><div class="ts-subtitle">${m.date} · ${m.venue} · <span style="color:var(--wc-yellow);font-size:11px">📊 Tap to load stats</span></div></div></div>${m.motm?`<div class="ms-motm">🏅 <strong>MOTM:</strong> ${m.motm}</div>`:''}<div class="ts-stats-content"></div></div>`;
   });
   document.getElementById('teamStatsCont').innerHTML=tsh;
 
