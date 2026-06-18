@@ -546,9 +546,9 @@ const GROUPS={
   ]},
   L:{teams:[
     {flag:'🏴󠁧󠁢󠁥󠁮󠁧󠁿',name:'England', mp:1,w:1,d:0,l:0,gf:4,ga:2,pts:3},
+    {flag:'🇬🇭',name:'Ghana',   mp:1,w:1,d:0,l:0,gf:1,ga:0,pts:3},
     {flag:'🇭🇷',name:'Croatia', mp:1,w:0,d:0,l:1,gf:2,ga:4,pts:0},
-    {flag:'🇬🇭',name:'Ghana',   mp:0,w:0,d:0,l:0,gf:0,ga:0,pts:0},
-    {flag:'🇵🇦',name:'Panama',  mp:0,w:0,d:0,l:0,gf:0,ga:0,pts:0},
+    {flag:'🇵🇦',name:'Panama',  mp:1,w:0,d:0,l:1,gf:0,ga:1,pts:0},
   ]},
 };
 
@@ -676,8 +676,10 @@ let MATCHES=[
    hev:[{i:'⚽',m:"12'",n:'H. Kane',a:'Opening goal'},{i:'⚽',m:"42'",n:'H. Kane',a:'Brace!'},{i:'⚽',m:"47'",n:'J. Bellingham',a:'Early 2nd half'},{i:'⚽',m:"85'",n:'M. Rashford',a:'Seals it'}],
    aev:[{i:'⚽',m:"36'",n:'M. Baturina',a:'Back in it'},{i:'⚽',m:"45+5'",n:'P. Musa',a:'HT equalizer!'}],
    motm:'H. Kane (ENG)',ms:null},
-  {grp:'L',home:'Ghana',hf:'🇬🇭',away:'Panama',af:'🇵🇦',hs:null,as_:null,date:'Jun 17',time:'7:00 PM',venue:'Toronto',status:'upcoming',hev:[],aev:[],ms:null},
-  {grp:'K',home:'Uzbekistan',hf:'🇺🇿',away:'Colombia',af:'🇨🇴',hs:null,as_:null,date:'Jun 17',time:'10:00 PM',venue:'Mexico City',status:'upcoming',hev:[],aev:[],ms:null},
+  {grp:'L',home:'Ghana',hf:'🇬🇭',away:'Panama',af:'🇵🇦',hs:1,as_:0,date:'Jun 17',time:'7:00 PM',venue:'Toronto',status:'ft',
+   hev:[{i:'⚽',m:"90+5'",n:'C. Yirenkyi',a:'Dramatic late winner!'}],
+   aev:[],motm:'C. Yirenkyi (GHA)',ms:null},
+  {grp:'K',home:'Uzbekistan',hf:'🇺🇿',away:'Colombia',af:'🇨🇴',hs:0,as_:0,date:'Jun 17',time:'10:00 PM',venue:'Mexico City',espnId:'760438',status:'live',clock:'LIVE',hev:[],aev:[],tbd:true,ms:null},
   // JUN 18
   {grp:'A',home:'Czechia',hf:'🇨🇿',away:'South Africa',af:'🇿🇦',hs:null,as_:null,date:'Jun 18',time:'12:00 PM',venue:'Atlanta',status:'upcoming',hev:[],aev:[],ms:null},
   {grp:'B',home:'Switzerland',hf:'🇨🇭',away:'Bosnia & Herz.',af:'🇧🇦',hs:null,as_:null,date:'Jun 18',time:'3:00 PM',venue:'Los Angeles',status:'upcoming',hev:[],aev:[],ms:null},
@@ -743,6 +745,7 @@ let MATCHES=[
 // matchOrder = chronological match number (higher = more recent)
 // ============================================================
 const GOALS=[
+  {name:'C. Yirenkyi',     team:'Ghana',    flag:'🇬🇭',goals:1,photo:null,matchOrder:23,lastMin:90},
   {name:'H. Kane',         team:'England',  flag:'🏴󠁧󠁢󠁥󠁮󠁧󠁿',goals:2,photo:null,matchOrder:22,lastMin:42},
   {name:'J. Bellingham',   team:'England',  flag:'🏴󠁧󠁢󠁥󠁮󠁧󠁿',goals:1,photo:null,matchOrder:22,lastMin:47},
   {name:'M. Rashford',     team:'England',  flag:'🏴󠁧󠁢󠁥󠁮󠁧󠁿',goals:1,photo:null,matchOrder:22,lastMin:85},
@@ -840,6 +843,8 @@ const GKS=[
   {name:'Y. Bounou',  team:'Morocco', flag:'🇲🇦',photo:null,mp:1,saves:3,ga:1,cs:0,savePct:75},
   {name:'D. Raya',  team:'Spain', flag:'🇪🇸',photo:null,mp:1,saves:0,ga:0,cs:1,savePct:100},
   {name:'Vozinha',      team:'Cape Verde', flag:'🇨🇻',photo:null,mp:1,saves:6,ga:0,cs:1,savePct:100},
+  {name:'L. Ati-Zigi',   team:'Ghana',   flag:'🇬🇭',photo:null,mp:1,saves:4,ga:0,cs:1,savePct:100},
+  {name:'O. Mosquera',  team:'Panama',  flag:'🇵🇦',photo:null,mp:1,saves:3,ga:1,cs:0,savePct:75},
   {name:'J. Pickford',   team:'England',  flag:'🏴󠁧󠁢󠁥󠁮󠁧󠁿',photo:null,mp:1,saves:5,ga:2,cs:0,savePct:71},
   {name:'D. Livaković',  team:'Croatia',  flag:'🇭🇷',photo:null,mp:1,saves:6,ga:4,cs:0,savePct:60},
   {name:'D. Costa',      team:'Portugal', flag:'🇵🇹',photo:null,mp:1,saves:4,ga:1,cs:0,savePct:80},
@@ -1038,15 +1043,26 @@ async function doRefresh() {
           const period = statusObj.period || 0;
           const clockSecs = statusObj.clock || 0;
           let clock = '';
-          if (rawClock && rawClock !== '0:00' && rawClock !== '0\'') {
-            // ESPN returned a real clock value like "67'" or "45:00"
-            clock = rawClock.includes(':') 
-              ? Math.ceil(parseInt(rawClock.split(':')[0]) + (parseInt(rawClock.split(':')[1]||0)/60)) + "'"
-              : rawClock;
+          if (rawClock && rawClock !== '0:00') {
+            if (rawClock.includes(':')) {
+              const parts = rawClock.split(':');
+              const mins = parseInt(parts[0]);
+              const secs = parseInt(parts[1] || '0');
+              const halfStart = period === 2 ? 45 : 0;
+              // ESPN soccer returns time remaining if <= 45, elapsed if > 45
+              if (mins <= 45) {
+                const elapsed = Math.round(halfStart + (45 - mins - secs/60));
+                clock = Math.max(1, elapsed) + "'";
+              } else {
+                clock = mins + "'";
+              }
+            } else {
+              clock = rawClock;
+            }
           } else if (clockSecs > 0) {
-            // Calculate minute from seconds
-            const mins = Math.floor((period === 2 ? 45 : 0) + clockSecs / 60);
-            clock = mins + "'";
+            const halfStart = period === 2 ? 45 : 0;
+            const elapsed = Math.round(halfStart + (2700 - clockSecs) / 60);
+            clock = Math.max(1, elapsed) + "'";
           } else if (period === 1) {
             clock = '1H';
           } else if (period === 2) {
@@ -1091,21 +1107,35 @@ async function doRefresh() {
             }
           } else if (state === 'in') {
             // Live game — update score and clock
-            // Use team name matching to assign scores correctly
             const espnHomeTeam = normHome;
             const homeIsESPNHome = match.home.includes(espnHomeTeam.split(' ')[0]) || 
                                    espnHomeTeam.includes(match.home.split(' ')[0]);
             let newHs = homeIsESPNHome ? parseInt(espnHome.score)||0 : parseInt(espnAway.score)||0;
             let newAs = homeIsESPNHome ? parseInt(espnAway.score)||0 : parseInt(espnHome.score)||0;
-            // Never let ESPN decrease the score — if we already have more goals, keep ours
-            // This prevents ESPN returning stale 0-0 when FIFA shows 1-0
-            // Also skip if FIFA has verified the score (ESPN is broken for this match)
             if (!match.fifaVerified && newHs + newAs >= (match.hs||0) + (match.as_||0)) {
               match.hs = newHs;
               match.as_ = newAs;
             }
             match.status = 'live';
-            match.clock = clock;
+            // Build clock: try displayClock first, then period+clock seconds
+            if (clock && clock !== '0:00' && clock !== "0'") {
+              // ESPN returns clock as MM:SS countdown (e.g. "43:21" = 43 min elapsed in half)
+              // For soccer: period 1 = first half, period 2 = second half
+              const parts = clock.split(':');
+              if (parts.length === 2) {
+                const elapsed = parseInt(parts[0]);
+                const period = comp.status?.period || 1;
+                const totalMin = period === 2 ? 45 + elapsed : elapsed;
+                match.clock = totalMin + "'";
+              } else {
+                match.clock = clock;
+              }
+            } else if (comp.status?.period) {
+              const period = comp.status.period;
+              match.clock = period === 1 ? '1H' : period === 2 ? '2H' : 'ET';
+            } else {
+              match.clock = match.clock || 'LIVE';
+            }
             liveCount++; updatedCount++;
           }
         });
