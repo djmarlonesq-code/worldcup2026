@@ -439,6 +439,115 @@ function flagImg(name, size=24) {
   return `<img src="${url}" alt="${name}" style="width:${size}px;height:auto;border-radius:2px;vertical-align:middle;" onerror="this.style.display='none'">`;
 }
 
+
+// ============================================================
+// ESPN EVENT IDs — for on-demand summary stats API
+// ============================================================
+const ESPN_IDS = {
+  'Mexico_South Africa':    '760415',
+  'South Korea_Czechia':    '760414',
+  'Canada_Bosnia & Herz.':  '760417',
+  'USA_Paraguay':           '760421',
+  'Qatar_Switzerland':      '760418',
+  'Brazil_Morocco':         '760420',
+  'Haiti_Scotland':         '760419',
+  'Australia_Türkiye':      '760416',
+  'Germany_Curaçao':        '760422',
+  'Netherlands_Japan':      '760425',
+  'Ivory Coast_Ecuador':    '760423',
+  'Tunisia_Sweden':         '760426',
+  'Spain_Cape Verde':       '760428',
+  'Belgium_Egypt':          '760427',
+  'Saudi Arabia_Uruguay':   '760429',
+  'Iran_New Zealand':       '760431',
+  'France_Senegal':         '760432',
+  'Iraq_Norway':            '760430',
+  'Argentina_Algeria':      '760433',
+  'Austria_Jordan':         '760434',
+  'Portugal_DR Congo':      '760435',
+  'England_Croatia':        '760436',
+  'Ghana_Panama':           '760437',
+  'Uzbekistan_Colombia':    '760438',
+};
+function getEspnId(home, away) {
+  return ESPN_IDS[home+'_'+away] || ESPN_IDS[away+'_'+home] || null;
+}
+const STATS_CACHE = {};
+
+async function fetchMatchStats(home, away, espnId) {
+  const key = espnId || (home+'_'+away);
+  if (STATS_CACHE[key]) return STATS_CACHE[key];
+  const id = espnId || getEspnId(home, away);
+  if (!id) return null;
+  try {
+    const resp = await fetch(
+      'https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/summary?event='+id,
+      {mode:'cors'}
+    );
+    if (!resp.ok) throw new Error('failed');
+    const data = await resp.json();
+    const teams = data.boxscore?.teams || [];
+    if (!teams.length) return null;
+    const homeTeam = teams.find(t=>t.homeAway==='home') || teams[0];
+    const awayTeam = teams.find(t=>t.homeAway==='away') || teams[1];
+    function gs(team, ...keys) {
+      for (const k of keys) {
+        const s = (team?.statistics||[]).find(s=>
+          (s.name||'').toLowerCase().includes(k) ||
+          (s.abbreviation||'').toLowerCase().includes(k)
+        );
+        if (s) return parseFloat(s.displayValue||s.value||0);
+      }
+      return null;
+    }
+    const ms = {
+      homePoss:    gs(homeTeam,'possession','poss'),
+      awayPoss:    gs(awayTeam,'possession','poss'),
+      homeShots:   gs(homeTeam,'totalshots','shots'),
+      awayShots:   gs(awayTeam,'totalshots','shots'),
+      homeShotsOT: gs(homeTeam,'shotsontarget','ontarget'),
+      awayShotsOT: gs(awayTeam,'shotsontarget','ontarget'),
+      homeCorners: gs(homeTeam,'corner','cornerkick'),
+      awayCorners: gs(awayTeam,'corner','cornerkick'),
+      homeFouls:   gs(homeTeam,'foul'),
+      awayFouls:   gs(awayTeam,'foul'),
+      homeOffsides:gs(homeTeam,'offside'),
+      awayOffsides:gs(awayTeam,'offside'),
+      homeSaves:   gs(homeTeam,'saves','save'),
+      awaySaves:   gs(awayTeam,'saves','save'),
+      homeYellow:  gs(homeTeam,'yellow'),
+      awayYellow:  gs(awayTeam,'yellow'),
+      homeRed:     gs(homeTeam,'red'),
+      awayRed:     gs(awayTeam,'red'),
+    };
+    if (ms.homePoss && !ms.awayPoss) ms.awayPoss = 100 - ms.homePoss;
+    if (ms.awayPoss && !ms.homePoss) ms.homePoss = 100 - ms.awayPoss;
+    STATS_CACHE[key] = ms;
+    return ms;
+  } catch(e) { return null; }
+}
+
+function buildStatsBar(ms) {
+  if (!ms) return '';
+  function bar(hv, av, lbl) {
+    if (hv===null && av===null) return '';
+    hv=hv||0; av=av||0;
+    const tot=hv+av||1; const hp=Math.round(hv/tot*100);
+    const sfx = lbl.includes('%')?'%':'';
+    return '<div class="ms-bar-row"><div class="ms-bar-label"><span class="ms-val-h">'+hv+sfx+'</span><span class="ms-lbl-c">'+lbl+'</span><span class="ms-val-a">'+av+sfx+'</span></div><div class="ms-bar-track"><div class="ms-bar-h" style="width:'+hp+'%"></div><div class="ms-bar-a" style="width:'+(100-hp)+'%"></div></div></div>';
+  }
+  return [
+    bar(ms.homePoss,ms.awayPoss,'Possession %'),
+    bar(ms.homeShots,ms.awayShots,'Total Shots'),
+    bar(ms.homeShotsOT,ms.awayShotsOT,'Shots on Target'),
+    bar(ms.homeCorners,ms.awayCorners,'Corners'),
+    bar(ms.homeFouls,ms.awayFouls,'Fouls'),
+    bar(ms.homeOffsides,ms.awayOffsides,'Offsides'),
+    bar(ms.homeSaves,ms.awaySaves,'GK Saves'),
+    bar(ms.homeYellow,ms.awayYellow,'Yellow Cards'),
+  ].filter(Boolean).join('');
+}
+
 // ============================================================
 // STADIUMS
 // ============================================================
@@ -1269,16 +1378,29 @@ function matchCard(m,showGrp=true){
   const bdr=isLive?'is-live':'';
   // Always render events drawer for FT matches (even 0-0 shows "No events" + stats)
   const evHtml=(isFt||isLive)?`<div class="mc-evts"><div class="ev-cols"><div class="ev-team"><div class="ev-lbl">${flagImg(m.home,14)||m.hf} ${m.home}</div>${evRows(m.hev)}</div><div class="ev-team"><div class="ev-lbl">${flagImg(m.away,14)||m.af} ${m.away}</div>${evRows(m.aev)}</div></div>${m.tbd?`<div class="mc-tbd-banner">⏳ Event details pending — will auto-update on Refresh when openfootball confirms</div>`:''}</div>`:'';
-  return`<div class="mc ${bdr}" onclick="${isExpandable||isLive?'toggleMC(this)':''}">
+  return`<div class="mc ${bdr}" onclick="toggleMC(this)" data-home="${m.home}" data-away="${m.away}" data-espnid="${m.espnId||getEspnId(m.home,m.away)||''}">
     <div class="mc-hdr"><span class="mc-tag">${showGrp?'Grp '+m.grp+' · ':''}${m.date}</span>${sp}${vb}</div>
     <div class="mc-body">
       <div class="t-side">${flagImg(m.home,28)||`<span class="t-flag">${m.hf}</span>`}<div><span class="t-name">${m.home}</span></div></div>
       <div class="sc-block">${sc}</div>
       <div class="t-side r">${flagImg(m.away,28)||`<span class="t-flag">${m.af}</span>`}<div><span class="t-name">${m.away}</span></div></div>
-    </div>${evHtml}${isFt&&hasStats?statsBar(m):''}</div>`;
+    </div>${evHtml}${isFt?`<div class="mc-stats">${m.ms?buildStatsBar(m.ms):''}</div>`:''}</div>`;
 }
-function toggleMC(el){
+async function toggleMC(el) {
+  const isOpening = !el.querySelector('.mc-evts')?.classList.contains('open');
   el.querySelectorAll('.mc-evts,.mc-stats').forEach(e=>e.classList.toggle('open'));
+  if (isOpening) {
+    const statsEl = el.querySelector('.mc-stats');
+    if (statsEl && !statsEl.dataset.loaded) {
+      const home = el.dataset.home;
+      const away = el.dataset.away;
+      const eid  = el.dataset.espnid;
+      statsEl.innerHTML = '<div style="padding:10px 14px;color:var(--text-muted);font-size:12px">⏳ Loading stats...</div>';
+      const ms = await fetchMatchStats(home, away, eid);
+      statsEl.innerHTML = ms ? buildStatsBar(ms) : '<div style="padding:10px 14px;color:var(--text-muted);font-size:12px">Stats not available</div>';
+      statsEl.dataset.loaded = '1';
+    }
+  }
 }
 
 // ============================================================
@@ -1371,13 +1493,13 @@ function renderStats(){
   document.getElementById('gkCont').innerHTML=gkh;
 
   // TEAM STATS
-  const played=MATCHES.filter(m=>m.status==='ft'&&m.ms);
+  const played=MATCHES.filter(m=>m.status==='ft');
   let tsh='';
   played.slice().reverse().forEach(m=>{
     const {homePoss,awayPoss,homeShots,awayShots,homeShotsOT,awayShotsOT,homeCorners,awayCorners,homeSaves,awaySaves}=m.ms;
     const ap=awayPoss||(100-homePoss);
     function bar(hv,av,lbl){const tot=hv+av||1;const hp=Math.round(hv/tot*100);return`<div class="ms-bar-row"><div class="ms-bar-label"><span class="ms-val-h">${hv}</span><span class="ms-lbl-c">${lbl}</span><span class="ms-val-a">${av}</span></div><div class="ms-bar-track"><div class="ms-bar-h" style="width:${hp}%"></div><div class="ms-bar-a" style="width:${100-hp}%"></div></div></div>`;}
-    tsh+=`<div class="ts-card"><div class="ts-header"><span style="font-size:22px">${m.hf}</span><div><div class="ts-title">${m.home} <span style="color:var(--wc-yellow)">${m.hs}–${m.as_}</span> ${m.away} ${m.af}</div><div class="ts-subtitle">${m.date} · ${m.venue}</div></div></div>${bar(homePoss,ap,'Possession %')}${bar(homeShots,awayShots,'Total Shots')}${bar(homeShotsOT,awayShotsOT,'Shots on Target')}${bar(homeCorners,awayCorners,'Corners')}${bar(homeSaves,awaySaves,'GK Saves')}${m.motm?`<div class="ms-motm">🏅 <strong>MOTM:</strong> ${m.motm}</div>`:''}</div>`;
+    const eid=getEspnId(m.home,m.away)||m.espnId||''; tsh+=`<div class="ts-card" onclick="loadCardStats(this,'${m.home}','${m.away}','${eid}')" style="cursor:pointer"><div class="ts-header"><span style="font-size:22px">${m.hf}</span><div><div class="ts-title">${m.home} <span style="color:var(--wc-yellow)">${m.hs}–${m.as_}</span> ${m.away} ${m.af}</div><div class="ts-subtitle">${m.date} · ${m.venue} · <span style="color:var(--wc-yellow);font-size:11px">Tap to load stats</span></div></div></div>${m.motm?`<div class="ms-motm">🏅 <strong>MOTM:</strong> ${m.motm}</div>`:''}<div class="ts-stats-content"></div></div>`;
   });
   document.getElementById('teamStatsCont').innerHTML=tsh;
 
@@ -1465,6 +1587,15 @@ function renderTeam(name){
 // ============================================================
 // RENDER ALL + TAB SWITCH
 // ============================================================
+
+async function loadCardStats(el, home, away, eid) {
+  const content = el.querySelector('.ts-stats-content');
+  if (!content || content.dataset.loaded) return;
+  content.innerHTML = '<div style="padding:8px 0;color:var(--text-muted);font-size:12px">⏳ Loading...</div>';
+  const ms = await fetchMatchStats(home, away, eid);
+  content.innerHTML = ms ? buildStatsBar(ms) : '<div style="padding:8px 0;color:var(--text-muted);font-size:12px">Stats not available</div>';
+  content.dataset.loaded = '1';
+}
 function renderAll(){renderOverview();renderGrp();renderRes();renderSched();renderStats();renderCards();}
 function switchTab(id,btn){document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));document.getElementById('tab-'+id).classList.add('active');btn.classList.add('active');}
 
