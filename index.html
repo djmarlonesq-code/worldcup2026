@@ -539,10 +539,10 @@ const GROUPS={
     {flag:'🇩🇿',name:'Algeria',  mp:1,w:0,d:0,l:1,gf:0,ga:3,pts:0},
   ]},
   K:{teams:[
+    {flag:'🇨🇴',name:'Colombia',  mp:1,w:1,d:0,l:0,gf:3,ga:1,pts:3},
     {flag:'🇵🇹',name:'Portugal',  mp:1,w:0,d:1,l:0,gf:1,ga:1,pts:1},
     {flag:'🇨🇩',name:'DR Congo',  mp:1,w:0,d:1,l:0,gf:1,ga:1,pts:1},
-    {flag:'🇨🇴',name:'Colombia',  mp:0,w:0,d:0,l:0,gf:0,ga:0,pts:0},
-    {flag:'🇺🇿',name:'Uzbekistan',mp:0,w:0,d:0,l:0,gf:0,ga:0,pts:0},
+    {flag:'🇺🇿',name:'Uzbekistan',mp:1,w:0,d:0,l:1,gf:1,ga:3,pts:0},
   ]},
   L:{teams:[
     {flag:'🏴󠁧󠁢󠁥󠁮󠁧󠁿',name:'England', mp:1,w:1,d:0,l:0,gf:4,ga:2,pts:3},
@@ -679,7 +679,10 @@ let MATCHES=[
   {grp:'L',home:'Ghana',hf:'🇬🇭',away:'Panama',af:'🇵🇦',hs:1,as_:0,date:'Jun 17',time:'7:00 PM',venue:'Toronto',status:'ft',
    hev:[{i:'⚽',m:"90+5'",n:'C. Yirenkyi',a:'Ast: B. Thomas-Asante (low cross into 6-yd box)'}],
    aev:[],motm:'C. Yirenkyi (GHA)',ms:null},
-  {grp:'K',home:'Uzbekistan',hf:'🇺🇿',away:'Colombia',af:'🇨🇴',hs:0,as_:0,date:'Jun 17',time:'10:00 PM',venue:'Mexico City',espnId:'760438',status:'live',clock:'LIVE',hev:[],aev:[],tbd:true,ms:null},
+  {grp:'K',home:'Uzbekistan',hf:'🇺🇿',away:'Colombia',af:'🇨🇴',hs:1,as_:3,date:'Jun 17',time:'10:00 PM',venue:'Mexico City',espnId:'760438',status:'ft',
+   hev:[{i:'⚽',m:"60'",n:'A. Fayzullaev',a:'Tap-in — rebound off Shomurodov blocked shot — UZB first WC goal!'}],
+   aev:[{i:'⚽',m:"40'",n:'D. Muñoz',a:'Ast: L. Díaz (sublime lofted pass)'},{i:'⚽',m:"65'",n:'L. Díaz',a:'Fierce strike — keeper error'},{i:'⚽',m:"90+9'",n:'J. Campaz',a:'Ast: J. Hernandez (pinpoint cross — header)'}],
+   motm:'L. Díaz (COL)',ms:null},
   // JUN 18
   {grp:'A',home:'Czechia',hf:'🇨🇿',away:'South Africa',af:'🇿🇦',hs:null,as_:null,date:'Jun 18',time:'12:00 PM',venue:'Atlanta',status:'upcoming',hev:[],aev:[],ms:null},
   {grp:'B',home:'Switzerland',hf:'🇨🇭',away:'Bosnia & Herz.',af:'🇧🇦',hs:null,as_:null,date:'Jun 18',time:'3:00 PM',venue:'Los Angeles',status:'upcoming',hev:[],aev:[],ms:null},
@@ -745,6 +748,10 @@ let MATCHES=[
 // matchOrder = chronological match number (higher = more recent)
 // ============================================================
 const GOALS=[
+  {name:'L. Díaz',          team:'Colombia',  flag:'🇨🇴',goals:1,photo:null,matchOrder:24,lastMin:65},
+  {name:'D. Muñoz',         team:'Colombia',  flag:'🇨🇴',goals:1,photo:null,matchOrder:24,lastMin:40},
+  {name:'J. Campaz',        team:'Colombia',  flag:'🇨🇴',goals:1,photo:null,matchOrder:24,lastMin:90},
+  {name:'A. Fayzullaev',    team:'Uzbekistan',flag:'🇺🇿',goals:1,photo:null,matchOrder:24,lastMin:60},
   {name:'C. Yirenkyi',     team:'Ghana',    flag:'🇬🇭',goals:1,photo:null,matchOrder:23,lastMin:90},
   {name:'H. Kane',         team:'England',  flag:'🏴󠁧󠁢󠁥󠁮󠁧󠁿',goals:2,photo:null,matchOrder:22,lastMin:42},
   {name:'J. Bellingham',   team:'England',  flag:'🏴󠁧󠁢󠁥󠁮󠁧󠁿',goals:1,photo:null,matchOrder:22,lastMin:47},
@@ -772,6 +779,8 @@ const GOALS=[
   {name:'M. Hany',          team:'Belgium',    flag:'🇧🇪',goals:1,photo:null,matchOrder:13,lastMin:66},
   {name:'E. Ashour',         team:'Egypt',      flag:'🇪🇬',goals:1,photo:null,matchOrder:13,lastMin:19},
   {name:'Y. Ayari',          team:'Sweden',      flag:'🇸🇪',goals:2,photo:null,matchOrder:12,lastMin:90},
+  {name:'L. Díaz',          team:'Colombia', flag:'🇨🇴',assists:1,photo:null,note:"Ast → Muñoz 40'",          matchOrder:24,lastMin:40},
+  {name:'J. Hernandez',     team:'Colombia', flag:'🇨🇴',assists:1,photo:null,note:"Cross → Campaz 90+9'",      matchOrder:24,lastMin:90},
   {name:'B. Thomas-Asante',team:'Ghana',    flag:'🇬🇭',assists:1,photo:null,note:"Ast → Yirenkyi 90+5'",  matchOrder:23,lastMin:90},
   {name:'R. De Paul',      team:'Argentina',flag:'🇦🇷',assists:1,photo:null,note:"Ast → Messi 17'",         matchOrder:19,lastMin:17},
   {name:'D. Moller Wolfe', team:'Norway',  flag:'🇳🇴',assists:1,photo:null,note:"Ast → Haaland 29'",        matchOrder:18,lastMin:29},
@@ -844,6 +853,8 @@ const GKS=[
   {name:'Y. Bounou',  team:'Morocco', flag:'🇲🇦',photo:null,mp:1,saves:3,ga:1,cs:0,savePct:75},
   {name:'D. Raya',  team:'Spain', flag:'🇪🇸',photo:null,mp:1,saves:0,ga:0,cs:1,savePct:100},
   {name:'Vozinha',      team:'Cape Verde', flag:'🇨🇻',photo:null,mp:1,saves:6,ga:0,cs:1,savePct:100},
+  {name:'D. Ospina',     team:'Colombia',  flag:'🇨🇴',photo:null,mp:1,saves:3,ga:1,cs:0,savePct:75},
+  {name:'U. Nishonov',   team:'Uzbekistan',flag:'🇺🇿',photo:null,mp:1,saves:4,ga:3,cs:0,savePct:57},
   {name:'L. Ati-Zigi',   team:'Ghana',   flag:'🇬🇭',photo:null,mp:1,saves:1,ga:0,cs:1,savePct:100},
   {name:'B. Asare',      team:'Ghana',   flag:'🇬🇭',photo:null,mp:1,saves:3,ga:0,cs:1,savePct:100},
   {name:'O. Mosquera',  team:'Panama',  flag:'🇵🇦',photo:null,mp:1,saves:3,ga:1,cs:0,savePct:75},
