@@ -677,7 +677,7 @@ let MATCHES=[
    aev:[{i:'⚽',m:"36'",n:'M. Baturina',a:'Back in it'},{i:'⚽',m:"45+5'",n:'P. Musa',a:'HT equalizer!'}],
    motm:'H. Kane (ENG)',ms:null},
   {grp:'L',home:'Ghana',hf:'🇬🇭',away:'Panama',af:'🇵🇦',hs:1,as_:0,date:'Jun 17',time:'7:00 PM',venue:'Toronto',status:'ft',
-   hev:[{i:'⚽',m:"90+5'",n:'C. Yirenkyi',a:'Dramatic late winner!'}],
+   hev:[{i:'⚽',m:"90+5'",n:'C. Yirenkyi',a:'Ast: B. Thomas-Asante (low cross into 6-yd box)'}],
    aev:[],motm:'C. Yirenkyi (GHA)',ms:null},
   {grp:'K',home:'Uzbekistan',hf:'🇺🇿',away:'Colombia',af:'🇨🇴',hs:0,as_:0,date:'Jun 17',time:'10:00 PM',venue:'Mexico City',espnId:'760438',status:'live',clock:'LIVE',hev:[],aev:[],tbd:true,ms:null},
   // JUN 18
@@ -772,6 +772,7 @@ const GOALS=[
   {name:'M. Hany',          team:'Belgium',    flag:'🇧🇪',goals:1,photo:null,matchOrder:13,lastMin:66},
   {name:'E. Ashour',         team:'Egypt',      flag:'🇪🇬',goals:1,photo:null,matchOrder:13,lastMin:19},
   {name:'Y. Ayari',          team:'Sweden',      flag:'🇸🇪',goals:2,photo:null,matchOrder:12,lastMin:90},
+  {name:'B. Thomas-Asante',team:'Ghana',    flag:'🇬🇭',assists:1,photo:null,note:"Ast → Yirenkyi 90+5'",  matchOrder:23,lastMin:90},
   {name:'R. De Paul',      team:'Argentina',flag:'🇦🇷',assists:1,photo:null,note:"Ast → Messi 17'",         matchOrder:19,lastMin:17},
   {name:'D. Moller Wolfe', team:'Norway',  flag:'🇳🇴',assists:1,photo:null,note:"Ast → Haaland 29'",        matchOrder:18,lastMin:29},
   {name:'M. Ødegaard',    team:'Norway',  flag:'🇳🇴',assists:1,photo:null,note:"Corner → Ostgard 76'",      matchOrder:18,lastMin:76},
@@ -843,7 +844,8 @@ const GKS=[
   {name:'Y. Bounou',  team:'Morocco', flag:'🇲🇦',photo:null,mp:1,saves:3,ga:1,cs:0,savePct:75},
   {name:'D. Raya',  team:'Spain', flag:'🇪🇸',photo:null,mp:1,saves:0,ga:0,cs:1,savePct:100},
   {name:'Vozinha',      team:'Cape Verde', flag:'🇨🇻',photo:null,mp:1,saves:6,ga:0,cs:1,savePct:100},
-  {name:'L. Ati-Zigi',   team:'Ghana',   flag:'🇬🇭',photo:null,mp:1,saves:4,ga:0,cs:1,savePct:100},
+  {name:'L. Ati-Zigi',   team:'Ghana',   flag:'🇬🇭',photo:null,mp:1,saves:1,ga:0,cs:1,savePct:100},
+  {name:'B. Asare',      team:'Ghana',   flag:'🇬🇭',photo:null,mp:1,saves:3,ga:0,cs:1,savePct:100},
   {name:'O. Mosquera',  team:'Panama',  flag:'🇵🇦',photo:null,mp:1,saves:3,ga:1,cs:0,savePct:75},
   {name:'J. Pickford',   team:'England',  flag:'🏴󠁧󠁢󠁥󠁮󠁧󠁿',photo:null,mp:1,saves:5,ga:2,cs:0,savePct:71},
   {name:'D. Livaković',  team:'Croatia',  flag:'🇭🇷',photo:null,mp:1,saves:6,ga:4,cs:0,savePct:60},
@@ -884,6 +886,7 @@ const GKS=[
 
 // Cards — latest first (matchOrder desc, lastMin desc)
 const CARDS=[
+  {type:'yellow',player:'C. Yirenkyi',  flag:'🇬🇭',team:'Ghana',     min:"1H",  match:'GHA vs PAN',reason:'Foul on Bárcenas',         photo:null,matchOrder:23,lastMin:25},
   {type:'yellow',player:'A. Fatouh',      flag:'🇪🇬',team:'Egypt',      min:"34'",  match:'BEL vs EGY',reason:'',                       photo:null,matchOrder:13,lastMin:34},
   {type:'yellow',player:'T. Castagne',  flag:'🇧🇪',team:'Belgium',    min:"14'",  match:'BEL vs EGY',reason:"Gripping Salah's arm",     photo:null,matchOrder:13,lastMin:14},
   {type:'yellow',player:'M. Attia',     flag:'🇪🇬',team:'Egypt',      min:"13'",  match:'BEL vs EGY',reason:'Foul on Doku',              photo:null,matchOrder:13,lastMin:13},
