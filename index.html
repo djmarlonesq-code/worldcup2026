@@ -588,8 +588,8 @@ function getStad(v){const id=VENUE_MAP[v];return STADIUMS.find(s=>s.id===id)||nu
 // ============================================================
 const GROUPS={
   A:{teams:[
-    {flag:'🇲🇽',name:'Mexico',      mp:1,w:1,d:0,l:0,gf:2,ga:0,pts:3},
-    {flag:'🇰🇷',name:'South Korea', mp:1,w:1,d:0,l:0,gf:2,ga:1,pts:3},
+    {flag:'🇲🇽',name:'Mexico',      mp:2,w:2,d:0,l:0,gf:3,ga:0,pts:6},
+    {flag:'🇰🇷',name:'South Korea', mp:2,w:1,d:0,l:1,gf:2,ga:2,pts:3},
     {flag:'🇨🇿',name:'Czechia',     mp:2,w:0,d:1,l:1,gf:2,ga:3,pts:1},
     {flag:'🇿🇦',name:'South Africa',mp:2,w:0,d:1,l:1,gf:1,ga:3,pts:1},
   ]},
@@ -681,7 +681,7 @@ const PHOTOS={
 // ============================================================
 let MATCHES=[
   // GRP A
-  {grp:'A',home:'Mexico',hf:'🇲🇽',away:'South Africa',af:'🇿🇦',hs:2,as_:0,date:'Jun 18',time:'9:00 PM',venue:'Guadalajara',status:'ft',
+  {grp:'A',home:'Mexico',hf:'🇲🇽',away:'South Africa',af:'🇿🇦',hs:2,as_:0,date:'Jun 11',time:'3:00 PM',venue:'Mexico City',status:'ft',
    hev:[{i:'⚽',m:"9'",n:'J. Quiñones',a:''},{i:'⚽',m:"67'",n:'R. Jiménez',a:'Ast: R. Alvarado'},{i:'🟨',m:"55'",n:'C. Montes',a:''},{i:'🟥',m:"90+2'",n:'C. Montes',a:'Denied GSO'}],
    aev:[{i:'🟥',m:"42'",n:'S. Sithole',a:'Reckless tackle'},{i:'🟥',m:"84'",n:'T. Zwane',a:'Unsporting behavior'}],
    motm:'J. Quiñones (MEX)',ms:{homePoss:58,awayPoss:42,homeShots:14,awayShots:8,homeShotsOT:5,awayShotsOT:2,homeCorners:6,awayCorners:3,homeSaves:2,awaySaves:3}},
@@ -804,7 +804,9 @@ let MATCHES=[
   {grp:'B',home:'Canada',hf:'🇨🇦',away:'Qatar',af:'🇶🇦',hs:6,as_:0,date:'Jun 18',time:'6:00 PM',venue:'Vancouver',status:'ft',
    hev:[{i:'⚽',m:"16'",n:'C. Larin',a:''},{i:'⚽',m:"29'",n:'J. David',a:'1st goal'},{i:'⚽',m:"45+3'",n:'J. David',a:'Brace before HT'},{i:'⚽',m:"64'",n:'N. Saliba',a:''},{i:'⚽',m:"75'",n:'M. Manai',a:''},{i:'⚽',m:"90+2'",n:'J. David',a:'Hat-trick!'}],
    aev:[],motm:'J. David (CAN)',ms:null},
-  {grp:'A',home:'Mexico',hf:'🇲🇽',away:'South Korea',af:'🇰🇷',hs:0,as_:0,date:'Jun 18',time:'9:00 PM',venue:'Guadalajara',espnId:'760441',status:'live',clock:'2H',hev:[],aev:[],tbd:true,ms:null},
+  {grp:'A',home:'Mexico',hf:'🇲🇽',away:'South Korea',af:'🇰🇷',hs:1,as_:0,date:'Jun 18',time:'9:00 PM',venue:'Guadalajara',espnId:'760441',status:'ft',
+   hev:[{i:'⚽',m:"50'",n:'L. Romo',a:'Match-winner — Mexico tops Group A'}],
+   aev:[],motm:'L. Romo (MEX)',ms:null},
   // JUN 19
   {grp:'D',home:'USA',hf:'🇺🇸',away:'Australia',af:'🇦🇺',hs:null,as_:null,date:'Jun 19',time:'3:00 PM',venue:'Seattle',status:'upcoming',hev:[],aev:[],ms:null},
   {grp:'C',home:'Scotland',hf:'🏴󠁧󠁢󠁳󠁣󠁴󠁿',away:'Morocco',af:'🇲🇦',hs:null,as_:null,date:'Jun 19',time:'3:00 PM',venue:'Boston',status:'upcoming',hev:[],aev:[],ms:null},
@@ -875,6 +877,7 @@ const GOALS=[
   {name:'M. Rashford',     team:'England',  flag:'🏴󠁧󠁢󠁥󠁮󠁧󠁿',goals:1,photo:null,matchOrder:22,lastMin:85},
   {name:'M. Baturina',     team:'Croatia',  flag:'🇭🇷',goals:1,photo:null,matchOrder:22,lastMin:36},
   {name:'P. Musa',         team:'Croatia',  flag:'🇭🇷',goals:1,photo:null,matchOrder:22,lastMin:45},
+  {name:'L. Romo',         team:'Mexico',     flag:'🇲🇽',goals:1,photo:null,matchOrder:28,lastMin:50},
   {name:'J. David',        team:'Canada',     flag:'🇨🇦',goals:3,photo:null,matchOrder:27,lastMin:90},
   {name:'J. Manzambi',     team:'Switzerland',flag:'🇨🇭',goals:2,photo:null,matchOrder:26,lastMin:90},
   {name:'C. Larin',        team:'Canada',     flag:'🇨🇦',goals:2,photo:null,matchOrder:27,lastMin:16},
@@ -975,6 +978,8 @@ const GKS=[
   {name:'R. Williams',  team:'South Africa', flag:'🇿🇦',photo:null,mp:2,saves:5,ga:3,cs:0,savePct:63},
   {name:'Jo. Hyeon-woo',  team:'South Korea', flag:'🇰🇷',photo:null,mp:1,saves:2,ga:1,cs:0,savePct:67},
   {name:'J. Stanek',  team:'Czechia', flag:'🇨🇿',photo:null,mp:1,saves:2,ga:2,cs:0,savePct:50},
+  {name:'R. Rangel',     team:'Mexico',     flag:'🇲🇽',photo:null,mp:2,saves:5,ga:0,cs:1,savePct:100},
+  {name:'K. Seung-gyu',  team:'South Korea',flag:'🇰🇷',photo:null,mp:2,saves:4,ga:1,cs:0,savePct:80},
   {name:'M. Crepeau',  team:'Canada', flag:'🇨🇦',photo:null,mp:1,saves:1,ga:1,cs:0,savePct:50},
   {name:'N. Sehic',  team:'Bosnia & Herz.', flag:'🇧🇦',photo:null,mp:1,saves:4,ga:1,cs:0,savePct:80},
   {name:'Y. Bounou',  team:'Morocco', flag:'🇲🇦',photo:null,mp:1,saves:3,ga:1,cs:0,savePct:75},
