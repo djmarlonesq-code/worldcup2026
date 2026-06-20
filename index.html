@@ -1183,12 +1183,27 @@ async function doRefresh() {
     }
 
     // ── SOURCE 2: ESPN (live scores only — don't touch confirmed FT) ──
+    // TEAM_NORM: canonical name lookup so ESPN's naming quirks
+    // ("IR Iran", "Korea Republic", "USA" vs "United States" etc.)
+    // never cause a mismatch or a silent home/away flip.
+    const TEAM_NORM = {
+      'IR Iran':'Iran','Korea Republic':'South Korea','United States':'USA',
+      'USMNT':'USA','Cote d\'Ivoire':'Ivory Coast',"Côte d'Ivoire":'Ivory Coast',
+      'Türkiye':'Türkiye','Turkey':'Türkiye','Czech Republic':'Czechia',
+      'Bosnia and Herzegovina':'Bosnia & Herz.','Bosnia & Herzegovina':'Bosnia & Herz.',
+      'DR Congo':'DR Congo','Democratic Republic of the Congo':'DR Congo',
+      'Cabo Verde':'Cape Verde','Curacao':'Curaçao',
+    };
+    function normTeam(n){ return TEAM_NORM[n] || n; }
+
+    const espnMatchedIds = new Set(); // matches ESPN successfully addressed this cycle
+
     try {
       const startDate = new Date(now); startDate.setDate(startDate.getDate() - 1);
       const endDate = new Date(now); endDate.setDate(endDate.getDate() + 2);
       const fmt = d => d.toISOString().slice(0,10).replace(/-/g,'');
       const espnUrl = `https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard?dates=${fmt(startDate)}-${fmt(endDate)}&limit=50`;
-      
+
       let espnResp;
       try {
         espnResp = await fetch(espnUrl, {mode:'cors'});
@@ -1204,7 +1219,6 @@ async function doRefresh() {
           if (!comp) return;
           const state = comp.status?.type?.state;
           const completed = comp.status?.type?.completed;
-          // Build clock string from ESPN — try multiple fields
           const statusObj = comp.status || {};
           const rawClock = statusObj.displayClock || '';
           const period = statusObj.period || 0;
@@ -1216,7 +1230,6 @@ async function doRefresh() {
               const mins = parseInt(parts[0]);
               const secs = parseInt(parts[1] || '0');
               const halfStart = period === 2 ? 45 : 0;
-              // ESPN soccer returns time remaining if <= 45, elapsed if > 45
               if (mins <= 45) {
                 const elapsed = Math.round(halfStart + (45 - mins - secs/60));
                 clock = Math.max(1, elapsed) + "'";
@@ -1237,80 +1250,103 @@ async function doRefresh() {
           } else {
             clock = 'LIVE';
           }
+
           const competitors = comp.competitors || [];
+          const espnHomeC = competitors.find(c => c.homeAway === 'home');
+          const espnAwayC = competitors.find(c => c.homeAway === 'away');
+          if (!espnHomeC || !espnAwayC) return;
 
-          // Find our match by team name matching
-          const espnHome = competitors.find(c => c.homeAway === 'home');
-          const espnAway = competitors.find(c => c.homeAway === 'away');
-          if (!espnHome || !espnAway) return;
+          const espnHomeName = normTeam(espnHomeC.team?.displayName || '');
+          const espnAwayName = normTeam(espnAwayC.team?.displayName || '');
 
-          const homeName = espnHome.team?.displayName || '';
-          const awayName = espnAway.team?.displayName || '';
+          // Try espnId first (most reliable), then bidirectional name match
+          // (bidirectional = works whether ESPN calls our home team "home" or "away")
+          let match = MATCHES.find(m => m.espnId === event.id && m.status !== 'ft');
+          let weAreFlipped = false; // true if ESPN's "home" is actually our "away"
 
-          // Find our match — try espnId first, then name matching
-          const espnEventId = event.id;
-          let match = MATCHES.find(m => m.espnId === espnEventId && m.status !== 'ft');
           if (!match) {
-            // Normalize ESPN names (e.g. "IR Iran" → "Iran", "Korea Republic" → "South Korea")
-            const normHome = homeName.replace(/^IR /, '').replace(/^Korea Republic/, 'South Korea');
-            const normAway = awayName.replace(/^IR /, '').replace(/^Korea Republic/, 'South Korea');
-            match = MATCHES.find(m =>
+            const directMatch = MATCHES.find(m =>
               m.status !== 'ft' &&
-              (normHome.includes(m.home.split(' ')[0]) || m.home.includes(normHome.split(' ')[0])) &&
-              (normAway.includes(m.away.split(' ')[0]) || m.away.includes(normAway.split(' ')[0]))
+              (espnHomeName.includes(m.home.split(' ')[0]) || m.home.includes(espnHomeName.split(' ')[0])) &&
+              (espnAwayName.includes(m.away.split(' ')[0]) || m.away.includes(espnAwayName.split(' ')[0]))
             );
+            const flippedMatch = !directMatch ? MATCHES.find(m =>
+              m.status !== 'ft' &&
+              (espnHomeName.includes(m.away.split(' ')[0]) || m.away.includes(espnHomeName.split(' ')[0])) &&
+              (espnAwayName.includes(m.home.split(' ')[0]) || m.home.includes(espnAwayName.split(' ')[0]))
+            ) : null;
+            if (directMatch) { match = directMatch; }
+            else if (flippedMatch) { match = flippedMatch; weAreFlipped = true; }
+          } else {
+            // Confirmed by espnId — still need to know orientation for scoring
+            weAreFlipped = !(espnHomeName.includes(match.home.split(' ')[0]) || match.home.includes(espnHomeName.split(' ')[0]));
           }
+
           if (!match) return;
+          espnMatchedIds.add(match.home + '_' + match.away);
+          match.noEspnData = false; // ESPN addressed this match — clear the flag
 
           const hrs = (now - new Date(event.date)) / 3600000;
+          const ourHomeScore = weAreFlipped ? parseInt(espnAwayC.score)||0 : parseInt(espnHomeC.score)||0;
+          const ourAwayScore = weAreFlipped ? parseInt(espnHomeC.score)||0 : parseInt(espnAwayC.score)||0;
 
           if ((state === 'post' || completed) && hrs < 6) {
-            // ESPN says finished AND recent — mark FT
             if (match.status !== 'ft') {
               match.status = 'ft';
-              match.hs = parseInt(espnHome.score) || 0;
-              match.as_ = parseInt(espnAway.score) || 0;
+              match.hs = ourHomeScore;
+              match.as_ = ourAwayScore;
               updatedCount++;
             }
           } else if (state === 'in') {
-            // Live game — update score and clock
-            const espnHomeTeam = normHome;
-            const homeIsESPNHome = match.home.includes(espnHomeTeam.split(' ')[0]) || 
-                                   espnHomeTeam.includes(match.home.split(' ')[0]);
-            let newHs = homeIsESPNHome ? parseInt(espnHome.score)||0 : parseInt(espnAway.score)||0;
-            let newAs = homeIsESPNHome ? parseInt(espnAway.score)||0 : parseInt(espnHome.score)||0;
-            if (!match.fifaVerified && newHs + newAs >= (match.hs||0) + (match.as_||0)) {
-              match.hs = newHs;
-              match.as_ = newAs;
+            if (!match.fifaVerified && (ourHomeScore + ourAwayScore) >= (match.hs||0) + (match.as_||0)) {
+              match.hs = ourHomeScore;
+              match.as_ = ourAwayScore;
             }
             match.status = 'live';
-            // Build clock: try displayClock first, then period+clock seconds
-            if (clock && clock !== '0:00' && clock !== "0'") {
-              // ESPN returns clock as MM:SS countdown (e.g. "43:21" = 43 min elapsed in half)
-              // For soccer: period 1 = first half, period 2 = second half
-              const parts = clock.split(':');
-              if (parts.length === 2) {
-                const elapsed = parseInt(parts[0]);
-                const period = comp.status?.period || 1;
-                const totalMin = period === 2 ? 45 + elapsed : elapsed;
-                match.clock = totalMin + "'";
-              } else {
-                match.clock = clock;
-              }
-            } else if (comp.status?.period) {
-              const period = comp.status.period;
-              match.clock = period === 1 ? '1H' : period === 2 ? '2H' : 'ET';
-            } else {
-              match.clock = match.clock || 'LIVE';
-            }
+            match.clock = clock || match.clock || 'LIVE';
             liveCount++; updatedCount++;
           }
         });
       }
     } catch(espnErr) {
       console.warn('ESPN secondary source failed:', espnErr);
-      // No problem — openfootball already handled FT scores
     }
+
+    // ── Flag live matches ESPN had nothing for this cycle ─────────
+    // (distinct from tbd — this means "no live source at all right now",
+    // not just "score known, goal detail pending")
+    MATCHES.forEach(m => {
+      if (m.status === 'live' && !espnMatchedIds.has(m.home + '_' + m.away)) {
+        m.noEspnData = true;
+      }
+    });
+
+        // ── TIME-BASED AUTO-DETECTION ──────────────────────────────
+    // Runs AFTER the ESPN pass above. If a match is still 'upcoming'
+    // here, ESPN already had its chance this cycle and returned
+    // nothing usable for it — so kickoff-time detection takes over,
+    // and we explicitly flag noEspnData so the UI is honest about
+    // why there's no live score/minute yet.
+    let autoDetected = 0;
+    MATCHES.forEach(m => {
+      if (m.status === 'upcoming' && m.date && m.time) {
+        try {
+          const dateStr = m.date + ' 2026 ' + m.time + ' ET';
+          const kickoff = new Date(dateStr);
+          if (!isNaN(kickoff) && now >= kickoff) {
+            m.status = 'live';
+            m.hs = 0; m.as_ = 0;
+            m.clock = 'LIVE';
+            m.tbd = true;
+            m.noEspnData = true;
+            if (!m.hev) m.hev = [];
+            if (!m.aev) m.aev = [];
+            autoDetected++;
+          }
+        } catch(e) {}
+      }
+    });
+    if (autoDetected > 0) console.log(`Auto-detected ${autoDetected} newly live match(es) by kickoff time`);
 
     // ── Stale lock: if still 'live' but 3+ hours past kickoff, force FT ──
     MATCHES.forEach(m => {
@@ -1341,7 +1377,10 @@ async function doRefresh() {
       liveBadge.classList.add('show');
       liveAlert.classList.add('show');
       document.getElementById('liveAlertText').textContent = `${liveCount} match${liveCount > 1 ? 'es' : ''} in progress`;
-      document.getElementById('liveAlertSub').textContent = liveMs.map(m => `${m.home} ${m.hs}–${m.as_} ${m.away} (${m.clock || 'LIVE'})`).join(' · ');
+      document.getElementById('liveAlertSub').textContent = liveMs.map(m => {
+        const clockLabel = m.noEspnData ? 'no live source — checking' : (m.clock || 'LIVE');
+        return `${m.home} ${m.hs}–${m.as_} ${m.away} (${clockLabel})`;
+      }).join(' · ');
       clearInterval(autoRefreshTimer);
       autoRefreshTimer = setInterval(doRefresh, 30000);
     } else {
@@ -1413,7 +1452,7 @@ function matchCard(m,showGrp=true){
   const isExpandable=isFt&&(hasEv||hasStats);  // expandable if FT and has stats OR events
   let sc;
   if(isFt) sc=`<div class="sc-dig">${m.hs} : ${m.as_}</div><div class="sc-st ft">FT</div>`;
-  else if(isLive) sc=`<div class="sc-dig live">${m.hs!==null?m.hs:'—'} : ${m.as_!==null?m.as_:'—'}</div><div class="sc-clock">● ${m.clock||'LIVE'}</div>`;
+  else if(isLive) sc=`<div class="sc-dig live">${m.hs!==null?m.hs:'—'} : ${m.as_!==null?m.as_:'—'}</div><div class="sc-clock">${m.noEspnData?'⏳ checking for live data...':'● '+(m.clock||'LIVE')}</div>`;
   else sc=`<div class="sc-time">${m.time} ET</div><div class="sc-st up">Upcoming</div>`;
   const stad=getStad(m.venue);
   const tv=getTV(m.home,m.away);
@@ -1497,7 +1536,7 @@ function renderOverview(){
         ${isL?`<div class="nh-score">${m.hs!==null?m.hs:'—'} : ${m.as_!==null?m.as_:'—'}</div>`:`<div class="nh-vs">VS</div>`}
         <div class="nh-team">${flagImg(m.away,42)||`<span class="nh-flag">${m.af}</span>`}<div class="nh-name">${m.away}</div></div>
       </div>
-      ${isL?`<div class="nh-time live">● ${m.clock||'LIVE'}</div>`:`<div class="nh-time">${m.time} ET</div>`}
+      ${isL?`<div class="nh-time live">${m.noEspnData?'⏳ checking for live data...':'● '+(m.clock||'LIVE')}</div>`:`<div class="nh-time">${m.time} ET</div>`}
       <div class="nh-meta">Group ${m.grp} · ${m.venue}</div>
       <div class="nh-tv">📺 ${getTV(m.home,m.away)}</div>
       ${s?`<div class="nh-stadium">🏟️ ${s.name} · ${s.cap.toLocaleString()} seats</div>`:''}
