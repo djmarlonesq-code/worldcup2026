@@ -698,9 +698,9 @@ let MATCHES=[
    motm:'C. Larin (CAN)',ms:{homePoss:55,awayPoss:45,homeShots:18,awayShots:9,homeShotsOT:5,awayShotsOT:2,homeCorners:7,awayCorners:3,homeSaves:1,awaySaves:4}},
 
   {grp:'B',home:'Qatar',hf:'🇶🇦',away:'Switzerland',af:'🇨🇭',hs:1,as_:1,date:'Jun 13',time:'3:00 PM',venue:'San Francisco',status:'ft',
-   hev:[{i:'⚽',m:"90+4'",n:'B. Khoukhi',a:'Dramatic late equalizer'},{i:'🟨',m:"16'",n:'M. Abunada',a:'Foul for penalty'},{i:'🟨',m:"22'",n:'J. Gaber',a:''}],
+   hev:[{i:'⚽',m:"90+4'",n:'M. Muheim OG',a:'Own goal — dramatic late equalizer'},{i:'🟨',m:"16'",n:'M. Abunada',a:'Foul for penalty'},{i:'🟨',m:"22'",n:'J. Gaber',a:''}],
    aev:[{i:'⚽',m:"17'",n:'B. Embolo',a:'Penalty (foul on Freuler)'},{i:'🟨',m:"—",n:'D. Zakaria',a:''}],
-   motm:'B. Khoukhi (QAT)',ms:{homePoss:38,awayPoss:62,homeShots:9,awayShots:23,homeShotsOT:2,awayShotsOT:7,homeCorners:3,awayCorners:9,homeSaves:6,awaySaves:1}},
+   motm:'B. Embolo (SUI)',ms:{homePoss:38,awayPoss:62,homeShots:9,awayShots:23,homeShotsOT:2,awayShotsOT:7,homeCorners:3,awayCorners:9,homeSaves:6,awaySaves:1}},
 
   // GRP C
   {grp:'C',home:'Brazil',hf:'🇧🇷',away:'Morocco',af:'🇲🇦',hs:1,as_:1,date:'Jun 13',time:'6:00 PM',venue:'New York/NJ',status:'ft',
@@ -813,9 +813,11 @@ let MATCHES=[
    aev:[],motm:'A. Freeman (USA)',ms:null},
   {grp:'C',home:'Scotland',hf:'🏴󠁧󠁢󠁳󠁣󠁴󠁿',away:'Morocco',af:'🇲🇦',hs:0,as_:1,date:'Jun 19',time:'6:00 PM',venue:'Boston',status:'ft',hev:[],aev:[{i:'⚽',m:"2'",n:'I. Saibari',a:'Ast: Brahim Díaz — fastest goal of the tournament!'}],motm:'I. Saibari (MAR)',ms:null},
   {grp:'C',home:'Brazil',hf:'🇧🇷',away:'Haiti',af:'🇭🇹',hs:3,as_:0,date:'Jun 19',time:'8:30 PM',venue:'Philadelphia',status:'ft',
-   hev:[{i:'⚽',m:'TBD',n:'M. Cunha',a:'Ast: Vinícius Júnior (1st of brace)'},{i:'⚽',m:'TBD',n:'M. Cunha',a:'2nd goal — brace'},{i:'⚽',m:'TBD',n:'Vinícius Júnior',a:'3rd goal'}],
+   hev:[{i:'⚽',m:"23'",n:'M. Cunha',a:'1st of brace'},{i:'⚽',m:"36'",n:'M. Cunha',a:'2nd goal — brace'},{i:'⚽',m:"45+3'",n:'Vinícius Júnior',a:'3rd goal — HT 3-0'}],
    aev:[],motm:'M. Cunha (BRA)',ms:null},
-  {grp:'D',home:'Türkiye',hf:'🇹🇷',away:'Paraguay',af:'🇵🇾',hs:null,as_:null,date:'Jun 19',time:'11:00 PM',venue:'San Francisco',status:'upcoming',hev:[],aev:[],ms:null},
+  {grp:'D',home:'Türkiye',hf:'🇹🇷',away:'Paraguay',af:'🇵🇾',hs:0,as_:1,date:'Jun 19',time:'11:00 PM',venue:'San Francisco',status:'ft',
+   hev:[],aev:[{i:'⚽',m:"2'",n:'M. Galarza',a:'Lightning-fast opener'}],
+   motm:'M. Galarza (PAR)',ms:null},
   // JUN 20
   {grp:'F',home:'Netherlands',hf:'🇳🇱',away:'Sweden',af:'🇸🇪',hs:null,as_:null,date:'Jun 20',time:'1:00 PM',venue:'Houston',status:'upcoming',hev:[],aev:[],ms:null},
   {grp:'E',home:'Germany',hf:'🇩🇪',away:'Ivory Coast',af:'🇨🇮',hs:null,as_:null,date:'Jun 20',time:'4:00 PM',venue:'Toronto',status:'upcoming',hev:[],aev:[],ms:null},
@@ -871,6 +873,11 @@ let MATCHES=[
 // matchOrder = chronological match number (higher = more recent)
 // ============================================================
 const GOALS=[
+  {name:'M. Muheim OG',     team:'Qatar',      flag:'🇶🇦',goals:1,photo:null,matchOrder:5,lastMin:90},
+  {name:'C. Burgess OG',    team:'USA',        flag:'🇺🇸',goals:1,photo:null,matchOrder:29,lastMin:11},
+  {name:'M. Cunha',         team:'Brazil',     flag:'🇧🇷',goals:2,photo:null,matchOrder:31,lastMin:36},
+  {name:'A. Freeman',       team:'USA',        flag:'🇺🇸',goals:1,photo:null,matchOrder:29,lastMin:43},
+  {name:'M. Galarza',       team:'Paraguay',   flag:'🇵🇾',goals:1,photo:null,matchOrder:32,lastMin:2},
   {name:'L. Díaz',          team:'Colombia',  flag:'🇨🇴',goals:1,photo:null,matchOrder:24,lastMin:65},
   {name:'D. Muñoz',         team:'Colombia',  flag:'🇨🇴',goals:1,photo:null,matchOrder:24,lastMin:40},
   {name:'J. Campaz',        team:'Colombia',  flag:'🇨🇴',goals:1,photo:null,matchOrder:24,lastMin:90},
@@ -940,8 +947,7 @@ const GOALS=[
   {name:'C. Metcalfe',       team:'Australia',   flag:'🇦🇺',goals:1,photo:null,matchOrder:8,lastMin:75},
   {name:'J. McGinn',         team:'Scotland',    flag:'🏴󠁧󠁢󠁳󠁣󠁴󠁿',goals:1,photo:null,matchOrder:7,lastMin:28},
   {name:'I. Saibari',        team:'Morocco',     flag:'🇲🇦',goals:2,photo:null,matchOrder:30,lastMin:2},
-  {name:'Vinícius Júnior',   team:'Brazil',      flag:'🇧🇷',goals:2,photo:'Vinícius Júnior',matchOrder:31,lastMin:30},
-  {name:'B. Khoukhi',        team:'Qatar',       flag:'🇶🇦',goals:1,photo:null,matchOrder:5,lastMin:94},
+  {name:'Vinícius Júnior',   team:'Brazil',      flag:'🇧🇷',goals:2,photo:'Vinícius Júnior',matchOrder:31,lastMin:45},
   {name:'B. Embolo',         team:'Switzerland', flag:'🇨🇭',goals:1,photo:'Breel Embolo',matchOrder:5,lastMin:17},
   {name:'F. Balogun',        team:'USA',         flag:'🇺🇸',goals:2,photo:'Folarin Balogun',matchOrder:4,lastMin:90},
     {name:'D. Bobadilla OG',team:'USA',         flag:'🇺🇸',goals:1,photo:null,matchOrder:4,lastMin:7},
@@ -1015,7 +1021,7 @@ const GKS=[
   {name:'K. Baah',      team:'Belgium',    flag:'🇧🇪',photo:null,mp:1,saves:2,ga:1,cs:0,savePct:67},
   {name:'M. El Shennawy',team:'Egypt',    flag:'🇪🇬',photo:null,mp:1,saves:3,ga:1,cs:0,savePct:75},
   {name:'P. Beach',     team:'Australia',   flag:'🇦🇺',photo:null,mp:2,saves:11,ga:2,cs:1,savePct:85},
-  {name:'A. Gunn',      team:'Scotland',    flag:'🏴󠁧󠁢󠁳󠁣󠁴󠁿',photo:null,mp:1,saves:3,ga:0,cs:1,savePct:100},
+  {name:'A. Gunn',      team:'Scotland',    flag:'🏴󠁧󠁢󠁳󠁣󠁴󠁿',photo:null,mp:2,saves:5,ga:1,cs:1,savePct:83},
   {name:'Y. Sommer',    team:'Switzerland', flag:'🇨🇭',photo:null,mp:2,saves:8,ga:2,cs:0,savePct:80},
   {name:'B. Verbruggen',team:'Netherlands', flag:'🇳🇱',photo:null,mp:1,saves:4,ga:2,cs:0,savePct:67},
   {name:'Alisson',      team:'Brazil',      flag:'🇧🇷',photo:null,mp:2,saves:5,ga:1,cs:1,savePct:83},
@@ -1024,13 +1030,13 @@ const GKS=[
   {name:'J. Placide',   team:'Haiti',       flag:'🇭🇹',photo:null,mp:2,saves:5,ga:4,cs:0,savePct:56},
   {name:'M. Abunada',   team:'Qatar',       flag:'🇶🇦',photo:null,mp:2,saves:4,ga:7,cs:0,savePct:36},
   {name:'M. Freese',    team:'USA',         flag:'🇺🇸',photo:null,mp:2,saves:3,ga:1,cs:1,savePct:75},
-  {name:'U. Çakır',     team:'Türkiye',     flag:'🇹🇷',photo:null,mp:1,saves:2,ga:2,cs:0,savePct:33},
+  {name:'U. Çakır',     team:'Türkiye',     flag:'🇹🇷',photo:null,mp:2,saves:3,ga:3,cs:0,savePct:50},
   {name:'D. Schmidt',   team:'Japan',       flag:'🇯🇵',photo:null,mp:1,saves:1,ga:2,cs:0,savePct:14},
   {name:'H. Galindez',  team:'Ecuador',     flag:'🇪🇨',photo:null,mp:1,saves:1,ga:1,cs:0,savePct:20},
   {name:'M. Neuer',     team:'Germany',     flag:'🇩🇪',photo:null,mp:1,saves:1,ga:1,cs:0,savePct:50},
   {name:'E. Room',      team:'Curaçao',     flag:'🇨🇼',photo:null,mp:1,saves:3,ga:7,cs:0,savePct:30},
   {name:'M. Chamakh',   team:'Tunisia',     flag:'🇹🇳',photo:null,mp:1,saves:6,ga:5,cs:0,savePct:55},
-  {name:'O. Guzan',     team:'Paraguay',    flag:'🇵🇾',photo:null,mp:1,saves:3,ga:4,cs:0,savePct:43},
+  {name:'O. Guzan',     team:'Paraguay',    flag:'🇵🇾',photo:null,mp:2,saves:3,ga:4,cs:0,savePct:43},
 ];
 
 // Cards — latest first (matchOrder desc, lastMin desc)
