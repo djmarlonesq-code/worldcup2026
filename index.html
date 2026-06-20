@@ -612,8 +612,8 @@ const GROUPS={
     {flag:'🇵🇾',name:'Paraguay',  mp:1,w:0,d:0,l:1,gf:1,ga:4,pts:0},
   ]},
   E:{teams:[
-    {flag:'🇩🇪',name:'Germany',    mp:1,w:1,d:0,l:0,gf:7,ga:1,pts:3},
-    {flag:'🇨🇮',name:'Ivory Coast',mp:1,w:1,d:0,l:0,gf:1,ga:0,pts:3},
+    {flag:'🇩🇪',name:'Germany',    mp:2,w:2,d:0,l:0,gf:9,ga:2,pts:6},
+    {flag:'🇨🇮',name:'Ivory Coast',mp:2,w:1,d:0,l:1,gf:2,ga:2,pts:3},
     {flag:'🇪🇨',name:'Ecuador',    mp:1,w:0,d:0,l:1,gf:0,ga:1,pts:0},
     {flag:'🇨🇼',name:'Curaçao',    mp:1,w:0,d:0,l:1,gf:1,ga:7,pts:0},
   ]},
@@ -823,9 +823,10 @@ let MATCHES=[
    hev:[{i:'⚽',m:"5'",n:'B. Brobbey',a:'1st of brace'},{i:'⚽',m:"17'",n:'B. Brobbey',a:'2nd goal — brace'},{i:'⚽',m:"47'",n:'C. Gakpo',a:'1st of brace'},{i:'⚽',m:"54'",n:'C. Gakpo',a:'2nd goal — brace'},{i:'⚽',m:"89'",n:'C. Summerville',a:'5th goal'}],
    aev:[{i:'⚽',m:"59'",n:'A. Elanga',a:'Consolation'}],
    motm:'C. Gakpo (NED)',ms:null},
-  {grp:'E',home:'Germany',hf:'🇩🇪',away:'Ivory Coast',af:'🇨🇮',hs:1,as_:1,date:'Jun 20',time:'4:00 PM',venue:'Toronto',espnId:'760448',status:'live',clock:'LIVE',
-   hev:[{i:'⚽',m:'TBD',n:'D. Undav',a:'Ast: N. Amiri (cross)'}],aev:[{i:'⚽',m:"30'",n:'F. Kessié',a:'Rebound after Brown block on Diallo'}],
-   tbd:true,ms:null},
+  {grp:'E',home:'Germany',hf:'🇩🇪',away:'Ivory Coast',af:'🇨🇮',hs:2,as_:1,date:'Jun 20',time:'4:00 PM',venue:'Toronto',espnId:'760448',status:'ft',
+   hev:[{i:'⚽',m:"68'",n:'D. Undav',a:'Ast: N. Amiri (cross) — equalizer'},{i:'⚽',m:"90+4'",n:'D. Undav',a:'Brace — winner!'}],
+   aev:[{i:'⚽',m:"30'",n:'F. Kessié',a:'Rebound after Brown block on Diallo'}],
+   tbd:false,motm:'D. Undav (GER)',ms:null},
   {grp:'E',home:'Ecuador',hf:'🇪🇨',away:'Curaçao',af:'🇨🇼',hs:null,as_:null,date:'Jun 20',time:'8:00 PM',venue:'Kansas City',status:'upcoming',hev:[],aev:[],ms:null},
   {grp:'F',home:'Tunisia',hf:'🇹🇳',away:'Japan',af:'🇯🇵',hs:null,as_:null,date:'Jun 20',time:'12:00 AM',venue:'Monterrey',status:'upcoming',hev:[],aev:[],ms:null},
   // JUN 21
@@ -878,6 +879,7 @@ let MATCHES=[
 // matchOrder = chronological match number (higher = more recent)
 // ============================================================
 const GOALS=[
+  {name:'F. Kessié',        team:'Ivory Coast',flag:'🇨🇮',goals:1,photo:null,matchOrder:34,lastMin:30},
   {name:'B. Brobbey',       team:'Netherlands',flag:'🇳🇱',goals:2,photo:null,matchOrder:33,lastMin:17},
   {name:'C. Gakpo',         team:'Netherlands',flag:'🇳🇱',goals:2,photo:null,matchOrder:33,lastMin:54},
   {name:'A. Elanga',        team:'Sweden',     flag:'🇸🇪',goals:1,photo:null,matchOrder:33,lastMin:59},
@@ -948,7 +950,7 @@ const GOALS=[
   {name:'K. Havertz',        team:'Germany',     flag:'🇩🇪',goals:2,photo:null,matchOrder:9,lastMin:88},
   {name:'J. Musiala',        team:'Germany',     flag:'🇩🇪',goals:1,photo:null,matchOrder:9,lastMin:47},
   {name:'N. Brown',          team:'Germany',     flag:'🇩🇪',goals:1,photo:null,matchOrder:9,lastMin:68},
-  {name:'D. Undav',          team:'Germany',     flag:'🇩🇪',goals:1,photo:null,matchOrder:9,lastMin:78},
+  {name:'D. Undav',          team:'Germany',     flag:'🇩🇪',goals:3,photo:null,matchOrder:35,lastMin:90},
   {name:'F. Nmecha',         team:'Germany',     flag:'🇩🇪',goals:1,photo:null,matchOrder:9,lastMin:6},
   {name:'N. Schlotterbeck',  team:'Germany',     flag:'🇩🇪',goals:1,photo:null,matchOrder:9,lastMin:38},
   {name:'L. Comenencia',     team:'Curaçao',     flag:'🇨🇼',goals:1,photo:null,matchOrder:9,lastMin:21},
@@ -972,6 +974,7 @@ const GOALS=[
 ];
 
 const ASSISTS=[
+  {name:'N. Amiri',          team:'Germany',  flag:'🇩🇪',assists:1,photo:null,note:"Ast → Undav 68'",            matchOrder:35,lastMin:68},
   {name:'V. Gyökeres',      team:'Sweden',     flag:'🇸🇪',assists:1,photo:null,note:"Ast → Isak 30'",           matchOrder:12,lastMin:30},
   {name:'A. Isak',          team:'Sweden',     flag:'🇸🇪',assists:1,photo:null,note:"Ast → Gyökeres 59'",       matchOrder:12,lastMin:59},
   {name:'Hannibal Mejbri',  team:'Tunisia',    flag:'🇹🇳',assists:1,photo:null,note:"Ast → Rekik 43'",          matchOrder:12,lastMin:43},
@@ -1035,14 +1038,14 @@ const GKS=[
   {name:'B. Verbruggen',team:'Netherlands', flag:'🇳🇱',photo:null,mp:2,saves:6,ga:3,cs:0,savePct:67},
   {name:'Alisson',      team:'Brazil',      flag:'🇧🇷',photo:null,mp:2,saves:5,ga:1,cs:1,savePct:83},
   {name:'O. Olsen',     team:'Sweden',      flag:'🇸🇪',photo:null,mp:2,saves:3,ga:6,cs:0,savePct:33},
-  {name:'K. Fofana',    team:'Ivory Coast', flag:'🇨🇮',photo:null,mp:1,saves:3,ga:0,cs:1,savePct:100},
+  {name:'K. Fofana',    team:'Ivory Coast', flag:'🇨🇮',photo:null,mp:2,saves:7,ga:2,cs:0,savePct:78},
   {name:'J. Placide',   team:'Haiti',       flag:'🇭🇹',photo:null,mp:2,saves:5,ga:4,cs:0,savePct:56},
   {name:'M. Abunada',   team:'Qatar',       flag:'🇶🇦',photo:null,mp:2,saves:4,ga:7,cs:0,savePct:36},
   {name:'M. Freese',    team:'USA',         flag:'🇺🇸',photo:null,mp:2,saves:3,ga:1,cs:1,savePct:75},
   {name:'U. Çakır',     team:'Türkiye',     flag:'🇹🇷',photo:null,mp:2,saves:3,ga:3,cs:0,savePct:50},
   {name:'D. Schmidt',   team:'Japan',       flag:'🇯🇵',photo:null,mp:1,saves:1,ga:2,cs:0,savePct:14},
   {name:'H. Galindez',  team:'Ecuador',     flag:'🇪🇨',photo:null,mp:1,saves:1,ga:1,cs:0,savePct:20},
-  {name:'M. Neuer',     team:'Germany',     flag:'🇩🇪',photo:null,mp:1,saves:1,ga:1,cs:0,savePct:50},
+  {name:'M. Neuer',     team:'Germany',     flag:'🇩🇪',photo:null,mp:2,saves:3,ga:2,cs:0,savePct:60},
   {name:'E. Room',      team:'Curaçao',     flag:'🇨🇼',photo:null,mp:1,saves:3,ga:7,cs:0,savePct:30},
   {name:'M. Chamakh',   team:'Tunisia',     flag:'🇹🇳',photo:null,mp:1,saves:6,ga:5,cs:0,savePct:55},
   {name:'O. Guzan',     team:'Paraguay',    flag:'🇵🇾',photo:null,mp:2,saves:3,ga:4,cs:0,savePct:43},
