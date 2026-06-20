@@ -618,8 +618,8 @@ const GROUPS={
     {flag:'🇨🇼',name:'Curaçao',    mp:1,w:0,d:0,l:1,gf:1,ga:7,pts:0},
   ]},
   F:{teams:[
-    {flag:'🇸🇪',name:'Sweden',     mp:1,w:1,d:0,l:0,gf:5,ga:1,pts:3},
-    {flag:'🇳🇱',name:'Netherlands',mp:1,w:0,d:1,l:0,gf:2,ga:2,pts:1},
+    {flag:'🇳🇱',name:'Netherlands',mp:2,w:1,d:1,l:0,gf:7,ga:3,pts:4},
+    {flag:'🇸🇪',name:'Sweden',     mp:2,w:1,d:0,l:1,gf:6,ga:6,pts:3},
     {flag:'🇯🇵',name:'Japan',      mp:1,w:0,d:1,l:0,gf:2,ga:2,pts:1},
     {flag:'🇹🇳',name:'Tunisia',    mp:1,w:0,d:0,l:1,gf:1,ga:5,pts:0},
   ]},
@@ -819,8 +819,13 @@ let MATCHES=[
    hev:[],aev:[{i:'⚽',m:"2'",n:'M. Galarza',a:'Lightning-fast opener'}],
    motm:'M. Galarza (PAR)',ms:null},
   // JUN 20
-  {grp:'F',home:'Netherlands',hf:'🇳🇱',away:'Sweden',af:'🇸🇪',hs:null,as_:null,date:'Jun 20',time:'1:00 PM',venue:'Houston',status:'upcoming',hev:[],aev:[],ms:null},
-  {grp:'E',home:'Germany',hf:'🇩🇪',away:'Ivory Coast',af:'🇨🇮',hs:null,as_:null,date:'Jun 20',time:'4:00 PM',venue:'Toronto',status:'upcoming',hev:[],aev:[],ms:null},
+  {grp:'F',home:'Netherlands',hf:'🇳🇱',away:'Sweden',af:'🇸🇪',hs:5,as_:1,date:'Jun 20',time:'1:00 PM',venue:'Houston',status:'ft',
+   hev:[{i:'⚽',m:"5'",n:'B. Brobbey',a:'1st of brace'},{i:'⚽',m:"17'",n:'B. Brobbey',a:'2nd goal — brace'},{i:'⚽',m:"47'",n:'C. Gakpo',a:'1st of brace'},{i:'⚽',m:"54'",n:'C. Gakpo',a:'2nd goal — brace'},{i:'⚽',m:"89'",n:'C. Summerville',a:'5th goal'}],
+   aev:[{i:'⚽',m:"59'",n:'A. Elanga',a:'Consolation'}],
+   motm:'C. Gakpo (NED)',ms:null},
+  {grp:'E',home:'Germany',hf:'🇩🇪',away:'Ivory Coast',af:'🇨🇮',hs:0,as_:1,date:'Jun 20',time:'4:00 PM',venue:'Toronto',espnId:'760448',status:'live',clock:'HT',
+   hev:[],aev:[{i:'⚽',m:"30'",n:'F. Kessié',a:'Rebound after Brown block on Diallo'}],
+   tbd:false,ms:null},
   {grp:'E',home:'Ecuador',hf:'🇪🇨',away:'Curaçao',af:'🇨🇼',hs:null,as_:null,date:'Jun 20',time:'8:00 PM',venue:'Kansas City',status:'upcoming',hev:[],aev:[],ms:null},
   {grp:'F',home:'Tunisia',hf:'🇹🇳',away:'Japan',af:'🇯🇵',hs:null,as_:null,date:'Jun 20',time:'12:00 AM',venue:'Monterrey',status:'upcoming',hev:[],aev:[],ms:null},
   // JUN 21
@@ -873,6 +878,10 @@ let MATCHES=[
 // matchOrder = chronological match number (higher = more recent)
 // ============================================================
 const GOALS=[
+  {name:'B. Brobbey',       team:'Netherlands',flag:'🇳🇱',goals:2,photo:null,matchOrder:33,lastMin:17},
+  {name:'C. Gakpo',         team:'Netherlands',flag:'🇳🇱',goals:2,photo:null,matchOrder:33,lastMin:54},
+  {name:'A. Elanga',        team:'Sweden',     flag:'🇸🇪',goals:1,photo:null,matchOrder:33,lastMin:59},
+  {name:'F. Kessié',        team:'Ivory Coast',flag:'🇨🇮',goals:1,photo:null,matchOrder:34,lastMin:30},
   {name:'M. Muheim OG',     team:'Qatar',      flag:'🇶🇦',goals:1,photo:null,matchOrder:5,lastMin:90},
   {name:'C. Burgess OG',    team:'USA',        flag:'🇺🇸',goals:1,photo:null,matchOrder:29,lastMin:11},
   {name:'M. Cunha',         team:'Brazil',     flag:'🇧🇷',goals:2,photo:null,matchOrder:31,lastMin:36},
@@ -934,7 +943,7 @@ const GOALS=[
   {name:'D. Kamada',         team:'Japan',       flag:'🇯🇵',goals:1,photo:null,matchOrder:11,lastMin:88},
   {name:'K. Nakamura',       team:'Japan',       flag:'🇯🇵',goals:1,photo:null,matchOrder:11,lastMin:57},
   {name:'V. van Dijk',       team:'Netherlands', flag:'🇳🇱',goals:1,photo:null,matchOrder:11,lastMin:51},
-  {name:'C. Summerville',    team:'Netherlands', flag:'🇳🇱',goals:1,photo:null,matchOrder:11,lastMin:64},
+  {name:'C. Summerville',    team:'Netherlands', flag:'🇳🇱',goals:2,photo:null,matchOrder:33,lastMin:89},
   {name:'Amad Diallo',       team:'Ivory Coast', flag:'🇨🇮',goals:1,photo:null,matchOrder:10,lastMin:90},
   {name:'K. Havertz',        team:'Germany',     flag:'🇩🇪',goals:2,photo:null,matchOrder:9,lastMin:88},
   {name:'J. Musiala',        team:'Germany',     flag:'🇩🇪',goals:1,photo:null,matchOrder:9,lastMin:47},
@@ -1023,9 +1032,9 @@ const GKS=[
   {name:'P. Beach',     team:'Australia',   flag:'🇦🇺',photo:null,mp:2,saves:11,ga:2,cs:1,savePct:85},
   {name:'A. Gunn',      team:'Scotland',    flag:'🏴󠁧󠁢󠁳󠁣󠁴󠁿',photo:null,mp:2,saves:5,ga:1,cs:1,savePct:83},
   {name:'Y. Sommer',    team:'Switzerland', flag:'🇨🇭',photo:null,mp:2,saves:8,ga:2,cs:0,savePct:80},
-  {name:'B. Verbruggen',team:'Netherlands', flag:'🇳🇱',photo:null,mp:1,saves:4,ga:2,cs:0,savePct:67},
+  {name:'B. Verbruggen',team:'Netherlands', flag:'🇳🇱',photo:null,mp:2,saves:6,ga:3,cs:0,savePct:67},
   {name:'Alisson',      team:'Brazil',      flag:'🇧🇷',photo:null,mp:2,saves:5,ga:1,cs:1,savePct:83},
-  {name:'O. Olsen',     team:'Sweden',      flag:'🇸🇪',photo:null,mp:1,saves:1,ga:1,cs:0,savePct:50},
+  {name:'O. Olsen',     team:'Sweden',      flag:'🇸🇪',photo:null,mp:2,saves:3,ga:6,cs:0,savePct:33},
   {name:'K. Fofana',    team:'Ivory Coast', flag:'🇨🇮',photo:null,mp:1,saves:3,ga:0,cs:1,savePct:100},
   {name:'J. Placide',   team:'Haiti',       flag:'🇭🇹',photo:null,mp:2,saves:5,ga:4,cs:0,savePct:56},
   {name:'M. Abunada',   team:'Qatar',       flag:'🇶🇦',photo:null,mp:2,saves:4,ga:7,cs:0,savePct:36},
