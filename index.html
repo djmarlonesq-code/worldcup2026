@@ -1174,9 +1174,60 @@ const TV = {
   'England_Croatia': 'Fox · Telemundo',
   'Ghana_Panama': 'FS1 · Telemundo',
   'Uzbekistan_Colombia': 'FS1 · Telemundo',
-  _default: 'Fox / FS1 · Telemundo'
+  // Matchday 2 (Jun 18-21)
+  'Czechia_South Africa': 'Fox · Telemundo',
+  'Switzerland_Bosnia & Herz.': 'FS1 · Universo',
+  'Canada_Qatar': 'FS1 · Telemundo',
+  'Mexico_South Korea': 'Fox · Telemundo',
+  'USA_Australia': 'Fox · Telemundo',
+  'Scotland_Morocco': 'Fox · Telemundo',
+  'Brazil_Haiti': 'Fox · Telemundo',
+  'Türkiye_Paraguay': 'FS1 · Universo',
+  'Netherlands_Sweden': 'Fox · Telemundo',
+  'Germany_Ivory Coast': 'Fox · Telemundo',
+  'Ecuador_Curaçao': 'FS1 · Telemundo',
+  'Tunisia_Japan': 'FS1 · Telemundo',
+  'Spain_Saudi Arabia': 'Fox · Telemundo',
+  'Belgium_Iran': 'FS1 · Telemundo',
+  'Uruguay_Cape Verde': 'FS1 · Telemundo',
+  'New Zealand_Egypt': 'FS1 · Telemundo',
+  // Matchday 3 (Jun 22-23)
+  'Argentina_Austria': 'Fox · Telemundo',
+  'France_Iraq': 'Fox · Telemundo',
+  'Norway_Senegal': 'Fox · Telemundo',
+  'Jordan_Algeria': 'FS1 · Telemundo',
+  'Portugal_Uzbekistan': 'Fox · Telemundo',
+  'England_Ghana': 'Fox · Telemundo',
+  'Panama_Croatia': 'Fox · Telemundo',
+  'Colombia_DR Congo': 'FS1 · Telemundo',
+  // Matchday 3 finale (Jun 24-27) — simultaneous kickoffs split Fox/FS1
+  'Switzerland_Canada': 'Fox · Telemundo',
+  'Bosnia & Herz._Qatar': 'FS1 · Universo',
+  'Scotland_Brazil': 'Fox · Telemundo',
+  'Morocco_Haiti': 'FS1 · Universo',
+  'Czechia_Mexico': 'Fox · Telemundo',
+  'South Africa_South Korea': 'FS1 · Universo',
+  'Curaçao_Ivory Coast': 'FS1 · Telemundo',
+  'Ecuador_Germany': 'Fox · Telemundo',
+  'Tunisia_Netherlands': 'Fox · Telemundo',
+  'Japan_Sweden': 'FS1 · Universo',
+  'Türkiye_USA': 'Fox · Telemundo',
+  'Paraguay_Australia': 'FS1 · Universo',
+  'Norway_France': 'Fox · Telemundo',
+  'Senegal_Iraq': 'FS1 · Universo',
+  'Uruguay_Spain': 'Fox · Telemundo',
+  'Cape Verde_Saudi Arabia': 'FS1 · Universo',
+  'New Zealand_Belgium': 'Fox · Telemundo',
+  'Egypt_Iran': 'FS1 · Universo',
+  'Panama_England': 'Fox · Telemundo',
+  'Croatia_Ghana': 'FS1 · Universo',
+  'Colombia_Portugal': 'Fox · Telemundo',
+  'DR Congo_Uzbekistan': 'FS1 · Universo',
+  'Algeria_Austria': 'FS1 · Universo',
+  'Jordan_Argentina': 'Fox · Telemundo',
+  _default: 'TBD'
 };
-function getTV(home, away) { return TV[home+'_'+away] || TV._default; }
+function getTV(home, away) { return TV[home+'_'+away] || TV[away+'_'+home] || TV._default; }
 
 async function doRefresh() {
   const btn = document.getElementById('refreshBtn');
