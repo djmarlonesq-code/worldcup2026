@@ -656,8 +656,8 @@ const GROUPS={
   L:{teams:[
     {flag:'🏴󠁧󠁢󠁥󠁮󠁧󠁿',name:'England', mp:2,w:1,d:1,l:0,gf:4,ga:2,pts:4},
     {flag:'🇬🇭',name:'Ghana',   mp:2,w:1,d:1,l:0,gf:1,ga:0,pts:4},
-    {flag:'🇭🇷',name:'Croatia', mp:1,w:0,d:0,l:1,gf:2,ga:4,pts:0},
-    {flag:'🇵🇦',name:'Panama',  mp:1,w:0,d:0,l:1,gf:0,ga:1,pts:0},
+    {flag:'🇭🇷',name:'Croatia', mp:2,w:1,d:0,l:1,gf:3,ga:4,pts:3},
+    {flag:'🇵🇦',name:'Panama',  mp:2,w:0,d:0,l:2,gf:0,ga:2,pts:0},
   ]},
 };
 
@@ -869,8 +869,10 @@ let MATCHES=[
    motm:'C. Ronaldo (POR)',ms:null},
   {grp:'L',home:'England',hf:'🏴󠁧󠁢󠁥󠁮󠁧󠁿',away:'Ghana',af:'🇬🇭',hs:0,as_:0,date:'Jun 23',time:'4:00 PM',venue:'Boston',status:'ft',
    hev:[],aev:[],motm:'L. Ati-Zigi (GHA)',ms:null},
-  {grp:'L',home:'Panama',hf:'🇵🇦',away:'Croatia',af:'🇭🇷',hs:null,as_:null,date:'Jun 23',time:'7:00 PM',venue:'Seattle',status:'upcoming',hev:[],aev:[],ms:null},
-  {grp:'K',home:'Colombia',hf:'🇨🇴',away:'DR Congo',af:'🇨🇩',hs:null,as_:null,date:'Jun 23',time:'10:00 PM',venue:'Miami',status:'upcoming',hev:[],aev:[],ms:null},
+  {grp:'L',home:'Panama',hf:'🇵🇦',away:'Croatia',af:'🇭🇷',hs:0,as_:1,date:'Jun 23',time:'7:00 PM',venue:'Toronto',status:'ft',
+   hev:[],aev:[{i:'⚽',m:"54'",n:'A. Budimir',a:''}],
+   motm:'A. Budimir (CRO)',ms:null},
+  {grp:'K',home:'Colombia',hf:'🇨🇴',away:'DR Congo',af:'🇨🇩',hs:0,as_:0,date:'Jun 23',time:'10:00 PM',venue:'Guadalajara',espnId:'760459',status:'live',clock:'LIVE',hev:[],aev:[],tbd:true,ms:null},
   // JUN 24
   {grp:'B',home:'Switzerland',hf:'🇨🇭',away:'Canada',af:'🇨🇦',hs:null,as_:null,date:'Jun 24',time:'3:00 PM',venue:'Vancouver',status:'upcoming',hev:[],aev:[],ms:null},
   {grp:'B',home:'Bosnia & Herz.',hf:'🇧🇦',away:'Qatar',af:'🇶🇦',hs:null,as_:null,date:'Jun 24',time:'3:00 PM',venue:'Seattle',status:'upcoming',hev:[],aev:[],ms:null},
@@ -906,6 +908,7 @@ let MATCHES=[
 // matchOrder = chronological match number (higher = more recent)
 // ============================================================
 const GOALS=[
+  {name:'A. Budimir',       team:'Croatia',    flag:'🇭🇷',goals:1,photo:null,matchOrder:47,lastMin:54},
   {name:'C. Ronaldo',       team:'Portugal',   flag:'🇵🇹',goals:2,photo:null,matchOrder:46,lastMin:39},
   {name:'N. Mendes',        team:'Portugal',   flag:'🇵🇹',goals:1,photo:null,matchOrder:46,lastMin:17},
   {name:'R. Leão',          team:'Portugal',   flag:'🇵🇹',goals:1,photo:null,matchOrder:46,lastMin:87},
@@ -1059,9 +1062,9 @@ const GKS=[
   {name:'U. Nishonov',   team:'Uzbekistan',flag:'🇺🇿',photo:null,mp:2,saves:6,ga:8,cs:0,savePct:43},
   {name:'L. Ati-Zigi',   team:'Ghana',   flag:'🇬🇭',photo:null,mp:2,saves:5,ga:0,cs:2,savePct:100},
   {name:'B. Asare',      team:'Ghana',   flag:'🇬🇭',photo:null,mp:1,saves:3,ga:0,cs:1,savePct:100},
-  {name:'O. Mosquera',  team:'Panama',  flag:'🇵🇦',photo:null,mp:1,saves:3,ga:1,cs:0,savePct:75},
+  {name:'O. Mosquera',  team:'Panama',  flag:'🇵🇦',photo:null,mp:2,saves:5,ga:2,cs:0,savePct:71},
   {name:'J. Pickford',   team:'England',  flag:'🏴󠁧󠁢󠁥󠁮󠁧󠁿',photo:null,mp:2,saves:6,ga:2,cs:1,savePct:75},
-  {name:'D. Livaković',  team:'Croatia',  flag:'🇭🇷',photo:null,mp:1,saves:6,ga:4,cs:0,savePct:60},
+  {name:'D. Livaković',  team:'Croatia',  flag:'🇭🇷',photo:null,mp:2,saves:9,ga:4,cs:1,savePct:69},
   {name:'M. Crepeau',    team:'Canada',     flag:'🇨🇦',photo:null,mp:2,saves:2,ga:1,cs:1,savePct:67},
   {name:'N. Sehic',      team:'Bosnia & Herz.',flag:'🇧🇦',photo:null,mp:2,saves:5,ga:5,cs:0,savePct:50},
   {name:'M. Kovar',      team:'Czechia',    flag:'🇨🇿',photo:null,mp:2,saves:4,ga:3,cs:0,savePct:57},
