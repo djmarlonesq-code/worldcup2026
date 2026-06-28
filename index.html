@@ -279,6 +279,7 @@ main{padding:14px 16px;max-width:660px;margin:0 auto;}
   </div>
   <div class="nav-tabs">
     <button class="tab-btn active" onclick="switchTab('overview',this)">Overview</button>
+    <button class="tab-btn" onclick="switchTab('bracket',this)">Bracket</button>
     <button class="tab-btn" onclick="switchTab('groups',this)">Groups</button>
     <button class="tab-btn" onclick="switchTab('schedule',this)">Schedule</button>
     <button class="tab-btn" onclick="switchTab('results',this)">Results</button>
@@ -298,6 +299,11 @@ main{padding:14px 16px;max-width:660px;margin:0 auto;}
   <div id="ov-next"></div>
   <div class="sec-label">Latest Results</div>
   <div id="ov-results"></div>
+</div>
+<div id="tab-bracket" class="tab-panel">
+  <div class="info-box"><strong>🏆 Knockout Stage</strong> — single elimination from here. 32 teams, 5 rounds to the Final on July 19.</div>
+  <div class="grp-scroll" id="koRoundChips"></div>
+  <div id="koContent"></div>
 </div>
 <div id="tab-groups" class="tab-panel">
   <div class="grp-scroll" id="grpChips"></div>
@@ -679,6 +685,50 @@ const PHOTOS={
 // ============================================================
 // MATCHES — all verified from openfootball June 14 FT
 // ============================================================
+// ============================================================
+// KNOCKOUT STAGE — Round of 32, 16, QF, SF, Final
+// All Round of 32 matchups confirmed from CBS/Yahoo/ESPN/FOX/NBC
+// ============================================================
+let KNOCKOUT=[
+  // ── ROUND OF 32 ──────────────────────────────────────────
+  {round:'R32',home:'South Africa',hf:'🇿🇦',away:'Canada',af:'🇨🇦',hs:null,as_:null,date:'Jun 28',time:'3:00 PM',venue:'Los Angeles',status:'upcoming',hev:[],aev:[],ms:null,note:'Grp A 2nd vs Grp B 2nd'},
+  {round:'R32',home:'Brazil',hf:'🇧🇷',away:'Japan',af:'🇯🇵',hs:null,as_:null,date:'Jun 29',time:'1:00 PM',venue:'Houston',status:'upcoming',hev:[],aev:[],ms:null,note:'Grp C 1st vs Grp F 2nd'},
+  {round:'R32',home:'Germany',hf:'🇩🇪',away:'Paraguay',af:'🇵🇾',hs:null,as_:null,date:'Jun 29',time:'4:30 PM',venue:'Boston',status:'upcoming',hev:[],aev:[],ms:null,note:'Grp E 1st vs Grp D 3rd'},
+  {round:'R32',home:'Netherlands',hf:'🇳🇱',away:'Morocco',af:'🇲🇦',hs:null,as_:null,date:'Jun 29',time:'9:00 PM',venue:'Monterrey',status:'upcoming',hev:[],aev:[],ms:null,note:'Grp F 1st vs Grp C 2nd'},
+  {round:'R32',home:'Ivory Coast',hf:'🇨🇮',away:'Norway',af:'🇳🇴',hs:null,as_:null,date:'Jun 30',time:'1:00 PM',venue:'Dallas',status:'upcoming',hev:[],aev:[],ms:null,note:'Grp E 2nd vs Grp I 2nd'},
+  {round:'R32',home:'France',hf:'🇫🇷',away:'Sweden',af:'🇸🇪',hs:null,as_:null,date:'Jun 30',time:'5:00 PM',venue:'New York/NJ',status:'upcoming',hev:[],aev:[],ms:null,note:'Grp I 1st vs Grp F 3rd'},
+  {round:'R32',home:'Mexico',hf:'🇲🇽',away:'Ecuador',af:'🇪🇨',hs:null,as_:null,date:'Jun 30',time:'9:00 PM',venue:'Mexico City',status:'upcoming',hev:[],aev:[],ms:null,note:'Grp A 1st vs Grp E 3rd'},
+  {round:'R32',home:'England',hf:'🏴󠁧󠁢󠁥󠁮󠁧󠁿',away:'DR Congo',af:'🇨🇩',hs:null,as_:null,date:'Jul 1',time:'12:00 PM',venue:'Atlanta',status:'upcoming',hev:[],aev:[],ms:null,note:'Grp L 1st vs Grp K 3rd'},
+  {round:'R32',home:'Belgium',hf:'🇧🇪',away:'Senegal',af:'🇸🇳',hs:null,as_:null,date:'Jul 1',time:'4:00 PM',venue:'Seattle',status:'upcoming',hev:[],aev:[],ms:null,note:'Grp G 1st vs Grp I 3rd'},
+  {round:'R32',home:'USA',hf:'🇺🇸',away:'Bosnia & Herz.',af:'🇧🇦',hs:null,as_:null,date:'Jul 1',time:'8:00 PM',venue:'San Francisco',status:'upcoming',hev:[],aev:[],ms:null,note:'Grp D 1st vs Grp B 3rd'},
+  {round:'R32',home:'Spain',hf:'🇪🇸',away:'Austria',af:'🇦🇹',hs:null,as_:null,date:'Jul 2',time:'3:00 PM',venue:'Los Angeles',status:'upcoming',hev:[],aev:[],ms:null,note:'Grp H 1st vs Grp J 2nd'},
+  {round:'R32',home:'Portugal',hf:'🇵🇹',away:'Croatia',af:'🇭🇷',hs:null,as_:null,date:'Jul 2',time:'7:00 PM',venue:'Toronto',status:'upcoming',hev:[],aev:[],ms:null,note:'Grp K 2nd vs Grp L 2nd'},
+  {round:'R32',home:'Switzerland',hf:'🇨🇭',away:'Algeria',af:'🇩🇿',hs:null,as_:null,date:'Jul 2',time:'11:00 PM',venue:'Vancouver',status:'upcoming',hev:[],aev:[],ms:null,note:'Grp B 1st vs Grp J 3rd'},
+  {round:'R32',home:'Australia',hf:'🇦🇺',away:'Egypt',af:'🇪🇬',hs:null,as_:null,date:'Jul 3',time:'2:00 PM',venue:'Dallas',status:'upcoming',hev:[],aev:[],ms:null,note:'Grp D 2nd vs Grp G 2nd'},
+  {round:'R32',home:'Argentina',hf:'🇦🇷',away:'Cape Verde',af:'🇨🇻',hs:null,as_:null,date:'Jul 3',time:'6:00 PM',venue:'Miami',status:'upcoming',hev:[],aev:[],ms:null,note:'Grp J 1st vs Grp H 2nd'},
+  {round:'R32',home:'Colombia',hf:'🇨🇴',away:'Ghana',af:'🇬🇭',hs:null,as_:null,date:'Jul 3',time:'9:30 PM',venue:'Kansas City',status:'upcoming',hev:[],aev:[],ms:null,note:'Grp K 1st vs Grp L 3rd'},
+  // ── ROUND OF 16 — pairings locked, teams TBD until R32 completes ──
+  {round:'R16',home:'TBD',hf:'🏳️',away:'TBD',af:'🏳️',hs:null,as_:null,date:'Jul 4',time:'12:00 PM',venue:'Philadelphia',status:'upcoming',hev:[],aev:[],ms:null,note:'Winner: Netherlands/Morocco vs Winner: South Africa/Canada'},
+  {round:'R16',home:'TBD',hf:'🏳️',away:'TBD',af:'🏳️',hs:null,as_:null,date:'Jul 4',time:'4:00 PM',venue:'Houston',status:'upcoming',hev:[],aev:[],ms:null,note:'Winner: Germany/Paraguay vs Winner: Brazil/Japan'},
+  {round:'R16',home:'TBD',hf:'🏳️',away:'TBD',af:'🏳️',hs:null,as_:null,date:'Jul 4',time:'8:00 PM',venue:'New York/NJ',status:'upcoming',hev:[],aev:[],ms:null,note:'Winner: France/Sweden vs Winner: Ivory Coast/Norway'},
+  {round:'R16',home:'TBD',hf:'🏳️',away:'TBD',af:'🏳️',hs:null,as_:null,date:'Jul 5',time:'12:00 PM',venue:'Mexico City',status:'upcoming',hev:[],aev:[],ms:null,note:'Winner: Mexico/Ecuador vs Winner: England/DR Congo'},
+  {round:'R16',home:'TBD',hf:'🏳️',away:'TBD',af:'🏳️',hs:null,as_:null,date:'Jul 6',time:'1:00 PM',venue:'Atlanta',status:'upcoming',hev:[],aev:[],ms:null,note:'Winner: USA/Bosnia vs Winner: Belgium/Senegal'},
+  {round:'R16',home:'TBD',hf:'🏳️',away:'TBD',af:'🏳️',hs:null,as_:null,date:'Jul 6',time:'5:00 PM',venue:'Toronto',status:'upcoming',hev:[],aev:[],ms:null,note:'Winner: Spain/Austria vs Winner: Portugal/Croatia'},
+  {round:'R16',home:'TBD',hf:'🏳️',away:'TBD',af:'🏳️',hs:null,as_:null,date:'Jul 7',time:'12:00 PM',venue:'Vancouver',status:'upcoming',hev:[],aev:[],ms:null,note:'Winner: Switzerland/Algeria vs Winner: Colombia/Ghana'},
+  {round:'R16',home:'TBD',hf:'🏳️',away:'TBD',af:'🏳️',hs:null,as_:null,date:'Jul 7',time:'4:00 PM',venue:'Miami',status:'upcoming',hev:[],aev:[],ms:null,note:'Winner: Argentina/Cape Verde vs Winner: Australia/Egypt'},
+  // ── QUARTERFINALS — pairings TBD until R16 completes ──
+  {round:'QF',home:'TBD',hf:'🏳️',away:'TBD',af:'🏳️',hs:null,as_:null,date:'Jul 9',time:'TBD',venue:'TBD',status:'upcoming',hev:[],aev:[],ms:null,note:'Quarterfinal 1 — pairing set once Round of 16 concludes'},
+  {round:'QF',home:'TBD',hf:'🏳️',away:'TBD',af:'🏳️',hs:null,as_:null,date:'Jul 10',time:'TBD',venue:'TBD',status:'upcoming',hev:[],aev:[],ms:null,note:'Quarterfinal 2 — pairing set once Round of 16 concludes'},
+  {round:'QF',home:'TBD',hf:'🏳️',away:'TBD',af:'🏳️',hs:null,as_:null,date:'Jul 10',time:'TBD',venue:'TBD',status:'upcoming',hev:[],aev:[],ms:null,note:'Quarterfinal 3 — pairing set once Round of 16 concludes'},
+  {round:'QF',home:'TBD',hf:'🏳️',away:'TBD',af:'🏳️',hs:null,as_:null,date:'Jul 11',time:'TBD',venue:'TBD',status:'upcoming',hev:[],aev:[],ms:null,note:'Quarterfinal 4 — pairing set once Round of 16 concludes'},
+  // ── SEMIFINALS ──
+  {round:'SF',home:'TBD',hf:'🏳️',away:'TBD',af:'🏳️',hs:null,as_:null,date:'Jul 14',time:'TBD',venue:'Dallas',status:'upcoming',hev:[],aev:[],ms:null,note:'Semifinal 1 — pairing set once Quarterfinals conclude'},
+  {round:'SF',home:'TBD',hf:'🏳️',away:'TBD',af:'🏳️',hs:null,as_:null,date:'Jul 15',time:'TBD',venue:'Atlanta',status:'upcoming',hev:[],aev:[],ms:null,note:'Semifinal 2 — pairing set once Quarterfinals conclude'},
+  // ── THIRD PLACE & FINAL ──
+  {round:'3RD',home:'TBD',hf:'🏳️',away:'TBD',af:'🏳️',hs:null,as_:null,date:'Jul 18',time:'TBD',venue:'Miami',status:'upcoming',hev:[],aev:[],ms:null,note:'3rd Place Playoff — Semifinal losers'},
+  {round:'F',home:'TBD',hf:'🏳️',away:'TBD',af:'🏳️',hs:null,as_:null,date:'Jul 19',time:'TBD',venue:'New York/NJ',status:'upcoming',hev:[],aev:[],ms:null,note:'🏆 FINAL — MetLife Stadium'},
+];
+
 let MATCHES=[
   // GRP A
   {grp:'A',home:'Mexico',hf:'🇲🇽',away:'South Africa',af:'🇿🇦',hs:2,as_:0,date:'Jun 11',time:'3:00 PM',venue:'Mexico City',status:'ft',
@@ -1331,6 +1381,23 @@ const TV = {
   'DR Congo_Uzbekistan': 'FS1 · Universo',
   'Algeria_Austria': 'FS1 · Universo',
   'Jordan_Argentina': 'Fox · Telemundo',
+  // Round of 32 — confirmed via CBS/Yahoo/NBC/FOX (all Telemundo in Spanish)
+  'South Africa_Canada': 'Fox · Telemundo',
+  'Brazil_Japan': 'Fox · Telemundo',
+  'Germany_Paraguay': 'Fox · Telemundo',
+  'Netherlands_Morocco': 'Fox · Telemundo',
+  'Ivory Coast_Norway': 'Fox · Telemundo',
+  'France_Sweden': 'Fox · Telemundo',
+  'Mexico_Ecuador': 'Fox · Telemundo',
+  'England_DR Congo': 'Fox · Telemundo',
+  'Belgium_Senegal': 'FS1 · Telemundo',
+  'USA_Bosnia & Herz.': 'Fox · Telemundo',
+  'Spain_Austria': 'Fox · Telemundo',
+  'Portugal_Croatia': 'Fox · Telemundo',
+  'Switzerland_Algeria': 'FS1 · Telemundo',
+  'Australia_Egypt': 'Fox · Telemundo',
+  'Argentina_Cape Verde': 'Fox · Telemundo',
+  'Colombia_Ghana': 'Fox · Telemundo',
   _default: 'TBD'
 };
 function getTV(home, away) { return TV[home+'_'+away] || TV[away+'_'+home] || TV._default; }
@@ -1715,6 +1782,57 @@ function initChips(){
 function renderGrp(){let h=standing(CG)+'<div class="sec-label">Matches</div>';MATCHES.filter(m=>m.grp===CG).forEach(m=>{h+=matchCard(m,false);});document.getElementById('grpContent').innerHTML=h;}
 
 // ============================================================
+// KNOCKOUT BRACKET
+// ============================================================
+const KO_ROUNDS=['R32','R16','QF','SF','3RD','F'];
+const KO_LABELS={'R32':'Round of 32','R16':'Round of 16','QF':'Quarterfinals','SF':'Semifinals','3RD':'3rd Place','F':'Final'};
+let CKR='R32';
+function initKoChips(){
+  const c=document.getElementById('koRoundChips');
+  c.innerHTML='';
+  KO_ROUNDS.forEach(r=>{
+    const has=KNOCKOUT.some(m=>m.round===r);
+    const b=document.createElement('button');
+    b.className='g-chip'+(r==='R32'?' active':'');
+    b.textContent=KO_LABELS[r];
+    b.style.opacity=has?'1':'.4';
+    b.onclick=()=>{document.querySelectorAll('#koRoundChips .g-chip').forEach(x=>x.classList.remove('active'));b.classList.add('active');CKR=r;renderKo();};
+    c.appendChild(b);
+  });
+}
+function koMatchCard(m){
+  const isFt=m.status==='ft';const isLive=m.status==='live';
+  let sc;
+  if(isFt) sc=`<div class="sc-dig">${m.hs} : ${m.as_}</div><div class="sc-st ft">FT${m.pen?` (PEN ${m.pen})`:''}</div>`;
+  else if(isLive) sc=`<div class="sc-dig live">${m.hs!==null?m.hs:'—'} : ${m.as_!==null?m.as_:'—'}</div><div class="sc-clock">${m.noEspnData?'⏳ checking...':'● '+(m.clock||'LIVE')}</div>`;
+  else sc=`<div class="sc-time">${m.time} ET</div><div class="sc-st up">${m.date}</div>`;
+  const stad=getStad(m.venue);
+  const tv=getTV(m.home,m.away);
+  const vb=stad?`<div class="mc-venue-wrap"><div class="mc-venue">${m.venue}</div><div class="mc-stadium">${stad.name}</div><div class="mc-tv">📺 ${tv}</div></div>`:`<div class="mc-venue-wrap"><div class="mc-venue">${m.venue}</div><div class="mc-tv">📺 ${tv}</div></div>`;
+  const sp=isFt?`<span class="mc-status-pill pill-ft">Final</span>`:isLive?`<span class="mc-status-pill pill-live">● Live</span>`:`<span class="mc-status-pill pill-up">Upcoming</span>`;
+  const hasEv=!!(m.hev?.length||m.aev?.length);
+  const evHtml=(isFt||isLive)?`<div class="mc-evts"><div class="ev-cols"><div class="ev-team"><div class="ev-lbl">${flagImg(m.home,14)||m.hf} ${m.home}</div>${evRows(m.hev)}</div><div class="ev-team"><div class="ev-lbl">${flagImg(m.away,14)||m.af} ${m.away}</div>${evRows(m.aev)}</div></div></div>`:'';
+  return `<div class="mc" onclick="toggleMC(this)" data-home="${m.home}" data-away="${m.away}" data-espnid="${m.espnId||''}">
+    <div class="mc-hdr"><span class="mc-tag">${m.note||''}</span>${sp}${vb}</div>
+    <div class="mc-body">
+      <div class="t-side">${flagImg(m.home,28)||`<span class="t-flag">${m.hf}</span>`}<div><span class="t-name">${m.home}</span></div></div>
+      <div class="sc-block">${sc}</div>
+      <div class="t-side r">${flagImg(m.away,28)||`<span class="t-flag">${m.af}</span>`}<div><span class="t-name">${m.away}</span></div></div>
+    </div>${evHtml}${isFt?`<div class="mc-stats">${m.ms?buildStatsBar(m.ms):''}</div>`:''}</div>`;
+}
+function renderKo(){
+  const matches=KNOCKOUT.filter(m=>m.round===CKR);
+  let h='';
+  if(!matches.length){
+    h=`<div class="info-box">${KO_LABELS[CKR]} matchups will be added here once the previous round concludes.</div>`;
+  } else {
+    matches.forEach(m=>{h+=koMatchCard(m);});
+  }
+  document.getElementById('koContent').innerHTML=h;
+}
+
+
+// ============================================================
 // SCHEDULE + RESULTS + OVERVIEW
 // ============================================================
 function renderSched(){
@@ -1897,13 +2015,13 @@ async function loadCardStats(el, home, away, eid) {
   content.innerHTML = ms ? buildStatsBar(ms) : '<div style="padding:8px 0;color:var(--text-muted);font-size:12px">Stats not available</div>';
   content.dataset.loaded = '1';
 }
-function renderAll(){renderOverview();renderGrp();renderRes();renderSched();renderStats();renderCards();}
+function renderAll(){renderOverview();renderGrp();renderRes();renderSched();renderStats();renderCards();renderKo();}
 function switchTab(id,btn){document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));document.getElementById('tab-'+id).classList.add('active');btn.classList.add('active');}
 
 // ============================================================
 // INIT
 // ============================================================
-initChips();renderAll();renderCards();renderStadiums();
+initChips();initKoChips();renderAll();renderCards();renderStadiums();
 doRefresh(); // Auto-fetch openfootball on load
 </script>
 </body>
