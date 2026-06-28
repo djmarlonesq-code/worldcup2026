@@ -313,17 +313,17 @@ main{padding:14px 16px;max-width:660px;margin:0 auto;}
 </div>
 <div id="tab-stats" class="tab-panel">
   <div class="stat-tabs">
-    <button class="stat-tab active" onclick="switchStat('goals',this)">⚽ Scorers</button>
+    <button class="stat-tab active" onclick="switchStat('fun',this)">⭐ Highlights</button>
+    <button class="stat-tab" onclick="switchStat('goals',this)">⚽ Scorers</button>
     <button class="stat-tab" onclick="switchStat('assists',this)">🎯 Assists</button>
     <button class="stat-tab" onclick="switchStat('gk',this)">🧤 Goalkeepers</button>
     <button class="stat-tab" onclick="switchStat('team',this)">📊 Match Stats</button>
-    <button class="stat-tab" onclick="switchStat('fun',this)">⭐ Highlights</button>
   </div>
-  <div id="goalsCont"></div>
+  <div id="funCont"></div>
+  <div id="goalsCont" style="display:none"></div>
   <div id="assistsCont" style="display:none"></div>
   <div id="gkCont" style="display:none"></div>
   <div id="teamStatsCont" style="display:none"></div>
-  <div id="funCont" style="display:none"></div>
 </div>
 <div id="tab-cards" class="tab-panel">
   <div class="cf-wrap">
@@ -749,7 +749,7 @@ let MATCHES=[
   // UPCOMING JUN 15
   {grp:'H',home:'Spain',hf:'🇪🇸',away:'Cape Verde',af:'🇨🇻',hs:0,as_:0,date:'Jun 15',time:'12:00 PM',venue:'Atlanta',status:'ft',hev:[],aev:[],motm:'J. Raya (ESP)',ms:{homePoss:62,awayPoss:38,homeShots:22,awayShots:3,homeShotsOT:6,awayShotsOT:0,homeCorners:12,awayCorners:2,homeSaves:0,awaySaves:6}},
   {grp:'G',home:'Belgium',hf:'🇧🇪',away:'Egypt',af:'🇪🇬',hs:1,as_:1,date:'Jun 15',time:'3:00 PM',venue:'Seattle',status:'ft',
-   hev:[{i:'⚽',m:"66'",n:'M. Hany',a:'Equalizer'},{i:'🟨',m:"14'",n:'T. Castagne',a:'Yellow card'}],
+   hev:[{i:'⚽',m:"66'",n:'M. Hany OG',a:'Egypt OG — equalizer for Belgium'},{i:'🟨',m:"14'",n:'T. Castagne',a:'Yellow card'}],
    aev:[{i:'⚽',m:"19'",n:'E. Ashour',a:'Brilliant strike'},{i:'🟨',m:"13'",n:'M. Attia',a:'Yellow card'},{i:'🟨',m:"34'",n:'A. Fatouh',a:'Yellow card'}],
    motm:'E. Ashour (EGY)',ms:null},
   {grp:'H',home:'Saudi Arabia',hf:'🇸🇦',away:'Uruguay',af:'🇺🇾',hs:1,as_:1,date:'Jun 15',time:'6:00 PM',venue:'Miami',espnId:'760429',status:'ft',
@@ -773,7 +773,7 @@ let MATCHES=[
    hev:[{i:'⚽',m:"17'",n:'L. Messi',a:'Hat-trick goal 1'},{i:'⚽',m:"60'",n:'L. Messi',a:'Hat-trick goal 2'},{i:'⚽',m:"76'",n:'L. Messi',a:'Hat-trick goal 3 — levels Klose WC record!'}],
    aev:[],motm:'L. Messi (ARG)',ms:null},
   {grp:'J',home:'Austria',hf:'🇦🇹',away:'Jordan',af:'🇯🇴',hs:3,as_:1,date:'Jun 16',time:'12:00 AM',venue:'San Francisco',espnId:'760434',status:'ft',
-   hev:[{i:'⚽',m:"21'",n:'R. Schmid',a:'Austria opener'},{i:'⚽',m:"76'",n:'Y. Al-Arab',a:'2nd goal'},{i:'⚽',m:"90+12'",n:'M. Arnautovic',a:'Late 3rd — huge stoppage time!'}],
+   hev:[{i:'⚽',m:"21'",n:'R. Schmid',a:'Austria opener'},{i:'⚽',m:"76'",n:'Y. Al-Arab OG',a:'Own goal'},{i:'⚽',m:"90+12'",n:'M. Arnautovic',a:'Penalty — huge stoppage time!'}],
    aev:[{i:'⚽',m:"50'",n:'A. Olwan',a:'Jordan back in it'}],
    motm:'R. Schmid (AUT)',ms:null},
   // JUN 17
@@ -802,7 +802,7 @@ let MATCHES=[
    aev:[{i:'⚽',m:"90+3'",n:'E. Mahmic',a:'Late consolation'}],
    motm:'J. Manzambi (SUI)',ms:null},
   {grp:'B',home:'Canada',hf:'🇨🇦',away:'Qatar',af:'🇶🇦',hs:6,as_:0,date:'Jun 18',time:'6:00 PM',venue:'Vancouver',status:'ft',
-   hev:[{i:'⚽',m:"16'",n:'C. Larin',a:''},{i:'⚽',m:"29'",n:'J. David',a:'1st goal'},{i:'⚽',m:"45+3'",n:'J. David',a:'Brace before HT'},{i:'⚽',m:"64'",n:'N. Saliba',a:''},{i:'⚽',m:"75'",n:'M. Manai',a:''},{i:'⚽',m:"90+2'",n:'J. David',a:'Hat-trick!'}],
+   hev:[{i:'⚽',m:"16'",n:'C. Larin',a:''},{i:'⚽',m:"29'",n:'J. David',a:'1st goal'},{i:'⚽',m:"45+3'",n:'J. David',a:'Brace before HT'},{i:'⚽',m:"64'",n:'N. Saliba',a:''},{i:'⚽',m:"75'",n:'M. Manai OG',a:'Own goal'},{i:'⚽',m:"90+2'",n:'J. David',a:'Hat-trick!'}],
    aev:[],motm:'J. David (CAN)',ms:null},
   {grp:'A',home:'Mexico',hf:'🇲🇽',away:'South Korea',af:'🇰🇷',hs:1,as_:0,date:'Jun 18',time:'9:00 PM',venue:'Guadalajara',espnId:'760441',status:'ft',
    hev:[{i:'⚽',m:"50'",n:'L. Romo',a:'Match-winner — Mexico tops Group A'}],
@@ -911,7 +911,7 @@ let MATCHES=[
    motm:'D. Maeda (JPN)',ms:null},
   {grp:'F',home:'Tunisia',hf:'🇹🇳',away:'Netherlands',af:'🇳🇱',hs:1,as_:3,date:'Jun 25',time:'7:00 PM',venue:'Kansas City',status:'ft',
    hev:[{i:'⚽',m:"54'",n:'H. Mastouri',a:''}],
-   aev:[{i:'⚽',m:"3'",n:'E. Skhiri',a:''},{i:'⚽',m:"7'",n:'B. Brobbey',a:''},{i:'⚽',m:"62'",n:'J.P. van Hecke',a:''}],
+   aev:[{i:'⚽',m:"3'",n:'E. Skhiri OG',a:'Tunisia OG — early Netherlands lead'},{i:'⚽',m:"7'",n:'B. Brobbey',a:''},{i:'⚽',m:"62'",n:'J.P. van Hecke',a:''}],
    motm:'E. Skhiri (NED)',ms:null},
   {grp:'D',home:'Türkiye',hf:'🇹🇷',away:'USA',af:'🇺🇸',hs:3,as_:2,date:'Jun 25',time:'10:00 PM',venue:'New York/NJ',status:'ft',
    hev:[{i:'⚽',m:"10'",n:'A. Güler',a:''},{i:'⚽',m:"31'",n:'B.A. Yilmaz',a:''},{i:'⚽',m:"90+8'",n:'K. Ayhan',a:'Dramatic winner!'}],
@@ -994,7 +994,7 @@ const GOALS=[
   {name:'Á. Baena',         team:'Spain',      flag:'🇪🇸',goals:1,photo:null,matchOrder:63,lastMin:42},
   {name:'D. Maeda',         team:'Japan',      flag:'🇯🇵',goals:1,photo:null,matchOrder:57,lastMin:56},
   {name:'H. Mastouri',      team:'Tunisia',    flag:'🇹🇳',goals:1,photo:null,matchOrder:58,lastMin:54},
-  {name:'E. Skhiri',        team:'Netherlands',flag:'🇳🇱',goals:1,photo:null,matchOrder:58,lastMin:3},
+  {name:'E. Skhiri OG',     team:'Netherlands',flag:'🇳🇱',goals:1,photo:null,matchOrder:58,lastMin:3},
   {name:'J.P. van Hecke',   team:'Netherlands',flag:'🇳🇱',goals:1,photo:null,matchOrder:58,lastMin:62},
   {name:'A. Güler',         team:'Türkiye',    flag:'🇹🇷',goals:1,photo:null,matchOrder:59,lastMin:10},
   {name:'B.A. Yilmaz',      team:'Türkiye',    flag:'🇹🇷',goals:1,photo:null,matchOrder:59,lastMin:31},
@@ -1067,7 +1067,7 @@ const GOALS=[
   {name:'R. Vargas',       team:'Switzerland',flag:'🇨🇭',goals:2,photo:null,matchOrder:49,lastMin:46},
   {name:'G. Xhaka',        team:'Switzerland',flag:'🇨🇭',goals:1,photo:null,matchOrder:26,lastMin:90},
   {name:'N. Saliba',       team:'Canada',     flag:'🇨🇦',goals:1,photo:null,matchOrder:27,lastMin:64},
-  {name:'M. Manai',        team:'Canada',     flag:'🇨🇦',goals:1,photo:null,matchOrder:27,lastMin:75},
+  {name:'M. Manai OG',     team:'Canada',     flag:'🇨🇦',goals:1,photo:null,matchOrder:27,lastMin:75},
   {name:'E. Mahmic',       team:'Bosnia & Herz.',flag:'🇧🇦',goals:2,photo:null,matchOrder:50,lastMin:80},
   {name:'M. Sadílek',      team:'Czechia',    flag:'🇨🇿',goals:1,photo:null,matchOrder:25,lastMin:6},
   {name:'T. Mokoena',      team:'South Africa',flag:'🇿🇦',goals:1,photo:null,matchOrder:25,lastMin:83},
@@ -1075,12 +1075,13 @@ const GOALS=[
   {name:'Y. Wissa',        team:'DR Congo',  flag:'🇨🇩',goals:3,photo:null,matchOrder:64,lastMin:90},
   {name:'L. Messi',        team:'Argentina', flag:'🇦🇷',goals:6,photo:null,matchOrder:67,lastMin:80},
   {name:'R. Schmid',       team:'Austria',   flag:'🇦🇹',goals:1,photo:null,matchOrder:20,lastMin:21},
-  {name:'Y. Al-Arab',      team:'Austria',   flag:'🇦🇹',goals:1,photo:null,matchOrder:20,lastMin:76},
+  {name:'Y. Al-Arab OG',   team:'Austria',   flag:'🇦🇹',goals:1,photo:null,matchOrder:20,lastMin:76},
   {name:'M. Arnautovic',   team:'Austria',   flag:'🇦🇹',goals:2,photo:null,matchOrder:66,lastMin:28},
   {name:'A. Olwan',        team:'Jordan',    flag:'🇯🇴',goals:1,photo:null,matchOrder:20,lastMin:50},
   {name:'E. Haaland',     team:'Norway',   flag:'🇳🇴',goals:4,photo:null,matchOrder:44,lastMin:58},
   {name:'L. Ostgard',    team:'Norway',   flag:'🇳🇴',goals:1,photo:null,matchOrder:18,lastMin:76},
   {name:'A. Hussein',    team:'Iraq',     flag:'🇮🇶',goals:1,photo:null,matchOrder:18,lastMin:39},
+  {name:'A. Hussein OG', team:'Norway',   flag:'🇳🇴',goals:1,photo:null,matchOrder:18,lastMin:90},
   {name:'K. Mbappé',      team:'France',   flag:'🇫🇷',goals:4,photo:null,matchOrder:42,lastMin:54},
   {name:'B. Barcola',     team:'France',   flag:'🇫🇷',goals:1,photo:null,matchOrder:17,lastMin:82},
   {name:'I. Mbaye',       team:'Senegal',  flag:'🇸🇳',goals:1,photo:null,matchOrder:17,lastMin:90},
@@ -1089,7 +1090,7 @@ const GOALS=[
   {name:'M. Mohebbi',     team:'Iran',        flag:'🇮🇷',goals:1,photo:null,matchOrder:15,lastMin:64},
   {name:'A. Al-Amri',     team:'Saudi Arabia',flag:'🇸🇦',goals:1,photo:null,matchOrder:14,lastMin:41},
   {name:'M. Araújo',      team:'Uruguay',     flag:'🇺🇾',goals:2,photo:null,matchOrder:39,lastMin:44},
-  {name:'M. Hany',          team:'Belgium',    flag:'🇧🇪',goals:1,photo:null,matchOrder:13,lastMin:66},
+  {name:'M. Hany OG',       team:'Belgium',    flag:'🇧🇪',goals:1,photo:null,matchOrder:13,lastMin:66},
   {name:'E. Ashour',         team:'Egypt',      flag:'🇪🇬',goals:1,photo:null,matchOrder:13,lastMin:19},
   {name:'Y. Ayari',          team:'Sweden',      flag:'🇸🇪',goals:2,photo:null,matchOrder:12,lastMin:90},
   {name:'L. Díaz',          team:'Colombia', flag:'🇨🇴',assists:1,photo:null,note:"Ast → Muñoz 40'",          matchOrder:24,lastMin:40},
@@ -1762,7 +1763,7 @@ function renderOverview(){
 // ============================================================
 // STATS
 // ============================================================
-let CurStat='goals';
+let CurStat='fun';
 function switchStat(tab,btn){
   CurStat=tab;document.querySelectorAll('.stat-tab').forEach(b=>b.classList.remove('active'));btn.classList.add('active');
   ['goalsCont','assistsCont','gkCont','teamStatsCont','funCont'].forEach(id=>document.getElementById(id).style.display='none');
@@ -1796,10 +1797,16 @@ function renderStats(){
   document.getElementById('teamStatsCont').innerHTML=tsh;
 
   // HIGHLIGHTS
-  const totalG=MATCHES.filter(m=>m.status==='ft').reduce((s,m)=>s+(m.hs+m.as_),0);
-  const p8=MATCHES.filter(m=>m.status==='ft').length;
+  const ftMatches=MATCHES.filter(m=>m.status==='ft');
+  const totalG=ftMatches.reduce((s,m)=>s+(m.hs+m.as_),0);
+  const p8=ftMatches.length;
   const gpg=p8?(totalG/p8).toFixed(2):'—';
-  const bigWin=MATCHES.filter(m=>m.status==='ft').sort((a,b)=>Math.abs(b.hs-b.as_)-Math.abs(a.hs-a.as_))[0];
+  const bigWin=ftMatches.sort((a,b)=>Math.abs(b.hs-b.as_)-Math.abs(a.hs-a.as_))[0];
+  // Draws: count FT matches where hs === as_
+  const drawCount=ftMatches.filter(m=>m.hs===m.as_).length;
+  // Own goals: scan GOALS array for any scorer name containing "OG"
+  const ownGoals=GOALS.filter(g=>g.name.includes('OG'));
+  const ogCount=ownGoals.reduce((s,g)=>s+g.goals,0);
   document.getElementById('funCont').innerHTML=`<div class="fun-card">
     <div class="fun-title">⭐ Tournament Highlights</div>
     <div class="fun-item"><span class="fun-emoji">👑</span><div><div class="fun-text"><strong>Messi Hat-trick — WC Record Equalled</strong></div><div class="fun-sub">Lionel Messi 17', 60', 76' vs Algeria — his 14th, 15th & 16th World Cup goals, equalling Klose's all-time record of 16. Argentina won 3–0.</div><div class="fun-badge">Historic Milestone</div></div></div>
@@ -1807,6 +1814,8 @@ function renderStats(){
     <div class="fun-item"><span class="fun-emoji">🏅</span><div><div class="fun-text"><strong>Performance of the Tournament</strong></div><div class="fun-sub">Patrick Beach (AUS) — 8 saves vs Türkiye. Australia had 30% possession, 9 shots, won 2–0. Untouchable.</div><div class="fun-badge">Goalkeeper of the Round</div></div></div>
     <div class="fun-item"><span class="fun-emoji">🎭</span><div><div class="fun-text"><strong>Drama of the Round</strong></div><div class="fun-sub">Qatar 1–1 Switzerland — Khoukhi equalized in 90+4'. Austria vs Jordan — Arnautovic sealed it in 90+12' of stoppage time! Sweden 5–1 Tunisia with Ayari brace.</div><div class="fun-badge">Dramatic Moments</div></div></div>
     <div class="fun-item"><span class="fun-emoji">🃏</span><div><div class="fun-text"><strong>WC Record — 3 Reds in One Game</strong></div><div class="fun-sub">Mexico vs South Africa: 3 red cards — a World Cup opening-match record. Two for South Africa, one for Mexico (Montes, double yellow).</div><div class="fun-badge">WC Record</div></div></div>
+    <div class="fun-item"><span class="fun-emoji">🤝</span><div><div class="fun-text"><strong>Draws Tracker</strong></div><div class="fun-sub">${drawCount} draws across ${p8} completed matches (${p8?(drawCount/p8*100).toFixed(0):'—'}% draw rate). Updates automatically as results come in.</div><div class="fun-badge">${drawCount} Draws So Far</div></div></div>
+    <div class="fun-item"><span class="fun-emoji">🥅</span><div><div class="fun-text"><strong>Own Goals Tracker</strong></div><div class="fun-sub">${ogCount} own goal${ogCount===1?'':'s'} so far this tournament${ownGoals.length?': '+ownGoals.map(g=>g.name.replace(' OG','')+' ('+g.team+')').join(', '):''}.</div><div class="fun-badge">${ogCount} Own Goal${ogCount===1?'':'s'}</div></div></div>
     <div class="fun-item"><span class="fun-emoji">📊</span><div><div class="fun-text"><strong>Tournament Stats</strong></div><div class="fun-sub">⚽ ${totalG} goals in ${p8} games · ${gpg}/game avg<br>🏆 Biggest Win: ${bigWin?`${bigWin.home} ${bigWin.hs}–${bigWin.as_} ${bigWin.away}`:'—'}<br>🟥 3 reds, 16 yellows · 🌎 48 teams, 104 matches total · ⭐ Messi equals Klose WC record</div></div></div>
     <div class="fun-item"><span class="fun-emoji">📈</span><div><div class="fun-text"><strong>Top Teams by GD</strong></div><div class="fun-sub">1. 🇩🇪 Germany +6 &nbsp; 2. 🇸🇪 Sweden +4 &nbsp; 3. 🇳🇴 Norway +3<br>4. 🇦🇷 Argentina +3 &nbsp; 5. 🇺🇸 USA +3 &nbsp; 6. 🇦🇹 Austria +2</div></div></div>
   </div>`;
