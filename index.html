@@ -554,6 +554,9 @@ function buildStatsBar(ms) {
   ].filter(Boolean).join('');
 }
 
+// Unified array for refresh/overview — includes group + knockout matches
+const ALL_MATCHES=()=>[...MATCHES,...KNOCKOUT];
+
 // ============================================================
 // STADIUMS
 // ============================================================
@@ -691,9 +694,17 @@ const PHOTOS={
 // ============================================================
 let KNOCKOUT=[
   // ── ROUND OF 32 ──────────────────────────────────────────
-  {round:'R32',home:'South Africa',hf:'🇿🇦',away:'Canada',af:'🇨🇦',hs:null,as_:null,date:'Jun 28',time:'3:00 PM',venue:'Los Angeles',status:'upcoming',hev:[],aev:[],ms:null,note:'Grp A 2nd vs Grp B 2nd'},
-  {round:'R32',home:'Brazil',hf:'🇧🇷',away:'Japan',af:'🇯🇵',hs:null,as_:null,date:'Jun 29',time:'1:00 PM',venue:'Houston',status:'upcoming',hev:[],aev:[],ms:null,note:'Grp C 1st vs Grp F 2nd'},
-  {round:'R32',home:'Germany',hf:'🇩🇪',away:'Paraguay',af:'🇵🇾',hs:null,as_:null,date:'Jun 29',time:'4:30 PM',venue:'Boston',status:'upcoming',hev:[],aev:[],ms:null,note:'Grp E 1st vs Grp D 3rd'},
+  {round:'R32',home:'South Africa',hf:'🇿🇦',away:'Canada',af:'🇨🇦',hs:0,as_:1,date:'Jun 28',time:'3:00 PM',venue:'Los Angeles',status:'ft',
+   hev:[],aev:[{i:'⚽',m:"90+2'",n:'S. Eustáquio',a:'Dramatic late winner — Canada through!'}],
+   motm:'S. Eustáquio (CAN)',ms:null,note:'Grp A 2nd vs Grp B 2nd'},
+  {round:'R32',home:'Brazil',hf:'🇧🇷',away:'Japan',af:'🇯🇵',hs:2,as_:1,date:'Jun 29',time:'1:00 PM',venue:'Houston',status:'ft',
+   hev:[{i:'⚽',m:"56'",n:'Casemiro',a:''},{i:'⚽',m:"90+5'",n:'G. Martinelli',a:'Dramatic winner!'}],
+   aev:[{i:'⚽',m:"29'",n:'K. Sano',a:'Shock opener'}],
+   motm:'G. Martinelli (BRA)',ms:null,note:'Grp C 1st vs Grp F 2nd'},
+  {round:'R32',home:'Germany',hf:'🇩🇪',away:'Paraguay',af:'🇵🇾',hs:1,as_:1,date:'Jun 29',time:'4:30 PM',venue:'Boston',status:'ft',aet:true,pen:'3-4',
+   hev:[{i:'⚽',m:"54'",n:'K. Havertz',a:''}],
+   aev:[{i:'⚽',m:"42'",n:'J. Enciso',a:'Shock opener'}],
+   motm:'O. Gill (PAR)',ms:null,note:'Grp E 1st vs Grp D 3rd — PARAGUAY WIN ON PENS!'},
   {round:'R32',home:'Netherlands',hf:'🇳🇱',away:'Morocco',af:'🇲🇦',hs:null,as_:null,date:'Jun 29',time:'9:00 PM',venue:'Monterrey',status:'upcoming',hev:[],aev:[],ms:null,note:'Grp F 1st vs Grp C 2nd'},
   {round:'R32',home:'Ivory Coast',hf:'🇨🇮',away:'Norway',af:'🇳🇴',hs:null,as_:null,date:'Jun 30',time:'1:00 PM',venue:'Dallas',status:'upcoming',hev:[],aev:[],ms:null,note:'Grp E 2nd vs Grp I 2nd'},
   {round:'R32',home:'France',hf:'🇫🇷',away:'Sweden',af:'🇸🇪',hs:null,as_:null,date:'Jun 30',time:'5:00 PM',venue:'New York/NJ',status:'upcoming',hev:[],aev:[],ms:null,note:'Grp I 1st vs Grp F 3rd'},
@@ -709,9 +720,9 @@ let KNOCKOUT=[
   {round:'R32',home:'Colombia',hf:'🇨🇴',away:'Ghana',af:'🇬🇭',hs:null,as_:null,date:'Jul 3',time:'9:30 PM',venue:'Kansas City',status:'upcoming',hev:[],aev:[],ms:null,note:'Grp K 1st vs Grp L 3rd'},
   // ── ROUND OF 16 — pairings locked, teams TBD until R32 completes ──
   // ── ROUND OF 16 — confirmed via ESPN official bracket (match #s 89-96) ──
-  {round:'R16',home:'TBD',hf:'🏳️',away:'TBD',af:'🏳️',hs:null,as_:null,date:'Jul 4',time:'1:00 PM',venue:'Houston',status:'upcoming',hev:[],aev:[],ms:null,note:'Match 90: Winner South Africa/Canada vs Winner Netherlands/Morocco'},
-  {round:'R16',home:'TBD',hf:'🏳️',away:'TBD',af:'🏳️',hs:null,as_:null,date:'Jul 4',time:'5:00 PM',venue:'Philadelphia',status:'upcoming',hev:[],aev:[],ms:null,note:'Match 89: Winner Germany/Paraguay vs Winner France/Sweden'},
-  {round:'R16',home:'TBD',hf:'🏳️',away:'TBD',af:'🏳️',hs:null,as_:null,date:'Jul 5',time:'4:00 PM',venue:'New York/NJ',status:'upcoming',hev:[],aev:[],ms:null,note:'Match 91: Winner Brazil/Japan vs Winner Ivory Coast/Norway'},
+  {round:'R16',home:'TBD',hf:'🏳️',away:'TBD',af:'🏳️',hs:null,as_:null,date:'Jul 4',time:'1:00 PM',venue:'Houston',status:'upcoming',hev:[],aev:[],ms:null,note:'Match 90: Winner South Africa/Canada (→ Canada) vs Winner Netherlands/Morocco'},
+  {round:'R16',home:'TBD',hf:'🏳️',away:'TBD',af:'🏳️',hs:null,as_:null,date:'Jul 4',time:'5:00 PM',venue:'Philadelphia',status:'upcoming',hev:[],aev:[],ms:null,note:'Match 89: Winner Germany/Paraguay (→ Paraguay) vs Winner France/Sweden'},
+  {round:'R16',home:'TBD',hf:'🏳️',away:'TBD',af:'🏳️',hs:null,as_:null,date:'Jul 5',time:'4:00 PM',venue:'New York/NJ',status:'upcoming',hev:[],aev:[],ms:null,note:'Match 91: Winner Brazil/Japan (→ Brazil) vs Winner Ivory Coast/Norway'},
   {round:'R16',home:'TBD',hf:'🏳️',away:'TBD',af:'🏳️',hs:null,as_:null,date:'Jul 5',time:'8:00 PM',venue:'Mexico City',status:'upcoming',hev:[],aev:[],ms:null,note:'Match 92: Winner Mexico/Ecuador vs Winner England/DR Congo'},
   {round:'R16',home:'TBD',hf:'🏳️',away:'TBD',af:'🏳️',hs:null,as_:null,date:'Jul 6',time:'3:00 PM',venue:'Dallas',status:'upcoming',hev:[],aev:[],ms:null,note:'Match 93: Winner Portugal/Croatia vs Winner Spain/Austria'},
   {round:'R16',home:'TBD',hf:'🏳️',away:'TBD',af:'🏳️',hs:null,as_:null,date:'Jul 6',time:'8:00 PM',venue:'Seattle',status:'upcoming',hev:[],aev:[],ms:null,note:'Match 94: Winner USA/Bosnia vs Winner Belgium/Senegal'},
@@ -1020,6 +1031,11 @@ let MATCHES=[
 // matchOrder = chronological match number (higher = more recent)
 // ============================================================
 const GOALS=[
+  {name:'S. Eustáquio',     team:'Canada',     flag:'🇨🇦',goals:1,photo:null,matchOrder:68,lastMin:90},
+  {name:'Casemiro',         team:'Brazil',     flag:'🇧🇷',goals:1,photo:null,matchOrder:69,lastMin:56},
+  {name:'G. Martinelli',    team:'Brazil',     flag:'🇧🇷',goals:1,photo:null,matchOrder:69,lastMin:90},
+  {name:'K. Sano',          team:'Japan',      flag:'🇯🇵',goals:1,photo:null,matchOrder:69,lastMin:29},
+  {name:'J. Enciso',        team:'Paraguay',   flag:'🇵🇾',goals:1,photo:null,matchOrder:70,lastMin:42},
   {name:'R. Mahrez',        team:'Algeria',    flag:'🇩🇿',goals:2,photo:null,matchOrder:66,lastMin:90},
   {name:'R. Belghali',      team:'Algeria',    flag:'🇩🇿',goals:1,photo:null,matchOrder:66,lastMin:45},
   {name:'M. Sabitzer',      team:'Austria',    flag:'🇦🇹',goals:1,photo:null,matchOrder:66,lastMin:55},
@@ -1160,7 +1176,7 @@ const GOALS=[
   {name:'V. van Dijk',       team:'Netherlands', flag:'🇳🇱',goals:1,photo:null,matchOrder:11,lastMin:51},
   {name:'C. Summerville',    team:'Netherlands', flag:'🇳🇱',goals:2,photo:null,matchOrder:33,lastMin:89},
   {name:'Amad Diallo',       team:'Ivory Coast', flag:'🇨🇮',goals:1,photo:null,matchOrder:10,lastMin:90},
-  {name:'K. Havertz',        team:'Germany',     flag:'🇩🇪',goals:2,photo:null,matchOrder:9,lastMin:88},
+  {name:'K. Havertz',        team:'Germany',     flag:'🇩🇪',goals:3,photo:null,matchOrder:68,lastMin:54},
   {name:'J. Musiala',        team:'Germany',     flag:'🇩🇪',goals:1,photo:null,matchOrder:9,lastMin:47},
   {name:'N. Brown',          team:'Germany',     flag:'🇩🇪',goals:1,photo:null,matchOrder:9,lastMin:68},
   {name:'D. Undav',          team:'Germany',     flag:'🇩🇪',goals:3,photo:null,matchOrder:35,lastMin:90},
@@ -1541,16 +1557,16 @@ async function doRefresh() {
 
           // Try espnId first (most reliable), then bidirectional name match
           // (bidirectional = works whether ESPN calls our home team "home" or "away")
-          let match = MATCHES.find(m => m.espnId === event.id && m.status !== 'ft');
+          let match = ALL_MATCHES().find(m => m.espnId === event.id && m.status !== 'ft');
           let weAreFlipped = false; // true if ESPN's "home" is actually our "away"
 
           if (!match) {
-            const directMatch = MATCHES.find(m =>
+            const directMatch = ALL_MATCHES().find(m =>
               m.status !== 'ft' &&
               (espnHomeName.includes(m.home.split(' ')[0]) || m.home.includes(espnHomeName.split(' ')[0])) &&
               (espnAwayName.includes(m.away.split(' ')[0]) || m.away.includes(espnAwayName.split(' ')[0]))
             );
-            const flippedMatch = !directMatch ? MATCHES.find(m =>
+            const flippedMatch = !directMatch ? ALL_MATCHES().find(m =>
               m.status !== 'ft' &&
               (espnHomeName.includes(m.away.split(' ')[0]) || m.away.includes(espnHomeName.split(' ')[0])) &&
               (espnAwayName.includes(m.home.split(' ')[0]) || m.home.includes(espnAwayName.split(' ')[0]))
@@ -1595,7 +1611,7 @@ async function doRefresh() {
     // ── Flag live matches ESPN had nothing for this cycle ─────────
     // (distinct from tbd — this means "no live source at all right now",
     // not just "score known, goal detail pending")
-    MATCHES.forEach(m => {
+    ALL_MATCHES().forEach(m => {
       if (m.status === 'live' && !espnMatchedIds.has(m.home + '_' + m.away)) {
         m.noEspnData = true;
       }
@@ -1608,7 +1624,7 @@ async function doRefresh() {
     // and we explicitly flag noEspnData so the UI is honest about
     // why there's no live score/minute yet.
     let autoDetected = 0;
-    MATCHES.forEach(m => {
+    ALL_MATCHES().forEach(m => {
       if (m.status === 'upcoming' && m.date && m.time) {
         try {
           const dateStr = m.date + ' 2026 ' + m.time + ' ET';
@@ -1629,7 +1645,7 @@ async function doRefresh() {
     if (autoDetected > 0) console.log(`Auto-detected ${autoDetected} newly live match(es) by kickoff time`);
 
     // ── Stale lock: if still 'live' but 3+ hours past kickoff, force FT ──
-    MATCHES.forEach(m => {
+    ALL_MATCHES().forEach(m => {
       if (m.status === 'live' && m.date && m.time) {
         try {
           // Build proper date from m.date (e.g "Jun 15") + m.time (e.g "6:00 PM")
@@ -1650,7 +1666,7 @@ async function doRefresh() {
 
     const liveBadge = document.getElementById('liveBadge');
     const liveAlert = document.getElementById('liveAlert');
-    const liveMs = MATCHES.filter(m => m.status === 'live');
+    const liveMs = ALL_MATCHES().filter(m => m.status === 'live');
     liveCount = liveMs.length;
 
     if (liveCount > 0) {
@@ -1837,27 +1853,36 @@ function renderKo(){
 // SCHEDULE + RESULTS + OVERVIEW
 // ============================================================
 function renderSched(){
+  const all=ALL_MATCHES();
   const byD={};
-  MATCHES.filter(m=>m.status!=='ft').forEach(m=>{if(!byD[m.date])byD[m.date]=[];byD[m.date].push(m);});
-  const order=['Jun 15','Jun 16','Jun 17','Jun 18','Jun 19','Jun 20','Jun 21','Jun 22','Jun 23','Jun 24','Jun 25','Jun 26','Jun 27'];
+  all.filter(m=>m.status!=='ft').forEach(m=>{if(!byD[m.date])byD[m.date]=[];byD[m.date].push(m);});
+  const order=['Jun 28','Jun 29','Jun 30','Jul 1','Jul 2','Jul 3','Jul 4','Jul 5','Jul 6','Jul 7','Jul 9','Jul 10','Jul 11','Jul 14','Jul 15','Jul 18','Jul 19'];
   let h='';
-  order.forEach(d=>{if(!byD[d])return;h+=`<div class="dl">📅 ${d}</div>`;byD[d].forEach(m=>{h+=matchCard(m);});});
-  document.getElementById('schedContent').innerHTML=h||'<div class="info-box">All group stage matches completed.</div>';
+  order.forEach(d=>{
+    if(!byD[d])return;
+    h+=`<div class="dl">📅 ${d}</div>`;
+    byD[d].forEach(m=>{h+=m.round?koMatchCard(m):matchCard(m);});
+  });
+  document.getElementById('schedContent').innerHTML=h||'<div class="info-box">All matches completed.</div>';
 }
 function renderRes(){
-  const p=MATCHES.filter(m=>m.status==='ft'||m.status==='live');
-  const ftC=MATCHES.filter(m=>m.status==='ft').length;
-  const lvC=MATCHES.filter(m=>m.status==='live').length;
+  const all=ALL_MATCHES();
+  const p=all.filter(m=>m.status==='ft'||m.status==='live');
+  const ftC=all.filter(m=>m.status==='ft').length;
+  const lvC=all.filter(m=>m.status==='live').length;
   document.getElementById('resultsInfo').innerHTML=`<strong>${ftC} completed${lvC?` · ${lvC} live`:''}.</strong> Verified via openfootball. Tap any match to expand.`;
-  let h='';p.slice().reverse().forEach(m=>{h+=matchCard(m);});
+  let h='';p.slice().reverse().forEach(m=>{h+=m.round?koMatchCard(m):matchCard(m);});
   document.getElementById('resContent').innerHTML=h;
 }
 function renderOverview(){
-  const live=MATCHES.filter(m=>m.status==='live');
-  const nxt=MATCHES.filter(m=>m.status==='upcoming').slice(0,2);
+  const all=ALL_MATCHES();
+  const live=all.filter(m=>m.status==='live');
+  const nxt=all.filter(m=>m.status==='upcoming').slice(0,2);
   let nh='';
   [...live,...nxt].forEach(m=>{
     const s=getStad(m.venue);const isL=m.status==='live';
+    const isKO=!!m.round;
+    const roundLbl=isKO?(KO_LABELS[m.round]||m.round):'Group '+m.grp;
     nh+=`<div class="nh ${isL?'is-live':''}">
       <div class="nh-lbl ${isL?'live':''}">
         ${isL?'🔴 LIVE':'⚡ Up Next'} · ${m.date}
@@ -1868,14 +1893,14 @@ function renderOverview(){
         <div class="nh-team">${flagImg(m.away,42)||`<span class="nh-flag">${m.af}</span>`}<div class="nh-name">${m.away}</div></div>
       </div>
       ${isL?`<div class="nh-time live">${m.noEspnData?'⏳ checking for live data...':'● '+(m.clock||'LIVE')}</div>`:`<div class="nh-time">${m.time} ET</div>`}
-      <div class="nh-meta">Group ${m.grp} · ${m.venue}</div>
+      <div class="nh-meta">${roundLbl} · ${m.venue}</div>
       <div class="nh-tv">📺 ${getTV(m.home,m.away)}</div>
       ${s?`<div class="nh-stadium">🏟️ ${s.name} · ${s.cap.toLocaleString()} seats</div>`:''}
     </div>`;
   });
   document.getElementById('ov-next').innerHTML=nh;
-  const p=MATCHES.filter(m=>m.status==='ft');
-  let rh='';p.slice().reverse().forEach(m=>{rh+=matchCard(m);});
+  const ft=all.filter(m=>m.status==='ft');
+  let rh='';ft.slice().reverse().forEach(m=>{rh+=m.round?koMatchCard(m):matchCard(m);});
   document.getElementById('ov-results').innerHTML=rh;
 }
 
