@@ -1277,7 +1277,26 @@ const GKS=[
 ];
 
 // Cards — latest first (matchOrder desc, lastMin desc)
-const CARDS=[
+// CARDS — dynamically extracted from match events (hev/aev)
+// Populated at runtime from ALL_MATCHES() so knockout cards appear automatically
+function getCards(){
+  const cards=[];
+  ALL_MATCHES().forEach(m=>{
+    if(!m.hev && !m.aev) return;
+    const label=m.round?`${m.home} vs ${m.away}`:`${m.home} vs ${m.away}`;
+    const order=m.matchOrder||0;
+    [...(m.hev||[])].forEach(e=>{
+      if(e.i==='🟨') cards.push({type:'yellow',player:e.n,flag:m.hf,team:m.home,min:e.m,match:label,reason:e.a||'',matchOrder:order,lastMin:parseInt(e.m)||0});
+      if(e.i==='🟥') cards.push({type:'red',  player:e.n,flag:m.hf,team:m.home,min:e.m,match:label,reason:e.a||'',matchOrder:order,lastMin:parseInt(e.m)||0});
+    });
+    [...(m.aev||[])].forEach(e=>{
+      if(e.i==='🟨') cards.push({type:'yellow',player:e.n,flag:m.af,team:m.away,min:e.m,match:label,reason:e.a||'',matchOrder:order,lastMin:parseInt(e.m)||0});
+      if(e.i==='🟥') cards.push({type:'red',  player:e.n,flag:m.af,team:m.away,min:e.m,match:label,reason:e.a||'',matchOrder:order,lastMin:parseInt(e.m)||0});
+    });
+  });
+  return cards;
+}
+
   {type:'yellow',player:'C. Yirenkyi',  flag:'🇬🇭',team:'Ghana',     min:"1H",  match:'GHA vs PAN',reason:'Foul on Bárcenas',         photo:null,matchOrder:23,lastMin:25},
   {type:'yellow',player:'A. Fatouh',      flag:'🇪🇬',team:'Egypt',      min:"34'",  match:'BEL vs EGY',reason:'',                       photo:null,matchOrder:13,lastMin:34},
   {type:'yellow',player:'T. Castagne',  flag:'🇧🇪',team:'Belgium',    min:"14'",  match:'BEL vs EGY',reason:"Gripping Salah's arm",     photo:null,matchOrder:13,lastMin:14},
@@ -1288,19 +1307,7 @@ const CARDS=[
   {type:'yellow',player:'J.R. Bellegarde',flag:'🇭🇹',team:'Haiti',      min:"40'",  match:'HAI vs SCO',reason:'Reckless tackle',        photo:null,matchOrder:7,lastMin:40},
   {type:'yellow',player:'Casemiro',       flag:'🇧🇷',team:'Brazil',     min:"37'",  match:'BRA vs MAR',reason:'',                       photo:null,matchOrder:6,lastMin:37},
   {type:'yellow',player:'R. Ibañez',      flag:'🇧🇷',team:'Brazil',     min:"43'",  match:'BRA vs MAR',reason:'Clumsy challenge',       photo:null,matchOrder:6,lastMin:43},
-  {type:'yellow',player:'D. Zakaria',     flag:'🇨🇭',team:'Switzerland',min:"—",    match:'QAT vs SUI',reason:'',                       photo:null,matchOrder:5,lastMin:99},
-  {type:'yellow',player:'J. Gaber',       flag:'🇶🇦',team:'Qatar',      min:"22'",  match:'QAT vs SUI',reason:'',                       photo:null,matchOrder:5,lastMin:22},
-  {type:'yellow',player:'M. Abunada',     flag:'🇶🇦',team:'Qatar',      min:"16'",  match:'QAT vs SUI',reason:'Foul for penalty',       photo:null,matchOrder:5,lastMin:16},
-  {type:'yellow',player:'M. Almirón',     flag:'🇵🇾',team:'Paraguay',   min:"69'",  match:'USA vs PAR',reason:'',                       photo:null,matchOrder:4,lastMin:69},
-  {type:'yellow',player:'D. Gomez',       flag:'🇵🇾',team:'Paraguay',   min:"61'",  match:'USA vs PAR',reason:'',                       photo:null,matchOrder:4,lastMin:61},
-  {type:'yellow',player:'N. Katić',       flag:'🇧🇦',team:'Bosnia',     min:"90+3'",match:'CAN vs BIH',reason:'Serious foul play',      photo:null,matchOrder:3,lastMin:93},
-  {type:'yellow',player:'A. Johnston',    flag:'🇨🇦',team:'Canada',     min:"11'",  match:'CAN vs BIH',reason:'Serious foul play',      photo:null,matchOrder:3,lastMin:11},
-  {type:'yellow',player:'Lee Gi-hyuk',    flag:'🇰🇷',team:'S. Korea',   min:"89'",  match:'KOR vs CZE',reason:'',                       photo:null,matchOrder:2,lastMin:89},
-  {type:'red',   player:'C. Montes',      flag:'🇲🇽',team:'Mexico',     min:"90+2'",match:'MEX vs RSA',reason:'Denied goalscoring opp.',photo:null,matchOrder:1,lastMin:92},
-  {type:'red',   player:'T. Zwane',       flag:'🇿🇦',team:'South Africa',min:"84'", match:'MEX vs RSA',reason:'Unsporting behavior',    photo:null,matchOrder:1,lastMin:84},
-  {type:'yellow',player:'C. Montes',      flag:'🇲🇽',team:'Mexico',     min:"55'",  match:'MEX vs RSA',reason:'',                       photo:null,matchOrder:1,lastMin:55},
-  {type:'red',   player:'S. Sithole',     flag:'🇿🇦',team:'South Africa',min:"42'", match:'MEX vs RSA',reason:'Reckless tackle',        photo:null,matchOrder:1,lastMin:42},
-];
+
 
 const ALL_TEAMS=[
   {name:'Mexico',flag:'🇲🇽',grp:'A'},{name:'South Africa',flag:'🇿🇦',grp:'A'},{name:'South Korea',flag:'🇰🇷',grp:'A'},{name:'Czechia',flag:'🇨🇿',grp:'A'},
@@ -1971,6 +1978,7 @@ function renderStats(){
 let CardFilter='all';
 function filterCards(f,btn){CardFilter=f;document.querySelectorAll('.cf-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');renderCards();}
 function renderCards(){
+  const CARDS=getCards();
   const sc=arr=>[...arr].sort((a,b)=>b.matchOrder!==a.matchOrder?b.matchOrder-a.matchOrder:b.lastMin-a.lastMin);
   const reds=sc(CARDS.filter(c=>c.type==='red'));
   const yellows=sc(CARDS.filter(c=>c.type==='yellow'));
@@ -2024,7 +2032,7 @@ function renderTeam(name){
   if(tg.length){h+='<div class="sec-label" style="margin-top:12px">⚽ Scorers</div>';tg.forEach((p,i)=>{h+=`<div class="player-row"><div class="p-rank ${i===0?'t1':''}">${i+1}</div>${avHTML(p.photo,p.flag,50)}<div class="p-info"><div class="p-name">${p.name}</div><div class="p-team">${p.flag} ${p.team}</div></div><div class="p-stat"><div class="p-num">${p.goals}</div><div class="p-lbl">Goals</div></div></div>`;});}
   const ta=ASSISTS.filter(p=>p.assists>0&&(p.team===name||p.team.includes(name.split(' ')[0])));
   if(ta.length){h+='<div class="sec-label" style="margin-top:12px">🎯 Assists</div>';ta.forEach((p,i)=>{h+=`<div class="player-row"><div class="p-rank ${i===0?'t1':''}">${i+1}</div>${avHTML(p.photo,p.flag,50)}<div class="p-info"><div class="p-name">${p.name}</div><div class="p-team">${p.flag} ${p.team}</div>${p.note?`<div class="p-note">${p.note}</div>`:''}</div><div class="p-stat"><div class="p-num">${p.assists}</div><div class="p-lbl">Assists</div></div></div>`;});}
-  const tc=CARDS.filter(c=>c.team===name||c.team.includes(name.split(' ')[0]));
+  const tc=getCards().filter(c=>c.team===name||c.team.includes(name.split(' ')[0]));
   if(tc.length){h+='<div class="sec-label" style="margin-top:12px">📋 Discipline</div>';tc.forEach(c=>{h+=`<div class="player-row">${avHTML(c.photo,c.flag,50)}<div class="ci-wrap"><div class="ci ${c.type==='red'?'ci-r':'ci-y'}"></div></div><div class="p-info"><div class="p-name">${c.player}</div><div class="p-team">${c.flag} ${c.team}</div>${c.reason?`<div class="p-reason">${c.reason}</div>`:''}</div><div class="p-stat"><div class="p-match">${c.match}</div><div class="p-min">${c.min}</div><div class="card-type-lbl">${c.type==='red'?'🟥':'🟨'}</div></div></div>`;});}
   document.getElementById('myteamCont').innerHTML=h;
 }
