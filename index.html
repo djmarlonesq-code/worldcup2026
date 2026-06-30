@@ -106,6 +106,14 @@ main{padding:14px 16px;max-width:660px;margin:0 auto;}
 .t-side{flex:1;display:flex;align-items:center;gap:8px;}
 .t-side.r{flex-direction:row-reverse;text-align:right;}
 .t-name{font-size:15px;font-weight:700;line-height:1.2;}
+.t-name.winner{color:var(--wc-yellow);}
+.card-section{margin-bottom:8px;border:1px solid var(--border);border-radius:12px;overflow:hidden;}
+.card-section-hdr{display:flex;align-items:center;gap:8px;padding:12px 14px;background:var(--card-bg);cursor:pointer;user-select:none;}
+.card-section-title{flex:1;font-weight:700;font-size:14px;}
+.card-section-count{font-size:12px;color:var(--text-muted);}
+.card-section-chevron{font-size:12px;color:var(--text-muted);}
+.card-section-body{padding:0 6px 6px;}
+.card-wiped{opacity:0.55;}
 .t-flag{font-size:26px;flex-shrink:0;}
 .sc-block{text-align:center;min-width:78px;flex-shrink:0;}
 .sc-dig{font-family:'Bebas Neue',sans-serif;font-size:34px;letter-spacing:5px;color:var(--text);line-height:1;}
@@ -1282,20 +1290,36 @@ const GKS=[
 
 // Cards — latest first (matchOrder desc, lastMin desc)
 // CARDS — dynamically extracted from match events (hev/aev)
-// Populated at runtime from ALL_MATCHES() so knockout cards appear automatically
+// Grouped by round, latest round expanded by default
+// Yellow card reset rules: wiped after Group Stage and after QF
+const CARD_ROUND_ORDER=['Group Stage','Round of 32','Round of 16','Quarterfinals','Semifinals','Third Place','Final'];
+const CARD_ROUND_WIPED=['Group Stage']; // only YELLOW cards from these rounds are wiped — reds always carry a 1-match ban
+function getMatchRound(m){
+  if(!m.round) return 'Group Stage';
+  const r=m.round;
+  if(r==='R32') return 'Round of 32';
+  if(r==='R16') return 'Round of 16';
+  if(r==='QF')  return 'Quarterfinals';
+  if(r==='SF')  return 'Semifinals';
+  if(r==='3RD') return 'Third Place';
+  if(r==='F')   return 'Final';
+  return 'Group Stage';
+}
+const DATE_ORDER=['Jun 11','Jun 12','Jun 13','Jun 14','Jun 15','Jun 16','Jun 17','Jun 18','Jun 19','Jun 20','Jun 21','Jun 22','Jun 23','Jun 24','Jun 25','Jun 26','Jun 27','Jun 28','Jun 29','Jun 30','Jul 1','Jul 2','Jul 3','Jul 4','Jul 5','Jul 6','Jul 7','Jul 9','Jul 10','Jul 11','Jul 14','Jul 15','Jul 18','Jul 19'];
 function getCards(){
   const cards=[];
   ALL_MATCHES().forEach(m=>{
     if(!m.hev && !m.aev) return;
-    const label=m.round?`${m.home} vs ${m.away}`:`${m.home} vs ${m.away}`;
-    const order=m.matchOrder||0;
+    const label=`${m.home} vs ${m.away}`;
+    const round=getMatchRound(m);
+    const dateIdx=DATE_ORDER.indexOf(m.date||'');
     [...(m.hev||[])].forEach(e=>{
-      if(e.i==='🟨') cards.push({type:'yellow',player:e.n,flag:m.hf,team:m.home,min:e.m,match:label,reason:e.a||'',date:m.date||'',matchOrder:order,lastMin:parseInt(e.m)||0});
-      if(e.i==='🟥') cards.push({type:'red',  player:e.n,flag:m.hf,team:m.home,min:e.m,match:label,reason:e.a||'',date:m.date||'',matchOrder:order,lastMin:parseInt(e.m)||0});
+      if(e.i==='🟨') cards.push({type:'yellow',player:e.n,flag:m.hf,team:m.home,min:e.m,match:label,reason:e.a||'',date:m.date||'',dateIdx,round,lastMin:parseInt(e.m)||0});
+      if(e.i==='🟥') cards.push({type:'red',  player:e.n,flag:m.hf,team:m.home,min:e.m,match:label,reason:e.a||'',date:m.date||'',dateIdx,round,lastMin:parseInt(e.m)||0});
     });
     [...(m.aev||[])].forEach(e=>{
-      if(e.i==='🟨') cards.push({type:'yellow',player:e.n,flag:m.af,team:m.away,min:e.m,match:label,reason:e.a||'',date:m.date||'',matchOrder:order,lastMin:parseInt(e.m)||0});
-      if(e.i==='🟥') cards.push({type:'red',  player:e.n,flag:m.af,team:m.away,min:e.m,match:label,reason:e.a||'',date:m.date||'',matchOrder:order,lastMin:parseInt(e.m)||0});
+      if(e.i==='🟨') cards.push({type:'yellow',player:e.n,flag:m.af,team:m.away,min:e.m,match:label,reason:e.a||'',date:m.date||'',dateIdx,round,lastMin:parseInt(e.m)||0});
+      if(e.i==='🟥') cards.push({type:'red',  player:e.n,flag:m.af,team:m.away,min:e.m,match:label,reason:e.a||'',date:m.date||'',dateIdx,round,lastMin:parseInt(e.m)||0});
     });
   });
   return cards;
@@ -1829,22 +1853,31 @@ function initKoChips(){
 function koMatchCard(m){
   const isFt=m.status==='ft';const isLive=m.status==='live';
   let sc;
-  if(isFt) sc=`<div class="sc-dig">${m.hs} : ${m.as_}</div><div class="sc-st ft">${m.pen?`FT (PEN ${m.pen})`:m.aet?'AET':'FT'}</div>`;
+  // Determine winner for penalty matches
+  let winner='';
+  if(isFt && m.pen){
+    const [hp,ap]=m.pen.split('-').map(Number);
+    winner = hp>ap ? m.home : m.away;
+  } else if(isFt && !m.pen){
+    if(m.hs>m.as_) winner=m.home;
+    else if(m.as_>m.hs) winner=m.away;
+  }
+  if(isFt) sc=`<div class="sc-dig">${m.hs} : ${m.as_}</div><div class="sc-st ft">${m.pen?`AET · PEN ${m.pen}`:m.aet?'AET':'FT'}</div>`;
   else if(isLive) sc=`<div class="sc-dig live">${m.hs!==null?m.hs:'—'} : ${m.as_!==null?m.as_:'—'}</div><div class="sc-clock">${m.noEspnData?'⏳ checking...':'● '+(m.clock||'LIVE')}</div>`;
   else sc=`<div class="sc-time">${m.time} ET</div><div class="sc-st up">${m.date}</div>`;
   const stad=getStad(m.venue);
   const tv=getTV(m.home,m.away);
   const vb=stad?`<div class="mc-venue-wrap"><div class="mc-venue">${m.venue}</div><div class="mc-stadium">${stad.name}</div><div class="mc-tv">📺 ${tv}</div></div>`:`<div class="mc-venue-wrap"><div class="mc-venue">${m.venue}</div><div class="mc-tv">📺 ${tv}</div></div>`;
   const sp=isFt?`<span class="mc-status-pill pill-ft">Final</span>`:isLive?`<span class="mc-status-pill pill-live">● Live</span>`:`<span class="mc-status-pill pill-up">Upcoming</span>`;
-  const hasEv=!!(m.hev?.length||m.aev?.length);
+  const winnerBanner=winner?`<div style="text-align:center;padding:6px 12px;background:rgba(232,255,0,.12);border-top:1px solid rgba(232,255,0,.2);font-size:12px;font-weight:700;color:var(--wc-yellow)">🏆 ${winner} advance to Round of 16</div>`:'';
   const evHtml=(isFt||isLive)?`<div class="mc-evts"><div class="ev-cols"><div class="ev-team"><div class="ev-lbl">${flagImg(m.home,14)||m.hf} ${m.home}</div>${evRows(m.hev)}</div><div class="ev-team"><div class="ev-lbl">${flagImg(m.away,14)||m.af} ${m.away}</div>${evRows(m.aev)}</div></div></div>`:'';
   return `<div class="mc" onclick="toggleMC(this)" data-home="${m.home}" data-away="${m.away}" data-espnid="${m.espnId||''}">
     <div class="mc-hdr"><span class="mc-tag">${m.note||''}</span>${sp}${vb}</div>
     <div class="mc-body">
-      <div class="t-side">${flagImg(m.home,28)||`<span class="t-flag">${m.hf}</span>`}<div><span class="t-name">${m.home}</span></div></div>
+      <div class="t-side">${flagImg(m.home,28)||`<span class="t-flag">${m.hf}</span>`}<div><span class="t-name ${winner===m.home?'winner':''}">${m.home}</span></div></div>
       <div class="sc-block">${sc}</div>
-      <div class="t-side r">${flagImg(m.away,28)||`<span class="t-flag">${m.af}</span>`}<div><span class="t-name">${m.away}</span></div></div>
-    </div>${evHtml}${isFt?`<div class="mc-stats">${m.ms?buildStatsBar(m.ms):''}</div>`:''}</div>`;
+      <div class="t-side r">${flagImg(m.away,28)||`<span class="t-flag">${m.af}</span>`}<div><span class="t-name ${winner===m.away?'winner':''}">${m.away}</span></div></div>
+    </div>${evHtml}${winnerBanner}${isFt?`<div class="mc-stats">${m.ms?buildStatsBar(m.ms):''}</div>`:''}</div>`;
 }
 function renderKo(){
   const matches=KNOCKOUT.filter(m=>m.round===CKR);
@@ -1981,20 +2014,78 @@ let CardFilter='all';
 function filterCards(f,btn){CardFilter=f;document.querySelectorAll('.cf-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');renderCards();}
 function renderCards(){
   const CARDS=getCards();
-  // Sort: most recent match first (by date), then by minute within same match
-  const DATE_ORDER=['Jun 11','Jun 12','Jun 13','Jun 14','Jun 15','Jun 16','Jun 17','Jun 18','Jun 19','Jun 20','Jun 21','Jun 22','Jun 23','Jun 24','Jun 25','Jun 26','Jun 27','Jun 28','Jun 29','Jun 30','Jul 1','Jul 2','Jul 3','Jul 4','Jul 5','Jul 6','Jul 7','Jul 9','Jul 10','Jul 11','Jul 14','Jul 15','Jul 18','Jul 19'];
-  const sc=arr=>[...arr].sort((a,b)=>{
-    const da=DATE_ORDER.indexOf(a.date), db=DATE_ORDER.indexOf(b.date);
-    if(db!==da) return db-da;
-    return b.lastMin-a.lastMin;
-  });
-  const reds=sc(CARDS.filter(c=>c.type==='red'));
-  const yellows=sc(CARDS.filter(c=>c.type==='yellow'));
-  const entry=c=>`<div class="player-row">${avHTML(c.photo,c.flag,50)}<div class="ci-wrap"><div class="ci ${c.type==='red'?'ci-r':'ci-y'}"></div></div><div class="p-info"><div class="p-name">${c.player}</div><div class="p-team">${c.flag} ${c.team}</div>${c.reason?`<div class="p-reason">${c.reason}</div>`:''}</div><div class="p-stat"><div class="p-match">${c.match}</div><div class="p-min">${c.min}</div><div class="card-type-lbl">${c.type==='red'?'🟥 Red':'🟨 Yellow'}</div></div></div>`;
+  // Sort by round (latest first) then date (latest first) then minute
+  const allRoundsPresent=[...new Set(CARDS.map(c=>c.round))];
+  const roundOrder=CARD_ROUND_ORDER.filter(r=>allRoundsPresent.includes(r)).reverse(); // latest first
+
+  // Determine which round is "current" — the latest with any cards
+  const currentRound=roundOrder[0]||'';
+
+  const sortRound=arr=>[...arr].sort((a,b)=>b.dateIdx-a.dateIdx||b.lastMin-a.lastMin);
+
+  const entry=(c,roundWiped)=>{
+    // Reds are NEVER wiped — always served as 1-match ban immediately
+    // Only yellows from wiped rounds are shown as historical
+    const wiped=roundWiped && c.type==='yellow';
+    return `<div class="player-row ${wiped?'card-wiped':''}">
+    ${avHTML(c.photo,c.flag,50)}
+    <div class="ci-wrap"><div class="ci ${c.type==='red'?'ci-r':'ci-y'}"></div></div>
+    <div class="p-info">
+      <div class="p-name">${c.player}</div>
+      <div class="p-team">${c.flag} ${c.team}</div>
+      <div class="p-reason" style="font-size:11px;color:var(--text-muted)">${c.match} · ${c.min}${c.reason?' · '+c.reason:''}</div>
+    </div>
+    <div class="p-stat">
+      <div class="card-type-lbl">${c.type==='red'?'🟥 Red':'🟨 Yellow'}</div>
+      ${wiped?'<div style="font-size:10px;color:var(--text-muted);margin-top:2px">⚪ Wiped</div>':c.type==='red'?'<div style="font-size:10px;color:var(--wc-red);margin-top:2px">1-match ban</div>':''}
+    </div>
+  </div>`;
+  };
+
   let h='';
-  if(CardFilter!=='yellow'){h+=`<div class="sec-label" style="color:var(--wc-red)">🟥 Red Cards (${reds.length}) — WC Record</div>`;reds.forEach(c=>{h+=entry(c);});h+='<div style="margin-bottom:14px"></div>';}
-  if(CardFilter!=='red'){h+=`<div class="sec-label" style="color:var(--wc-yellow)">🟨 Yellow Cards (${yellows.length})</div>`;yellows.forEach(c=>{h+=entry(c);});}
+  roundOrder.forEach((round,ri)=>{
+    const roundCards=sortRound(CARDS.filter(c=>c.round===round));
+    const wiped=CARD_ROUND_WIPED.includes(round);
+    const isLatest=ri===0;
+    const reds=roundCards.filter(c=>c.type==='red');
+    const yellows=roundCards.filter(c=>c.type==='yellow');
+    const totalCards=roundCards.length;
+    if(!totalCards) return;
+
+    const sectionId='card-section-'+round.replace(/\s+/g,'-');
+    const resetNote=wiped?' <span style="font-size:11px;color:var(--text-muted);font-weight:400">(🟨 yellows wiped — historical)</span>':
+      round==='Round of 32'||round==='Round of 16'?' <span style="font-size:11px;color:var(--wc-yellow);font-weight:400">⚠️ Accumulating — reset after QF</span>':'';
+
+    h+=`<div class="card-section">
+      <div class="card-section-hdr" onclick="toggleCardSection('${sectionId}')">
+        <span class="card-section-title">${round}${resetNote}</span>
+        <span class="card-section-count">🟥${reds.length} · 🟨${yellows.length}</span>
+        <span class="card-section-chevron" id="${sectionId}-chevron">${isLatest?'▲':'▼'}</span>
+      </div>
+      <div class="card-section-body" id="${sectionId}" style="display:${isLatest?'block':'none'}">`;
+
+    if(CardFilter!=='yellow'&&reds.length){
+      h+=`<div class="sec-label" style="color:var(--wc-red);font-size:12px;padding:6px 0 2px">🟥 Red Cards (${reds.length})</div>`;
+      reds.forEach(c=>{h+=entry(c,wiped);});
+    }
+    if(CardFilter!=='red'&&yellows.length){
+      h+=`<div class="sec-label" style="color:var(--wc-yellow);font-size:12px;padding:6px 0 2px">🟨 Yellow Cards (${yellows.length})</div>`;
+      yellows.forEach(c=>{h+=entry(c,wiped);});
+    }
+    h+=`</div></div>`;
+  });
+
+  if(!h) h='<div class="info-box">No cards recorded yet.</div>';
   document.getElementById('cardsCont').innerHTML=h;
+}
+
+function toggleCardSection(id){
+  const body=document.getElementById(id);
+  const chev=document.getElementById(id+'-chevron');
+  if(!body) return;
+  const open=body.style.display!=='none';
+  body.style.display=open?'none':'block';
+  if(chev) chev.textContent=open?'▼':'▲';
 }
 
 // ============================================================
