@@ -705,7 +705,10 @@ let KNOCKOUT=[
    hev:[{i:'⚽',m:"54'",n:'K. Havertz',a:''}],
    aev:[{i:'⚽',m:"42'",n:'J. Enciso',a:'Shock opener'}],
    motm:'O. Gill (PAR)',ms:null,note:'Grp E 1st vs Grp D 3rd — PARAGUAY WIN ON PENS!'},
-  {round:'R32',home:'Netherlands',hf:'🇳🇱',away:'Morocco',af:'🇲🇦',hs:null,as_:null,date:'Jun 29',time:'9:00 PM',venue:'Monterrey',status:'upcoming',hev:[],aev:[],ms:null,note:'Grp F 1st vs Grp C 2nd'},
+  {round:'R32',home:'Netherlands',hf:'🇳🇱',away:'Morocco',af:'🇲🇦',hs:1,as_:1,date:'Jun 29',time:'9:00 PM',venue:'Monterrey',status:'ft',aet:true,pen:'2-3',
+   hev:[{i:'⚽',m:"72'",n:'C. Gakpo',a:'Ast: C. Summerville'}],
+   aev:[{i:'⚽',m:"90+1'",n:'I. Diop',a:'Dramatic equalizer — AET!'}],
+   motm:'Y. Bounou (MAR)',ms:null,note:'Grp F 1st vs Grp C 2nd — MOROCCO WIN ON PENS 3-2'},
   {round:'R32',home:'Ivory Coast',hf:'🇨🇮',away:'Norway',af:'🇳🇴',hs:null,as_:null,date:'Jun 30',time:'1:00 PM',venue:'Dallas',status:'upcoming',hev:[],aev:[],ms:null,note:'Grp E 2nd vs Grp I 2nd'},
   {round:'R32',home:'France',hf:'🇫🇷',away:'Sweden',af:'🇸🇪',hs:null,as_:null,date:'Jun 30',time:'5:00 PM',venue:'New York/NJ',status:'upcoming',hev:[],aev:[],ms:null,note:'Grp I 1st vs Grp F 3rd'},
   {round:'R32',home:'Mexico',hf:'🇲🇽',away:'Ecuador',af:'🇪🇨',hs:null,as_:null,date:'Jun 30',time:'9:00 PM',venue:'Mexico City',status:'upcoming',hev:[],aev:[],ms:null,note:'Grp A 1st vs Grp E 3rd'},
@@ -720,7 +723,7 @@ let KNOCKOUT=[
   {round:'R32',home:'Colombia',hf:'🇨🇴',away:'Ghana',af:'🇬🇭',hs:null,as_:null,date:'Jul 3',time:'9:30 PM',venue:'Kansas City',status:'upcoming',hev:[],aev:[],ms:null,note:'Grp K 1st vs Grp L 3rd'},
   // ── ROUND OF 16 — pairings locked, teams TBD until R32 completes ──
   // ── ROUND OF 16 — confirmed via ESPN official bracket (match #s 89-96) ──
-  {round:'R16',home:'TBD',hf:'🏳️',away:'TBD',af:'🏳️',hs:null,as_:null,date:'Jul 4',time:'1:00 PM',venue:'Houston',status:'upcoming',hev:[],aev:[],ms:null,note:'Match 90: Winner South Africa/Canada (→ Canada) vs Winner Netherlands/Morocco'},
+  {round:'R16',home:'TBD',hf:'🏳️',away:'TBD',af:'🏳️',hs:null,as_:null,date:'Jul 4',time:'1:00 PM',venue:'Houston',status:'upcoming',hev:[],aev:[],ms:null,note:'Match 90: Canada vs Morocco (Canada beat South Africa · Morocco beat Netherlands on pens)'},
   {round:'R16',home:'TBD',hf:'🏳️',away:'TBD',af:'🏳️',hs:null,as_:null,date:'Jul 4',time:'5:00 PM',venue:'Philadelphia',status:'upcoming',hev:[],aev:[],ms:null,note:'Match 89: Winner Germany/Paraguay (→ Paraguay) vs Winner France/Sweden'},
   {round:'R16',home:'TBD',hf:'🏳️',away:'TBD',af:'🏳️',hs:null,as_:null,date:'Jul 5',time:'4:00 PM',venue:'New York/NJ',status:'upcoming',hev:[],aev:[],ms:null,note:'Match 91: Winner Brazil/Japan (→ Brazil) vs Winner Ivory Coast/Norway'},
   {round:'R16',home:'TBD',hf:'🏳️',away:'TBD',af:'🏳️',hs:null,as_:null,date:'Jul 5',time:'8:00 PM',venue:'Mexico City',status:'upcoming',hev:[],aev:[],ms:null,note:'Match 92: Winner Mexico/Ecuador vs Winner England/DR Congo'},
@@ -1031,6 +1034,7 @@ let MATCHES=[
 // matchOrder = chronological match number (higher = more recent)
 // ============================================================
 const GOALS=[
+  {name:'I. Diop',          team:'Morocco',    flag:'🇲🇦',goals:1,photo:null,matchOrder:71,lastMin:90},
   {name:'S. Eustáquio',     team:'Canada',     flag:'🇨🇦',goals:1,photo:null,matchOrder:68,lastMin:90},
   {name:'Casemiro',         team:'Brazil',     flag:'🇧🇷',goals:1,photo:null,matchOrder:69,lastMin:56},
   {name:'G. Martinelli',    team:'Brazil',     flag:'🇧🇷',goals:1,photo:null,matchOrder:69,lastMin:90},
@@ -1109,7 +1113,7 @@ const GOALS=[
   {name:'H. Varela',        team:'Cape Verde', flag:'🇨🇻',goals:1,photo:null,matchOrder:39,lastMin:61},
   {name:'F. Kessié',        team:'Ivory Coast',flag:'🇨🇮',goals:1,photo:null,matchOrder:34,lastMin:30},
   {name:'B. Brobbey',       team:'Netherlands',flag:'🇳🇱',goals:3,photo:null,matchOrder:58,lastMin:7},
-  {name:'C. Gakpo',         team:'Netherlands',flag:'🇳🇱',goals:2,photo:null,matchOrder:33,lastMin:54},
+  {name:'C. Gakpo',         team:'Netherlands',flag:'🇳🇱',goals:3,photo:null,matchOrder:71,lastMin:72},
   {name:'A. Elanga',        team:'Sweden',     flag:'🇸🇪',goals:2,photo:null,matchOrder:57,lastMin:62},
   {name:'F. Kessié',        team:'Ivory Coast',flag:'🇨🇮',goals:1,photo:null,matchOrder:34,lastMin:30},
   {name:'M. Muheim OG',     team:'Qatar',      flag:'🇶🇦',goals:1,photo:null,matchOrder:5,lastMin:90},
@@ -1613,45 +1617,54 @@ async function doRefresh() {
       }
     });
 
-        // ── TIME-BASED AUTO-DETECTION ──────────────────────────────
+    // ── TIME-BASED AUTO-DETECTION ──────────────────────────────
     // Runs AFTER the ESPN pass above. If a match is still 'upcoming'
     // here, ESPN already had its chance this cycle and returned
     // nothing usable for it — so kickoff-time detection takes over,
     // and we explicitly flag noEspnData so the UI is honest about
     // why there's no live score/minute yet.
+    const MO={'Jan':0,'Feb':1,'Mar':2,'Apr':3,'May':4,'Jun':5,'Jul':6,'Aug':7,'Sep':8,'Oct':9,'Nov':10,'Dec':11};
+    function parseKickoff(date, time) {
+      // date = 'Jun 29', time = '9:00 PM' or '9:30 PM'
+      try {
+        if(!date||!time) return null;
+        const [mon,day] = date.split(' ');
+        const [rawTime,ampm] = time.split(' ');
+        let [hr,mn] = rawTime.split(':').map(Number);
+        if(ampm==='PM' && hr!==12) hr+=12;
+        if(ampm==='AM' && hr===12) hr=0;
+        // Build as ET (UTC-4 during DST)
+        const d = new Date(Date.UTC(2026, MO[mon], parseInt(day), hr+4, mn||0));
+        return isNaN(d)?null:d;
+      } catch(e){return null;}
+    }
     let autoDetected = 0;
     ALL_MATCHES().forEach(m => {
-      if (m.status === 'upcoming' && m.date && m.time) {
-        try {
-          const dateStr = m.date + ' 2026 ' + m.time + ' ET';
-          const kickoff = new Date(dateStr);
-          if (!isNaN(kickoff) && now >= kickoff) {
-            m.status = 'live';
-            m.hs = 0; m.as_ = 0;
-            m.clock = 'LIVE';
-            m.tbd = true;
-            m.noEspnData = true;
-            if (!m.hev) m.hev = [];
-            if (!m.aev) m.aev = [];
-            autoDetected++;
-          }
-        } catch(e) {}
+      if (m.status === 'upcoming' && m.date && m.time && m.time !== 'TBD') {
+        const kickoff = parseKickoff(m.date, m.time);
+        if (kickoff && now >= kickoff) {
+          m.status = 'live';
+          m.hs = m.hs!==null?m.hs:0;
+          m.as_ = m.as_!==null?m.as_:0;
+          m.clock = 'LIVE';
+          m.tbd = true;
+          m.noEspnData = true;
+          if (!m.hev) m.hev = [];
+          if (!m.aev) m.aev = [];
+          autoDetected++;
+        }
       }
     });
     if (autoDetected > 0) console.log(`Auto-detected ${autoDetected} newly live match(es) by kickoff time`);
 
     // ── Stale lock: if still 'live' but 3+ hours past kickoff, force FT ──
     ALL_MATCHES().forEach(m => {
-      if (m.status === 'live' && m.date && m.time) {
-        try {
-          // Build proper date from m.date (e.g "Jun 15") + m.time (e.g "6:00 PM")
-          const dateStr = m.date + ' 2026 ' + m.time + ' ET';
-          const kickoff = new Date(dateStr);
-          if (!isNaN(kickoff)) {
-            const hrs = (now - kickoff) / 3600000;
-            if (hrs > 3) { m.status = 'ft'; }
-          }
-        } catch(e) {}
+      if (m.status === 'live' && m.date && m.time && m.time !== 'TBD') {
+        const kickoff = parseKickoff(m.date, m.time);
+        if (kickoff) {
+          const hrs = (now - kickoff) / 3600000;
+          if (hrs > 3.5) { m.status = 'ft'; m.tbd = false; }
+        }
       }
     });
 
