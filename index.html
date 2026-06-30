@@ -1286,12 +1286,12 @@ function getCards(){
     const label=m.round?`${m.home} vs ${m.away}`:`${m.home} vs ${m.away}`;
     const order=m.matchOrder||0;
     [...(m.hev||[])].forEach(e=>{
-      if(e.i==='🟨') cards.push({type:'yellow',player:e.n,flag:m.hf,team:m.home,min:e.m,match:label,reason:e.a||'',matchOrder:order,lastMin:parseInt(e.m)||0});
-      if(e.i==='🟥') cards.push({type:'red',  player:e.n,flag:m.hf,team:m.home,min:e.m,match:label,reason:e.a||'',matchOrder:order,lastMin:parseInt(e.m)||0});
+      if(e.i==='🟨') cards.push({type:'yellow',player:e.n,flag:m.hf,team:m.home,min:e.m,match:label,reason:e.a||'',date:m.date||'',matchOrder:order,lastMin:parseInt(e.m)||0});
+      if(e.i==='🟥') cards.push({type:'red',  player:e.n,flag:m.hf,team:m.home,min:e.m,match:label,reason:e.a||'',date:m.date||'',matchOrder:order,lastMin:parseInt(e.m)||0});
     });
     [...(m.aev||[])].forEach(e=>{
-      if(e.i==='🟨') cards.push({type:'yellow',player:e.n,flag:m.af,team:m.away,min:e.m,match:label,reason:e.a||'',matchOrder:order,lastMin:parseInt(e.m)||0});
-      if(e.i==='🟥') cards.push({type:'red',  player:e.n,flag:m.af,team:m.away,min:e.m,match:label,reason:e.a||'',matchOrder:order,lastMin:parseInt(e.m)||0});
+      if(e.i==='🟨') cards.push({type:'yellow',player:e.n,flag:m.af,team:m.away,min:e.m,match:label,reason:e.a||'',date:m.date||'',matchOrder:order,lastMin:parseInt(e.m)||0});
+      if(e.i==='🟥') cards.push({type:'red',  player:e.n,flag:m.af,team:m.away,min:e.m,match:label,reason:e.a||'',date:m.date||'',matchOrder:order,lastMin:parseInt(e.m)||0});
     });
   });
   return cards;
@@ -1968,7 +1968,13 @@ let CardFilter='all';
 function filterCards(f,btn){CardFilter=f;document.querySelectorAll('.cf-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');renderCards();}
 function renderCards(){
   const CARDS=getCards();
-  const sc=arr=>[...arr].sort((a,b)=>b.matchOrder!==a.matchOrder?b.matchOrder-a.matchOrder:b.lastMin-a.lastMin);
+  // Sort: most recent match first (by date), then by minute within same match
+  const DATE_ORDER=['Jun 11','Jun 12','Jun 13','Jun 14','Jun 15','Jun 16','Jun 17','Jun 18','Jun 19','Jun 20','Jun 21','Jun 22','Jun 23','Jun 24','Jun 25','Jun 26','Jun 27','Jun 28','Jun 29','Jun 30','Jul 1','Jul 2','Jul 3','Jul 4','Jul 5','Jul 6','Jul 7','Jul 9','Jul 10','Jul 11','Jul 14','Jul 15','Jul 18','Jul 19'];
+  const sc=arr=>[...arr].sort((a,b)=>{
+    const da=DATE_ORDER.indexOf(a.date), db=DATE_ORDER.indexOf(b.date);
+    if(db!==da) return db-da;
+    return b.lastMin-a.lastMin;
+  });
   const reds=sc(CARDS.filter(c=>c.type==='red'));
   const yellows=sc(CARDS.filter(c=>c.type==='yellow'));
   const entry=c=>`<div class="player-row">${avHTML(c.photo,c.flag,50)}<div class="ci-wrap"><div class="ci ${c.type==='red'?'ci-r':'ci-y'}"></div></div><div class="p-info"><div class="p-name">${c.player}</div><div class="p-team">${c.flag} ${c.team}</div>${c.reason?`<div class="p-reason">${c.reason}</div>`:''}</div><div class="p-stat"><div class="p-match">${c.match}</div><div class="p-min">${c.min}</div><div class="card-type-lbl">${c.type==='red'?'🟥 Red':'🟨 Yellow'}</div></div></div>`;
