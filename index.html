@@ -1485,6 +1485,28 @@ const TV = {
   'Australia_Egypt': 'Fox · Telemundo',
   'Argentina_Cape Verde': 'Fox · Telemundo',
   'Colombia_Ghana': 'Fox · Telemundo',
+  // From Round of 16 onward every match is on Fox · Telemundo
+  // Confirmed: Fox Sports, Yahoo Sports, Deadline (July 9 2026)
+  // Round of 16
+  'Canada_Morocco': 'Fox · Telemundo',
+  'Paraguay_France': 'Fox · Telemundo',
+  'Brazil_Norway': 'Fox · Telemundo',
+  'Mexico_England': 'Fox · Telemundo',
+  'Portugal_Spain': 'Fox · Telemundo',
+  'USA_Belgium': 'Fox · Telemundo',
+  'Argentina_Egypt': 'Fox · Telemundo',
+  'Switzerland_Colombia': 'Fox · Telemundo',
+  // Quarterfinals
+  'France_Morocco': 'Fox · Telemundo',
+  'Spain_Belgium': 'Fox · Telemundo',
+  'Norway_England': 'Fox · Telemundo',
+  'Argentina_Switzerland': 'Fox · Telemundo',
+  // Semifinals
+  'SF_1': 'Fox · Telemundo',
+  'SF_2': 'Fox · Telemundo',
+  // Third Place & Final
+  '3rd_place': 'Fox · Telemundo',
+  'Final': 'Fox · Telemundo',
   _default: 'TBD'
 };
 function getTV(home, away) { return TV[home+'_'+away] || TV[away+'_'+home] || TV._default; }
@@ -1929,7 +1951,7 @@ function koMatchCard(m){
   const tv=getTV(m.home,m.away);
   const vb=stad?`<div class="mc-venue-wrap"><div class="mc-venue">${m.venue}</div><div class="mc-stadium">${stad.name}</div><div class="mc-tv">📺 ${tv}</div></div>`:`<div class="mc-venue-wrap"><div class="mc-venue">${m.venue}</div><div class="mc-tv">📺 ${tv}</div></div>`;
   const sp=isFt?`<span class="mc-status-pill pill-ft">Final</span>`:isLive?`<span class="mc-status-pill pill-live">● Live</span>`:`<span class="mc-status-pill pill-up">Upcoming</span>`;
-  const winnerBanner=winner?`<div style="text-align:center;padding:6px 12px;background:rgba(232,255,0,.12);border-top:1px solid rgba(232,255,0,.2);font-size:12px;font-weight:700;color:var(--wc-yellow)">🏆 ${winner} advance to Round of 16</div>`:'';
+  const winnerBanner=winner?`<div style="text-align:center;padding:6px 12px;background:rgba(232,255,0,.12);border-top:1px solid rgba(232,255,0,.2);font-size:12px;font-weight:700;color:var(--wc-yellow)">🏆 ${winner} advance to the ${m.round==='R32'?'Round of 16':m.round==='R16'?'Quarterfinals':m.round==='QF'?'Semifinals':m.round==='SF'?'the Final':'next round'}</div>`:'';
   const evHtml=(isFt||isLive)?`<div class="mc-evts"><div class="ev-cols"><div class="ev-team"><div class="ev-lbl">${flagImg(m.home,14)||m.hf} ${m.home}</div>${evRows(m.hev)}</div><div class="ev-team"><div class="ev-lbl">${flagImg(m.away,14)||m.af} ${m.away}</div>${evRows(m.aev)}</div></div></div>`:'';
   return `<div class="mc" onclick="toggleMC(this)" data-home="${m.home}" data-away="${m.away}" data-espnid="${m.espnId||''}">
     <div class="mc-hdr"><span class="mc-tag">${m.note||''}</span>${sp}${vb}</div>
